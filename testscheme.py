@@ -71,7 +71,7 @@ if __name__ == "__main__":
     nisys = NIRRAM(chipname)
     n_cells = 10
     random_seed = 1
-    log = open(f"scheme_test_{n_cells}_{random_seed}", "w")
+    log = open(f"testlog/scheme_test_{n_cells}_{random_seed}", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
