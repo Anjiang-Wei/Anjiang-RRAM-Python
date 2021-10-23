@@ -14,6 +14,8 @@ high_init_config = {
 }
 timestamps = [0.01, 0.1, 1.0]
 
+random_seed = 1
+
 def write_init(addr):
     nisys.set_addr(addr)
     target_low_res = high_init_config[config_char][0]
@@ -44,6 +46,7 @@ def dead_init():
                 dead_cells.append(dead_addr)
 
 def random_pick(ncells):
+    random.seed(random_seed)
     res = []
     while len(set(res)) < ncells:
         new = random.randint(start_addr, end_addr-1)
@@ -53,7 +56,6 @@ def random_pick(ncells):
     return res
 
 def testscheme(ncells):
-    random.seed(random_seed)
     cells = random_pick(ncells)
     for addr in cells:
         for level in levels:
@@ -70,7 +72,6 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     n_cells = 10
-    random_seed = 1
     log = open(f"testlog/scheme_test_{n_cells}_{random_seed}", "w")
     testscheme(n_cells)
     nisys.close()
