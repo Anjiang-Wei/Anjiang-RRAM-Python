@@ -77,7 +77,7 @@ def testscheme(ncells):
             for t in timestamps:
                 time.sleep(t)
                 read(addr, level.r1, level.r2)
-    dead_detection.detect(cells, dead_log)
+    dead_detection.detect(cells, dead_log, nisys)
     dead_log.close()
 
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     n_cells = 10
-    log = open(f"testlog/scheme_test_{n_cells}_{random_seed}", "w")
+    log = open(f"testlog/scheme_test_{n_cells}_{random_seed}_1", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
