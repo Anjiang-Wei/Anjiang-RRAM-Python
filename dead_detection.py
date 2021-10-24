@@ -3,7 +3,7 @@ import test_scheme
 
 chip_name = "C10"
 
-def detect(cells, low=10*1e3, high=11*1e3):
+def detect(cells, fout, low=10*1e3, high=11*1e3):
     for addr in cells:
         assert test_scheme.start_addr <= addr and addr < test_scheme.end_addr
         nisys.set_addr(addr)
@@ -13,15 +13,15 @@ def detect(cells, low=10*1e3, high=11*1e3):
         else:
             fout.write(f"{addr},{low},{high},{target[0]},False\n")
 
-def detect_after_test(ncells):
+def detect_after_test(ncells, fout):
     test_scheme.dead_init()
     cells = test_scheme.random_pick(ncells)
-    detect(cells)
+    detect(cells, fout)
     print(cells)
 
 if __name__ == "__main__":
     fout = open("log/new_dead.csv", "a")
     nisys = NIRRAM(chip_name)
-    detect_after_test(10)
+    detect_after_test(10, fout=fout)
     nisys.close()
     fout.close()

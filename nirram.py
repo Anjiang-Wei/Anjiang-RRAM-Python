@@ -327,7 +327,7 @@ class NIRRAM:
         """Performs SET/RESET pulses in increasing fashion until target range is achieved.
         Returns tuple (res, cond, meas_i, meas_v, attempt, success)."""
         # Assert the resistance is greater than 6kOhm
-        assert(target_res_lo >= 6000)
+        assert(target_res_lo >= 7812.5) # 1 / (128 uS)
         assert(target_res_hi >= target_res_lo)
 
         # Iterative pulse-verify
