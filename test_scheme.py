@@ -29,7 +29,7 @@ def write_init(addr):
 def write(addr, target_low_res, target_hi_res):
     assert addr >= start_addr and addr < end_addr
     nisys.set_addr(addr)
-    target = nisys.target(target_low_res, target_hi_res, max_attempts=50)
+    target = nisys.target(target_low_res, target_hi_res, max_attempts=25)
     log.write(f"Write\t{target_low_res}\t{target_hi_res}\t{addr}\t{time.time()}\t{target[0]}\t{target[1]}\n")
 
 def read(addr, read_range_low, read_range_high):
@@ -71,12 +71,14 @@ def testscheme(ncells):
     dead_log = open("log/new_dead.csv", "a")
     cells = random_pick(ncells)
     for addr in cells:
+        print(addr)
         for level in levels:
             write_init(addr)
             write(addr, level.w1, level.w2)
             for t in timestamps:
                 time.sleep(t)
                 read(addr, level.r1, level.r2)
+    print("Start dead cell detection")
     dead_detection.detect(cells, dead_log, nisys)
     dead_log.close()
 
