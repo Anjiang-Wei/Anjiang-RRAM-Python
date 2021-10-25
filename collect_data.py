@@ -13,7 +13,7 @@ high_init_config = {
     "B": [86666.666, 200 * 1e3]
 }
 
-random_seed = 3
+random_seed = 4
 
 def write_init(addr):
     nisys.set_addr(addr)
@@ -68,7 +68,7 @@ def random_pick(ncells):
 def collect(ncells):
     dead_log = open("log/new_dead.csv", "a")
     cells = random_pick(ncells)
-    w_center = 9000
+    w_center = 12000
     for addr in cells:
         print(addr)
         for width in [50, 100, 200, 500]:
