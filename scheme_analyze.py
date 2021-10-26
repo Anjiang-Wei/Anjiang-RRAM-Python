@@ -1,4 +1,4 @@
-logfile = "10_2_1_25"
+logfile = "10_1_1_25" # cells_manualseed_experimentid_attempts
 
 init = {}
 write = {}
@@ -38,14 +38,18 @@ class Result(object):
         if total == 0:
             return
         print(f"Failure rate for {hint}: {fail} / {total} = {fail/total}")
-        return fail_addr
+        return set(fail_addr), fail/total
     
     def analyze_level_prob(results):
-        for low in all_lows:
-            filtered_res_write = list(filter(lambda x: x.low == low and x.action == "Write", results))
-            Result.compute_prob(filtered_res_write, str(low) + "+write")
-            filtered_res_read = list(filter(lambda x: x.low == low and x.action == "Read", results))
-            Result.compute_prob(filtered_res_read, str(low) + "+read")
+        for i in range(0, len(all_lows), 2):
+            filtered_res_write = list(filter(lambda x: x.low == all_lows[i+1] and x.action == "Write", results))
+            write_fail_addr, write_failrate = Result.compute_prob(filtered_res_write, str(i/2) + "+write")
+            filtered_res_read = list(filter(lambda x: x.low == all_lows[i] and x.action == "Read", results))
+            read_fail_addr, read_failrate = Result.compute_prob(filtered_res_read, str(i/2) + "+read")
+            both_fail = write_fail_addr & read_fail_addr
+            both_fail_prob = len(both_fail) / len(filtered_res_write)
+            if write_failrate != 0:
+                print(f"P(read_fail | write_fail) = {both_fail_prob}/{write_failrate} = {both_fail_prob/write_failrate}")
 
 def data_init():
     global all_lows
@@ -55,19 +59,22 @@ def data_init():
             line = lines[i].strip().split()
             action, low, high, addr, time, final, _ = line
             low, high, addr, time, final = float(low), float(high), int(addr), float(time), float(final)
-            if low not in all_lows:
-                all_lows.append(low)
             success = Result.check_range(low, high, final)
             r = Result(action, addr, low, high, final, success, time)            
             if action == "Init":
                 Result.init.append(r)
             elif action == "Write":
                 Result.write.append(r)
+                if low not in all_lows:
+                    all_lows.append(low)
             else:
                 assert action == "Read"
                 Result.read.append(r)
+                if low not in all_lows:
+                    all_lows.append(low)
             Result.all.append(r)
     all_lows = sorted(set(all_lows))
+    print(all_lows)
 
 
 if __name__ == "__main__":
