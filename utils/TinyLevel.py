@@ -1,6 +1,6 @@
 class Tiny_Level(object):
     all_levels = []
-    def __init__(self, low, high, success):
+    def __init__(self, low, high, success, max_attempts):
         assert low < high
         self.low = low
         self.high = high
@@ -9,9 +9,13 @@ class Tiny_Level(object):
         self.success = success
         self.summary = {0: 0, -1: 0, 1: 0}
         self.summary[success] = 1
+        self.max_attempts = max_attempts
     
-    def __eq__(self, o):
-        return self.low == o.low and self.high == o.high
+    def __eq__(self, o, differentiate_attempt=True):
+        if differentiate_attempt:
+            return self.low == o.low and self.high == o.high and self.max_attempts == o.max_attempts
+        else:
+            return self.low == o.low and self.high == o.high
     
     def __str__(self):
         success_total = self.summary[0]
@@ -20,9 +24,19 @@ class Tiny_Level(object):
         total_times = sum(self.summary.values())
         assert success_total + lower_total + higher_total == total_times
         return f"Width:{self.width}, Center:{self.center}, \
+            Attempts:{self.max_attempts},\
             Success:{success_total}/{total_times} = {success_total/total_times}, \
             Low:{lower_total}, High:{higher_total}"
     
+    @staticmethod
+    def printall():
+        for level in Tiny_Level.all_levels:
+            print(level)
+    
+    @staticmethod
+    def clear():
+        Tiny_Level.all_levels = []
+
     @staticmethod
     def add(o):
         '''
