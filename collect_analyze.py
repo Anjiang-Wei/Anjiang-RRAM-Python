@@ -1,7 +1,7 @@
 from utils.TinyLevel import Tiny_Level
 
 
-logfile = "10_4_0"
+logfile = "10_5_0"
 
 init = {}
 write = {}
@@ -48,7 +48,7 @@ class Result(object):
     @staticmethod
     def toTinyLevel(results):
         for o in results:
-            Tiny_Level.add(Tiny_Level(o.low, o.high, o.success, o.max_attempts))
+            Tiny_Level.add(Tiny_Level(o.low, o.high, o.success, o.max_attempts, o.final))
 
 def data_init():
     with open("testlog/collect_data_" + logfile, "r") as fin:
@@ -63,6 +63,7 @@ def data_init():
 def report_all():
     Result.toTinyLevel(Result.all)
     Tiny_Level.printall()
+    Tiny_Level.draw_levels(Tiny_Level.all_levels, lambda x: x.low < 10000)
 
 if __name__ == "__main__":
     data_init()
