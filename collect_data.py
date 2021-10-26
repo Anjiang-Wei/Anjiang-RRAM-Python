@@ -14,7 +14,7 @@ high_init_config = {
     "B": [86666.666, 200 * 1e3]
 }
 
-random_seed = 6
+random_seed = 7
 exp_id = 0
 
 def write_init(addr):
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     dead_init()
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
-    n_cells = 10
+    n_cells = 30
     log = open(f"testlog/collect_data_{n_cells}_{random_seed}_{exp_id}", "w")
     collect(n_cells)
     nisys.close()
