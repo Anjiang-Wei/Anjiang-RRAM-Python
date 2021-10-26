@@ -7,6 +7,7 @@ chipname = "C10"
 config_char = "B"
 start_addr = 0
 end_addr = 65536
+lowest_target = 7812.5
 dead_cells = []
 # levels = Level.load_from_file("scheme/B_mapping.json")
 high_init_config = {
@@ -27,7 +28,7 @@ def write_init(addr):
 
 def write(addr, target_low_res, target_hi_res, attempts):
     assert addr >= start_addr and addr < end_addr
-    if target_low_res < 7812.5:
+    if target_low_res < lowest_target:
         print("Too low, skip!")
         return
     nisys.set_addr(addr)
@@ -78,6 +79,8 @@ def collect(ncells):
                 18682.5, 22000.0, 26442.5, 32000.0, 39502.5]
     for w_center in w_centers:
         for width in range(50, 1000, 100):
+            if w_center-width/2 < lowest_target:
+                continue
             for num_attempts in [10, 25, 50, 100]:
                 for addr in cells:
                     print(addr)
