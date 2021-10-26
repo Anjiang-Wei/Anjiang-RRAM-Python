@@ -15,7 +15,7 @@ class Tiny_Level(object):
         self.max_attempts = max_attempts
         self.finals = [final]
     
-    def __eq__(self, o, differentiate_attempt=False):
+    def __eq__(self, o, differentiate_attempt=True):
         if differentiate_attempt:
             return self.low == o.low and self.high == o.high and self.max_attempts == o.max_attempts
         else:

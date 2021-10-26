@@ -14,7 +14,7 @@ high_init_config = {
     "B": [86666.666, 200 * 1e3]
 }
 
-random_seed = 5
+random_seed = 6
 exp_id = 0
 
 def write_init(addr):
@@ -60,6 +60,10 @@ def dead_init():
                 dead_cells.append(dead_addr)
     dead_cells = sorted(set(dead_cells))
 
+
+def is_dead(addr):
+    return addr in dead_cells
+
 def random_pick(ncells):
     random.seed(random_seed)
     res = []
@@ -71,24 +75,29 @@ def random_pick(ncells):
     return res
 
 def collect(ncells):
-    dead_log = open("log/new_dead.csv", "a")
     cells = random_pick(ncells)
     w_centers = [7822.5, 8002.5, 8182.5, 8362.5, 8542.5, \
                 8722.5, 8902.5, 9082.5, 9382.5, 9792.5, \
                 10202.5, 10612.5, 11342.5, 12452.5, 14382.5, \
                 18682.5, 22000.0, 26442.5, 32000.0, 39502.5]
     for w_center in w_centers:
-        for width in range(50, 1000, 100):
-            if w_center-width/2 < lowest_target:
-                continue
-            for num_attempts in [10, 25, 50, 100]:
+        for num_attempts in [10, 25, 50, 100]:
+            for width in range(50, 1000, 100):
+                if w_center-width/2 < lowest_target:
+                    continue
+                if w_center < 14000 and width > 500:
+                    continue
                 for addr in cells:
+                    if is_dead(addr):
+                        continue
                     print(addr)
                     write_init(addr)
                     write(addr, w_center-width/2, w_center+width/2, num_attempts)
-    print("Start dead cell detection")
-    dead_detection.detect(cells, dead_log, nisys)
-    dead_log.close()
+            print("Start dead cell detection")
+            dead_log = open("log/new_dead.csv", "a")
+            dead_detection.detect(cells, dead_log, nisys)
+            dead_log.close()
+            dead_init()
 
 
 if __name__ == "__main__":
