@@ -14,7 +14,7 @@ high_init_config = {
     "B": [86666.666, 200 * 1e3]
 }
 
-random_seed = 7
+random_seed = 8
 exp_id = 0
 
 def write_init(addr):
