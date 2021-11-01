@@ -3,8 +3,10 @@ import test_scheme
 
 chip_name = "C10"
 
-def detect(cells, fout, nisys, low=10*1e3, high=11*1e3):
+def detect(cells, fout, nisys, low=10*1e3, high=11*1e3, already_dead=[]):
     for addr in cells:
+        if addr in already_dead:
+            continue
         assert test_scheme.start_addr <= addr and addr < test_scheme.end_addr
         nisys.set_addr(addr)
         target = nisys.target(low, high)

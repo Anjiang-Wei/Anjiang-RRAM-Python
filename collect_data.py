@@ -95,7 +95,7 @@ def collect(ncells):
                     write(addr, w_center-width/2, w_center+width/2, num_attempts)
             print("Start dead cell detection")
             dead_log = open("log/new_dead.csv", "a")
-            dead_detection.detect(cells, dead_log, nisys)
+            dead_detection.detect(cells, dead_log, nisys, already_dead=dead_cells)
             dead_log.close()
             dead_init()
 

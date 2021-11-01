@@ -1,7 +1,7 @@
 from utils.TinyLevel import Tiny_Level
 
 
-logfile = "10_5_0"
+logfile = "30_7_0"
 
 init = {}
 write = {}
@@ -63,7 +63,7 @@ def data_init():
 def report_all():
     Result.toTinyLevel(Result.all)
     Tiny_Level.printall()
-    Tiny_Level.draw_levels(Tiny_Level.all_levels, lambda x: x.low < 10000)
+    # Tiny_Level.draw_levels(Tiny_Level.all_levels, lambda x: x.low < 10000)
 
 if __name__ == "__main__":
     data_init()
