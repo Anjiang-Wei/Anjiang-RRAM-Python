@@ -1,7 +1,7 @@
 from utils.TinyLevel import Tiny_Level
 
 
-logfile = "30_7_0"
+logfile = "30_78_merge"
 
 init = {}
 write = {}
@@ -63,7 +63,12 @@ def data_init():
 def report_all():
     Result.toTinyLevel(Result.all)
     Tiny_Level.printall()
-    # Tiny_Level.draw_levels(Tiny_Level.all_levels, lambda x: x.low < 10000)
+    # levels = Tiny_Level.level_sort_by_width()
+    # for l in levels[::-1]:
+    #     Tiny_Level.draw_level(l)
+    levels = Tiny_Level.level_sort_by_attempt()
+    for l in levels[::-1]:
+        Tiny_Level.draw_level(l)
 
 if __name__ == "__main__":
     data_init()

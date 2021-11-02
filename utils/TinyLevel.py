@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 class Tiny_Level(object):
+    differentiate_attempt = True
     all_levels = []
     def __init__(self, low, high, success, max_attempts, final):
         assert low < high
@@ -14,9 +15,10 @@ class Tiny_Level(object):
         self.summary[success] = 1
         self.max_attempts = max_attempts
         self.finals = [final]
+        self.idx = 0
     
-    def __eq__(self, o, differentiate_attempt=True):
-        if differentiate_attempt:
+    def __eq__(self, o):
+        if Tiny_Level.differentiate_attempt:
             return self.low == o.low and self.high == o.high and self.max_attempts == o.max_attempts
         else:
             return self.low == o.low and self.high == o.high
@@ -34,6 +36,7 @@ class Tiny_Level(object):
     
     @staticmethod
     def printall():
+        Tiny_Level.compute_idx()
         for level in Tiny_Level.all_levels:
             print(level)
     
@@ -55,28 +58,67 @@ class Tiny_Level(object):
             Tiny_Level.all_levels[idx].finals += o.finals
 
     @staticmethod
-    def low2idx(low, levels=all_levels):
+    def center2idx(center, levels=all_levels):
         '''
-        Given a low value, return the index (redundance removed) to it w.r.t all the levels specified
+        Given a center value, return the index (redundance removed) to it w.r.t all the levels specified
         '''
-        all_lows = list(map(lambda x: x.low), levels)
-        sorted_lows = sorted(list(set(all_lows)))
-        return sorted_lows.index(low)
+        all_centers = list(map(lambda x: x.center, levels))
+        sorted_centers = sorted(list(set(all_centers)))
+        return sorted_centers.index(center)
     
     @staticmethod
-    def filter_levels(lambda_func):
+    def compute_idx():
+        for i in range(len(Tiny_Level.all_levels)):
+            level = Tiny_Level.all_levels[i]
+            level.idx = Tiny_Level.center2idx(level.center)
+    
+    @staticmethod
+    def filter_levels(lambda_func, all_levels=all_levels):
         '''
         Given a lambda function, return the filtered levels from all_levels
         '''
-        satisfied_levels = list(filter(lambda_func, Tiny_Level.all_levels))
+        satisfied_levels = list(filter(lambda_func, all_levels))
         return satisfied_levels
     
+    def filter_properties(lambda_func):
+        '''
+        Given a lambda function, return the set of values of a certain property
+        '''
+        property_vals = set(map(lambda_func, Tiny_Level.all_levels))
+        return property_vals
+    
+    def level_sort_by_width():
+        vals = Tiny_Level.filter_properties(lambda x: x.width)
+        res = []
+        for val in vals:
+            res += Tiny_Level.filter_levels(lambda x: x.width == val)
+        return res
+    
+    def level_sort_by_attempt():
+        vals = Tiny_Level.filter_properties(lambda x: x.max_attempts)
+        res = []
+        for val in vals:
+            res += Tiny_Level.filter_levels(lambda x: x.max_attempts == val)
+        return res
+    
     @staticmethod
-    def draw_levels(levels, lambda_func=lambda x: x):
+    def draw_levels(levels, lambda_func=lambda x: x, hint=""):
         all_levels = list(filter(lambda_func, levels))
         for i in range(len(all_levels)):
             color = sns.color_palette(n_colors=len(all_levels))[i]
             plt.axvline(all_levels[i].low, color=color, linestyle=':', linewidth=1)
             plt.axvline(all_levels[i].high, color=color, linestyle=':', linewidth=1)
-            sns.distplot(all_levels[i].finals, kde=True, label='Range %d' % i, axlabel=True)
+            sns.distplot(all_levels[i].finals, kde=True, label=f'{hint} {i}', axlabel=True)
+        plt.legend()
+        plt.show()
+    
+    @staticmethod
+    def draw_level(level):
+        color= sns.color_palette(n_colors=1)[0]
+        plt.axvline(level.low, color=color, linestyle=':', linewidth=1)
+        plt.axvline(level.high, color=color, linestyle=':', linewidth=1)
+        success_total, total_times = level.summary[0], sum(level.summary.values())
+        label = f"{level.idx} IDX, {level.width} WID, {level.max_attempts} ATT, {success_total/total_times}"
+        sns.distplot(level.finals, kde=True, label=label, axlabel=False)
+        plt.legend()
         plt.show()
