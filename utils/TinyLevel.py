@@ -11,11 +11,15 @@ class Tiny_Level(object):
         self.width = high - low
         self.center = (low + high) / 2
         self.success = success
+        self.max_attempts = max_attempts
+        # -1: final lower than target, 1: final higher than target
         self.summary = {0: 0, -1: 0, 1: 0}
         self.summary[success] = 1
-        self.max_attempts = max_attempts
         self.finals = [final]
+        # computed after all_levels is stable
         self.idx = 0
+        self.total_times = 0
+        self.success_rate = 0
     
     def __eq__(self, o):
         if Tiny_Level.differentiate_attempt:
@@ -33,6 +37,14 @@ class Tiny_Level(object):
             Attempts:{self.max_attempts},\
             Success:{success_total}/{total_times} = {success_total/total_times}, \
             Low:{lower_total}, High:{higher_total}"
+    
+    @staticmethod
+    def data_stable():
+        '''
+        After all_levels are stable, call this func to ensure correct initialization!
+        '''
+        Tiny_Level.compute_idx()
+        Tiny_Level.compute_total_succ()
     
     @staticmethod
     def printall():
@@ -68,9 +80,19 @@ class Tiny_Level(object):
     
     @staticmethod
     def compute_idx():
+        '''
+        After all_levels are stable, this function should be called
+        '''
         for i in range(len(Tiny_Level.all_levels)):
             level = Tiny_Level.all_levels[i]
             level.idx = Tiny_Level.center2idx(level.center)
+    
+    @staticmethod
+    def compute_total_succ():
+        for i in range(len(Tiny_Level.all_levels)):
+            level = Tiny_Level.all_levels[i]
+            level.total_times = sum(level.summary.values())
+            level.success_rate = level.summary[0] / level.total_times
     
     @staticmethod
     def filter_levels(lambda_func, all_levels=all_levels):
