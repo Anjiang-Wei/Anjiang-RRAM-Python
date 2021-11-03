@@ -102,11 +102,11 @@ class Tiny_Level(object):
         satisfied_levels = list(filter(lambda_func, all_levels))
         return satisfied_levels
     
-    def filter_properties(lambda_func):
+    def filter_properties(lambda_func, all_levels=all_levels):
         '''
         Given a lambda function, return the set of values of a certain property
         '''
-        property_vals = set(map(lambda_func, Tiny_Level.all_levels))
+        property_vals = set(map(lambda_func, all_levels))
         return property_vals
     
     def level_sort_by_width():

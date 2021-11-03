@@ -3,27 +3,25 @@ sys.path.append("..")
 from scheme.level import Level
 from models.write import WriteModel
 from models.relax import RelaxModel
-import collect_analyze
 
-def level_inference(Rmin, Rmax, Wmin, Wmax, Nctr, Nrad, T, BER):
+def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
     '''
     Rmin, Rmax: set by hardware constraints
-    Wmin, Wmax: write width
     Nctr: how many write center values to try in [Rmin, Rmax]
-    Nrad: how many write width values to try in [Wmin, Wmax]
+    max_attempts: the maximum number of attempts
     T: time for relaxation
     BER: bit error rate specification
     '''
     levels = []
     for Wctr in range(Rmin, Rmax, (Rmax-Rmin)/Nctr):
-        for Wrad in range(Wmin, Wmax, (Wmax-Wmin)/Nrad):
+        for width in range(50, 1000, 100): # pre-set values during data collection
             # run monte carlo simulation based on measurement data
-            Sim_Write_N = 1000
-            Read_Write_N = 1000
-            WriteDistr = WriteModel(Wctr-Wrad, Wctr+Wrad)
-            RelaxDistr = RelaxModel(WriteDistr, T)
+            Write_N = 1000
+            Read_N = 1000
+            WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
+            RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
             Rlow, Rhigh = getReadRange(RelaxDistr, BER)
-            levels.append(Level(Rlow, Rhigh, Wctr-Wrad, Wctr+Wrad, prob=BER))
+            levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=BER))
     return non_overlapping_levels(levels)
 
 
@@ -32,8 +30,7 @@ def non_overlapping_levels(levels):
 
 
 def init():
-    print(f"Data init from {collect_analyze.logfile}")
-    collect_analyze.data_init()
+    WriteModel.data_init()
 
 if __name__ == "__main__":
     init()

@@ -50,8 +50,10 @@ class Result(object):
         for o in results:
             Tiny_Level.add(Tiny_Level(o.low, o.high, o.success, o.max_attempts, o.final))
 
-def data_init():
-    with open("testlog/collect_data_" + logfile, "r") as fin:
+def data_init(fname=""):
+    if fname == "":
+        fname = "testlog/collect_data_" + logfile
+    with open(fname, "r") as fin:
         lines = fin.readlines()
         for i in range(0, len(lines)):
             line = lines[i].strip().split()
