@@ -1,10 +1,9 @@
+import sys
+sys.path.append("..")
 from scheme.level import Level
 from models.write import WriteModel
 from models.relax import RelaxModel
-
-def non_overlapping_levels(levels):
-    raise NotImplemented
-
+import collect_analyze
 
 def level_inference(Rmin, Rmax, Wmin, Wmax, Nctr, Nrad, T, BER):
     '''
@@ -26,3 +25,15 @@ def level_inference(Rmin, Rmax, Wmin, Wmax, Nctr, Nrad, T, BER):
             Rlow, Rhigh = getReadRange(RelaxDistr, BER)
             levels.append(Level(Rlow, Rhigh, Wctr-Wrad, Wctr+Wrad, prob=BER))
     return non_overlapping_levels(levels)
+
+
+def non_overlapping_levels(levels):
+    raise NotImplemented
+
+
+def init():
+    print(f"Data init from {collect_analyze.logfile}")
+    collect_analyze.data_init()
+
+if __name__ == "__main__":
+    init()

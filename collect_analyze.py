@@ -59,9 +59,11 @@ def data_init():
             low, high, addr, time, final, max_attempts = float(low), float(high), int(addr), float(time), float(final), int(max_attempts)
             r = Result(action, addr, low, high, final, time, max_attempts)
             Result.add2all(r)
+        Result.toTinyLevel(Result.all)
+        Tiny_Level.data_stable()
+
 
 def report_all():
-    Result.toTinyLevel(Result.all)
     Tiny_Level.printall()
     # levels = Tiny_Level.level_sort_by_width()
     # for l in levels[::-1]:
