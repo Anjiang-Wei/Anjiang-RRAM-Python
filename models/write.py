@@ -6,9 +6,10 @@ class WriteModel(object):
         pass
 
     def data_init():
-        print(f"Data init from {collect_analyze.logfile}")
+        print(f"Write data init from {collect_analyze.logfile}")
         fname = "../testlog/collect_data_" + collect_analyze.logfile
         collect_analyze.data_init(fname)
+        print("Write data init finished")
     
     def distr(Wctr, width, max_attempts, Write_N):
         center_vals = Tiny_Level.filter_properties(lambda x: x.center)
