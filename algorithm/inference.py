@@ -21,16 +21,19 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
             RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
             Rlow, Rhigh = getReadRange(RelaxDistr, BER)
-            levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=BER))
-    return non_overlapping_levels(levels)
+            levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=1-BER))
+    return Level.longest_non_overlap(levels)
 
-
-def non_overlapping_levels(levels):
-    raise NotImplemented
+def getReadRange(vals, BER):
+    num_discard = BER * len(vals) // 2
+    sorted_v = sorted(vals)
+    return sorted_v[num_discard], sorted_v[-num_discard]
 
 
 def init():
     WriteModel.data_init()
+    RelaxModel.data_init()
 
 if __name__ == "__main__":
     init()
+    level_inference()
