@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 import collect_analyze
 from utils.TinyLevel import Tiny_Level
 import random
@@ -15,7 +17,7 @@ class WriteModel(object):
         levels = Tiny_Level.filter_levels(lambda x: x.width == width and x.max_attempts == max_attempts)
         center_vals = Tiny_Level.filter_properties(lambda x: x.center, levels)
         if len(levels) == 0:
-            assert False, "No satisfied levels, unable to do simulation"
+            assert False, f"No satisfied levels for width={width}, max_attempts={max_attempts}, unable to do simulation"
         left_ctr, right_ctr = WriteModel.get_adjacent_values(Wctr, center_vals)
         if left_ctr == right_ctr:
             left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
@@ -62,6 +64,7 @@ class WriteModel(object):
         return [w1 * a_dis[i] + w2 * b_dis[i] for i in range(len(a_dis))]
 
     def simulate(vals, N):
+        # print(f"original: {len(vals)}, simulate: {N}")
         res = []
         for i in range(N // len(vals)):
             res += vals
@@ -73,3 +76,28 @@ class WriteModel(object):
     def transfer_distr(vals, old_center, new_center, Write_N):
         new_vals = [i - old_center + new_center for i in vals]
         return WriteModel.simulate(new_vals, Write_N)
+
+
+if __name__ == "__main__":
+    WriteModel.data_init()
+    import numpy as np
+    max_attempts = 50
+    Rmin, Rmax = 8000, 50000-1000
+    Nctr = 100
+    for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr):
+        width_mean = {}
+        width_std = {}
+        for width in range(50, 1000, 100): # pre-set values during data collection
+            # run monte carlo simulation based on measurement data
+            Write_N = 1000
+            try:
+                WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
+                mean, std = np.mean(WriteDistr), np.std(WriteDistr)
+                # print(Wctr, width, ":", mean, std)
+                width_mean[width] = float(abs(mean - Wctr))
+                width_std[width] = float(std)
+            except Exception as e:
+                print(f'{e}')
+        std_best_width = min(width_std, key=width_std.get)
+        mean_best_width = min(width_mean, key=width_mean.get)
+        print(Wctr, std_best_width, mean_best_width)
