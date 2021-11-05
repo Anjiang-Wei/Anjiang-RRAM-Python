@@ -31,6 +31,7 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
 
 def getReadRange(vals, BER):
     num_discard = int(BER * len(vals) / 2)
+    # print(f'from {len(vals)} delete {num_discard}')
     sorted_v = sorted(vals)
     return sorted_v[num_discard], sorted_v[-num_discard]
 
@@ -39,33 +40,74 @@ def init():
     WriteModel.data_init()
     RelaxModel.data_init()
 
+def level_inference_test():
+    import numpy as np
+    max_attempts = 50
+    Rmin, Rmax = 8000, 50000-1000
+    Nctr = 100
+    T = 1
+    for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr):
+        width_mean = {}
+        width_std = {}
+        for width in range(50, 1000, 100): # pre-set values during data collection
+            # run monte carlo simulation based on measurement data
+            Write_N = 100
+            Read_N = 100
+            WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
+            try:
+                RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
+                w_mean, w_std = np.mean(WriteDistr), np.std(WriteDistr)
+                r_mean, r_std = np.mean(RelaxDistr), np.std(RelaxDistr)
+                # print(Wctr, width, ":", w_mean, r_mean, w_std, r_std)
+                width_mean[width] = float(abs(r_mean - Wctr))
+                width_std[width] = float(r_std)
+            except Exception as e:
+                # print(f'{e}')
+                continue
+        std_best_width = min(width_std, key=width_std.get)
+        mean_best_width = min(width_mean, key=width_mean.get)
+        print(Wctr, std_best_width, mean_best_width)
+
 if __name__ == "__main__":
     init()
+    # level_inference_test()
+    #                        Rmin,   Rmax,     Nctr,att, T, BER 
     levels = level_inference(8000, 50000-1000, 400, 100, 1, 0.1) # 8
     print(len(levels))
     Level.draw(levels)
 
-    # levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.05) # 6
-    # print(len(levels))
-    # Level.draw(levels)
+    levels = level_inference(8000, 50000-1000, 400, 100, 1, 0.2) # 10
+    print(len(levels))
+    Level.draw(levels)
 
-    # levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.01) # 4
-    # print(len(levels))
-    # Level.draw(levels)
+    levels = level_inference(8000, 50000-1000, 400, 100, 0.1, 0.1) # 9
+    print(len(levels))
+    Level.draw(levels)
 
-    # levels = level_inference(8000, 50000-1000, 400, 50, 1, 0.05) # 6
-    # print(len(levels))
-    # Level.draw(levels)
+    levels = level_inference(8000, 50000-1000, 400, 100, 0.01, 0.2) # 16
+    print(len(levels))
+    Level.draw(levels)
 
-    # levels = level_inference(8000, 50000-1000, 400, 50, 1, 0.01) # 5
-    # print(len(levels))
-    # Level.draw(levels)
+    levels = level_inference(8000, 50000-1000, 400, 50, 1, 0.1) # 7
+    print(len(levels))
+    Level.draw(levels)
 
-    # levels = level_inference(8000, 50000-1000, 400, 100, 1, 0.05) # 6 
-    # print(len(levels))
-    # Level.draw(levels)
+    levels = level_inference(8000, 50000-1000, 400, 50, 1, 0.2) # 9
+    print(len(levels))
+    Level.draw(levels)
 
-    # levels = level_inference(8000, 50000-1000, 400, 100, 1, 0.01) # 5
-    # print(len(levels))
-    # Level.draw(levels)
+    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.05) # 6
+    print(len(levels))
+    Level.draw(levels)
 
+    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.01) # 4
+    print(len(levels))
+    Level.draw(levels)
+
+    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.001) # 3
+    print(len(levels))
+    Level.draw(levels)
+
+    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.1) # 7
+    print(len(levels))
+    Level.draw(levels)
