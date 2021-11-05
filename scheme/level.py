@@ -7,8 +7,9 @@ class Level(object):
     Level is represented as Read Range [r1, r2] and Write Range [w1, w2]
     [w1, w2] should be within the range of [r1, r2] 
     '''
-    def __init__(self, r1, r2, w1, w2, sigma=0, prob=0):
-        assert r1 < w1 and w1 < w2 and w2 < r2
+    def __init__(self, r1, r2, w1, w2, sigma=0, prob=0, assertion=True):
+        if assertion:
+            assert r1 < w1 and w1 < w2 and w2 < r2, f'{r1}, {w1}, {w2}, {r2}'
         self.r1 = r1
         self.r2 = r2
         self.w1 = w1

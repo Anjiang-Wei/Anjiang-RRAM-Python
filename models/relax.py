@@ -1,4 +1,4 @@
-import drift_model
+from . import drift_model
 class RelaxModel(object):
     def __init__(self):
         pass

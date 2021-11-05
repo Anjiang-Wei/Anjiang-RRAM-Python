@@ -12,7 +12,7 @@ timestamps = []
 
 def load_param():
     global mini, maxi, bins, interval, timestamps
-    with open("conf" + model_char, "r") as fin:
+    with open("../models/conf" + model_char, "r") as fin:
         lines = fin.readlines()
         maxi, mini, bins = lines[0].split(",")
         maxi, mini, bins = float(maxi), float(mini), int(bins)
@@ -31,7 +31,7 @@ def get_bin(r):
     idx = int((r - mini) / interval)
     if idx < 0:
         idx = 0
-    assert idx < bins
+    assert idx < bins, f'{r} >= {maxi}!'
     return idx
 
 def get_sigma(r0, t):
