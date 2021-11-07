@@ -15,13 +15,13 @@ class DataSpec {
         map<float, vector<int>> ber2index;
 
         DataSpec(string filename);
+        void PrintInfo();
 };
 
 DataSpec::DataSpec(string filename) {
     ifstream infile;
     infile.open(filename);
     infile >> datatype >> bitlength;
-    cout << datatype << bitlength << endl;
     float ber; int num_index;
     while (infile >> ber >> num_index) {
         while (num_index--) {
@@ -31,11 +31,28 @@ DataSpec::DataSpec(string filename) {
         }
     }
     for (auto iter = index2ber.begin(); iter != index2ber.end(); ++iter) {
-        cout << iter->first << " " << iter->second << endl;
+        ber2index[iter->second].push_back(iter->first);
     }
+}
+
+void DataSpec::PrintInfo() {
+    cout << datatype << ":" << bitlength << endl;
+    // for (auto iter = index2ber.begin(); iter != index2ber.end(); ++iter) {
+    //     cout << iter->first << " " << iter->second << endl;
+    // }
+    // cout << "-----------------" << endl;
+    for (auto iter = ber2index.begin(); iter != ber2index.end(); ++iter) {
+        cout << iter->first << ": [ ";
+        for (auto val : iter->second) {
+            cout << val << " ";
+        }
+        cout << "]" << endl;
+    }
+    return;
 }
 
 int main() {
     DataSpec d0("spec0.txt");
+    d0.PrintInfo();
     return 0;
 }
