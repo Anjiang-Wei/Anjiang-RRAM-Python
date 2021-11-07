@@ -7,6 +7,8 @@ init = {}
 write = {}
 read = {}
 
+dead_cells = []
+
 class Result(object):
     all = []
     def __init__(self, action, addr, low, high, final, time, max_attempts):
@@ -50,6 +52,29 @@ class Result(object):
         for o in results:
             Tiny_Level.add(Tiny_Level(o.low, o.high, o.success, o.max_attempts, o.final))
 
+def dead_cell_init(logdir=""):
+    '''
+    Consider two log files to initialize the dead cell tracking
+    Output -> dead_cells (a global variable)
+    '''
+    if logdir == "":
+        logdir = 'log/'
+    global dead_cells
+    with open(logdir + "dead_test.csv", "r") as fin:
+        lines = fin.readlines()
+        for line in lines:
+            if "False" in line:
+                dead_addr = int(line.split(",")[0])
+                dead_cells.append(dead_addr)
+    with open(logdir + "new_dead.csv", "r") as fin:
+        lines = fin.readlines()
+        for line in lines:
+            if "False" in line:
+                dead_addr = int(line.split(",")[0])
+                dead_cells.append(dead_addr)
+    dead_cells = sorted(set(dead_cells))
+    print(f'Dead cell initialization finished: {len(dead_cells)} are dead')
+
 def data_init(fname=""):
     if fname == "":
         fname = "testlog/collect_data_" + logfile
@@ -59,8 +84,11 @@ def data_init(fname=""):
             line = lines[i].strip().split()
             action, low, high, addr, time, final, _, max_attempts = line
             low, high, addr, time, final, max_attempts = float(low), float(high), int(addr), float(time), float(final), int(max_attempts)
-            r = Result(action, addr, low, high, final, time, max_attempts)
-            Result.add2all(r)
+            if addr not in dead_cells:
+                r = Result(action, addr, low, high, final, time, max_attempts)
+                Result.add2all(r)
+            # else:
+            #     print(f"Dead cell {addr} skipped")
         Result.toTinyLevel(Result.all)
         Tiny_Level.data_stable()
 
@@ -70,10 +98,11 @@ def report_all():
     # levels = Tiny_Level.level_sort_by_width()
     # for l in levels[::-1]:
     #     Tiny_Level.draw_level(l)
-    levels = Tiny_Level.level_sort_by_attempt()
-    for l in levels[::-1]:
-        Tiny_Level.draw_level(l)
+    # levels = Tiny_Level.level_sort_by_attempt()
+    # for l in levels[::-1]:
+    #     Tiny_Level.draw_level(l)
 
 if __name__ == "__main__":
+    dead_cell_init()
     data_init()
     report_all()

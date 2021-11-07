@@ -74,5 +74,5 @@ if __name__ == "__main__":
     #            Rmin,   Rmax,     Nctr,att, T, BER 
     levels = sba(8000, 50000-1000, 400, 100, 1, 0.003) # 5 -> 2bit
     print(len(levels))
-    levels = sba(8000, 50000-1000, 400, 100, 1, 0.1) # 7 -> 3bit
+    levels = sba(8000, 50000-1000, 400, 100, 1, 0.01) # 5 -> 3bit
     print(len(levels))
