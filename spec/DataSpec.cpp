@@ -33,6 +33,7 @@ DataSpec::DataSpec(string filename) {
     for (auto iter = index2ber.begin(); iter != index2ber.end(); ++iter) {
         ber2index[iter->second].push_back(iter->first);
     }
+    infile.close();
 }
 
 void DataSpec::PrintInfo() {
