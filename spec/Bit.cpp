@@ -109,14 +109,12 @@ void Bit::bits2file(string filename) {
 }
 
 int main() {
-    Bit b("float0.txt", true);
-    b.bits2data();
-    b.data2bits();
-    b.bits2data();
-    b.data2bits();
+    Bit b("bit0.txt", false);
+    b.data2file("float0.txt");
     b.PrintBits();
     b.PrintData();
-    b.data2file("float1.txt");
-    b.bits2file("bit0.txt");
+    Bit c("float0.txt", true);
+    c.PrintBits();
+    c.PrintData();
     return 0;
 }
