@@ -5,23 +5,8 @@
 #include <vector>
 #include <bitset>
 #include <assert.h>
+#include "Bit.h"
 using namespace std;
-
-class Bit {
-    public:
-        // Todo: extend support for other data types
-        vector<float> data;
-        // 1 float = 32 bit
-        vector<bitset<32>> bits;
-
-        Bit(string filename, bool isdata);
-        void PrintData();
-        void PrintBits();
-        void data2bits();
-        void bits2data();
-        void bits2file(string filename);
-        void data2file(string filename);
-};
 
 Bit::Bit(string filename, bool isdata) {
     // Read float from file and initialize bits
@@ -106,15 +91,4 @@ void Bit::bits2file(string filename) {
         outfile << b << endl;
     }
     outfile.close();
-}
-
-int main() {
-    Bit b("bit0.txt", false);
-    b.data2file("float0.txt");
-    b.PrintBits();
-    b.PrintData();
-    Bit c("float0.txt", true);
-    c.PrintBits();
-    c.PrintData();
-    return 0;
 }
