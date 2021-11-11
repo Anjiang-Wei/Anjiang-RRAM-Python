@@ -6,6 +6,7 @@
 #include <bitset>
 #include <assert.h>
 #include "Bit.h"
+#include "Bit.cpp"
 using namespace std;
 
 
