@@ -1,7 +1,8 @@
 from nirram import NIRRAM
 import test_scheme
+import time
 
-chip_name = "C10"
+chip_name = "C13"
 
 def detect(cells, fout, nisys, low=10*1e3, high=11*1e3, already_dead=[]):
     for addr in cells:
@@ -13,6 +14,7 @@ def detect(cells, fout, nisys, low=10*1e3, high=11*1e3, already_dead=[]):
         if low <= target[0] and target[0] <= high:
             continue
         else:
+            print(f"{addr},{low},{high},{target[0]},False\n")
             fout.write(f"{addr},{low},{high},{target[0]},False\n")
 
 def detect_after_test(ncells, fout, nisys):
@@ -22,8 +24,13 @@ def detect_after_test(ncells, fout, nisys):
     print(cells)
 
 if __name__ == "__main__":
-    fout = open("log/new_dead.csv", "a")
+    start = time.time()
+    fout = open("log/dead13.csv", "w")
     nisys = NIRRAM(chip_name)
-    detect_after_test(10, fout, nisys)
+    cells = [i for i in range(0, 65536)]
+    detect(cells, fout, nisys)
     nisys.close()
     fout.close()
+    end = time.time()
+    duration = end - start
+    print("elapsed time:", duration)
