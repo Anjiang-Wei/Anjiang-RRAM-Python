@@ -4,18 +4,19 @@ import random
 from scheme.level import Level
 import dead_detection
 
-chipname = "C10"
+chipname = "C13"
 config_char = "B"
+exp_id = 0
 start_addr = 0
 end_addr = 65536
 dead_cells = []
-levels = Level.load_from_file("scheme/B_mapping.json")
+levels = Level.load_from_file("scheme/C13_Nov14_1.json")
 high_init_config = {
-    "B": [86666.666, 200 * 1e3]
+    "B": [levels[-1].r1, levels[-1].r2]
 }
 timestamps = [0.01, 0.1, 1.0]
 
-random_seed = 1
+random_seed = 0
 
 def write_init(addr):
     nisys.set_addr(addr)
@@ -29,7 +30,7 @@ def write_init(addr):
 def write(addr, target_low_res, target_hi_res):
     assert addr >= start_addr and addr < end_addr
     nisys.set_addr(addr)
-    target = nisys.target(target_low_res, target_hi_res, max_attempts=25)
+    target = nisys.target(target_low_res, target_hi_res, max_attempts=100)
     log.write(f"Write\t{target_low_res}\t{target_hi_res}\t{addr}\t{time.time()}\t{target[0]}\t{target[1]}\n")
 
 def read(addr, read_range_low, read_range_high):
@@ -70,9 +71,9 @@ def random_pick(ncells):
 def testscheme(ncells):
     dead_log = open("log/13new_dead.csv", "a")
     cells = random_pick(ncells)
-    for addr in cells:
-        print(addr)
-        for level in levels:
+    for level in levels:
+        for addr in cells:
+            print(addr)
             write_init(addr)
             write(addr, level.w1, level.w2)
             for t in timestamps:
@@ -87,8 +88,8 @@ if __name__ == "__main__":
     dead_init()
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
-    n_cells = 10
-    log = open(f"testlog/scheme_test_{n_cells}_{random_seed}_1", "w")
+    n_cells = 30
+    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
