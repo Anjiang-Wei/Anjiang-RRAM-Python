@@ -46,13 +46,13 @@ def dead_init():
     Output -> dead_cells (a global variable)
     '''
     global dead_cells
-    with open("log/dead_test.csv", "r") as fin:
+    with open("log/13dead_test.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
                 dead_addr = int(line.split(",")[0])
                 dead_cells.append(dead_addr)
-    with open("log/new_dead.csv", "r") as fin:
+    with open("log/13new_dead.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
@@ -94,7 +94,7 @@ def collect(ncells):
                     write_init(addr)
                     write(addr, w_center-width/2, w_center+width/2, num_attempts)
             print("Start dead cell detection")
-            dead_log = open("log/new_dead.csv", "a")
+            dead_log = open("log/13new_dead.csv", "a")
             dead_detection.detect(cells, dead_log, nisys, already_dead=dead_cells)
             dead_log.close()
             dead_init()

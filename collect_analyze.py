@@ -60,13 +60,13 @@ def dead_cell_init(logdir=""):
     if logdir == "":
         logdir = 'log/'
     global dead_cells
-    with open(logdir + "dead_test.csv", "r") as fin:
+    with open(logdir + "13dead_test.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
                 dead_addr = int(line.split(",")[0])
                 dead_cells.append(dead_addr)
-    with open(logdir + "new_dead.csv", "r") as fin:
+    with open(logdir + "13new_dead.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:

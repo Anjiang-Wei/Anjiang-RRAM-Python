@@ -25,7 +25,7 @@ def detect_after_test(ncells, fout, nisys):
 
 if __name__ == "__main__":
     start = time.time()
-    fout = open("log/dead13.csv", "w")
+    fout = open("log/13dead_test.csv", "w")
     nisys = NIRRAM(chip_name)
     cells = [i for i in range(0, 65536)]
     detect(cells, fout, nisys)

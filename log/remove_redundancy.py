@@ -1,6 +1,6 @@
 deads = []
 to_write = []
-with open("new_dead.csv", "r") as fin:
+with open("13new_dead.csv", "r") as fin:
     lines = fin.readlines()
     for line in lines:
         addr = line.strip().split(",")[0]
@@ -8,5 +8,5 @@ with open("new_dead.csv", "r") as fin:
             deads.append(addr)
             to_write.append(line)
 
-with open("new_dead2.csv", "w") as fout:
+with open("13new_dead2.csv", "w") as fout:
     fout.writelines(to_write)
