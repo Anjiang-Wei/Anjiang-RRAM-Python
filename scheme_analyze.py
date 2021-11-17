@@ -1,4 +1,4 @@
-logfile = "10_1_1_25" # cells_manualseed_experimentid_attempts
+logfile = "30_0_1" # cells_manualseed_experimentid_attempts
 
 init = {}
 write = {}
@@ -50,10 +50,22 @@ class Result(object):
             both_fail_prob = len(both_fail) / len(filtered_res_write)
             if write_failrate != 0:
                 print(f"P(read_fail | write_fail) = {both_fail_prob}/{write_failrate} = {both_fail_prob/write_failrate}")
+    
+    def report_by_elasped_time(results, num_cat):
+        # results are only about read, assuming all read for same address are consecutive
+        # num_cat is the number of timestamps
+        categorized = {}
+        for i in range(num_cat):
+            categorized[i] = []
+        for i in range(0, len(results)):
+            categorized[i%num_cat].append(results[i])
+        for i in range(num_cat):
+            Result.compute_prob(categorized[i], "timebin_" + str(i))
+
 
 def data_init():
     global all_lows
-    with open("testlog/scheme_test_" + logfile, "r") as fin:
+    with open("testlog/13scheme_test_" + logfile, "r") as fin:
         lines = fin.readlines()
         for i in range(0, len(lines)):
             line = lines[i].strip().split()
@@ -84,6 +96,7 @@ if __name__ == "__main__":
     read_bad = Result.compute_prob(Result.read, "read")
     all_bad = Result.compute_prob(Result.all, "all")
     Result.analyze_level_prob(Result.all)
+    Result.report_by_elasped_time(Result.read, 3)
     # print(sorted(set(init_bad)))
     # print(sorted(set(write_bad)))
     # print(sorted(set(read_bad)))
