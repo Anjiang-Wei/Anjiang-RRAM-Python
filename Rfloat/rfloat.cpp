@@ -42,6 +42,18 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, bool sign_, uint8_t leadingM_
 
 Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
     R = R_; E = E_; M = M_;
+    bias = (int) pow(R, E-1) - 1;
+    if (val == 0) {
+        sign = false;
+        leadingM = 0;
+        for (int i = 0; i < maxE; i++) {
+            exp[i] = 0;
+        }
+        for (int i = 0; i < maxM; i++) {
+            mant[i] = 0;
+        }
+        return;
+    }
     if (val > 0) {
         sign = false;
     } else {
@@ -49,7 +61,6 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
     }
     val = fabs(val);
     int y = (int) (log(val) / log(R));
-    bias = (int) pow(R, E-1) - 1;
     int exp_val = y + bias;
     for (int i = E-1; i >= 0; i--) {
         // cout << "exp_val % R = " << exp_val % R << endl;
