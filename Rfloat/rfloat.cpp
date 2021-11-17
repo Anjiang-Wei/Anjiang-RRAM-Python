@@ -47,7 +47,25 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
     } else {
         sign = true;
     }
-    //???
+    val = fabs(val);
+    int y = (int) (log(val) / log(R));
+    bias = (int) pow(R, E-1) - 1;
+    int exp_val = y + bias;
+    for (int i = E-1; i >= 0; i--) {
+        // cout << "exp_val % R = " << exp_val % R << endl;
+        exp[i] = exp_val % R;
+        exp_val = exp_val / R;
+    }
+    float R_to_y = pow(R, y);
+    float remainder = val / R_to_y;
+    leadingM = (int) remainder;
+    remainder -= leadingM;
+    // cout << "remainder = " << remainder << endl;
+    for (int i = 0; i < M; i++) {
+        remainder *= R;
+        mant[i] = (int) remainder;
+        remainder -= (int) remainder;
+    }
 }
 
 void Rfloat::print() {
