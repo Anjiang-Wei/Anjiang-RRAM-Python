@@ -1,12 +1,30 @@
-# include "rfloat.cpp"
+#include "rfloat.cpp"
+#include <stdlib.h>
 
 void validate(float num) {
     float eps = 0.0000001;
     Rfloat num1 = Rfloat(2, 8, 23, num);
     float num2 = num1.from_Rfloat();
     // num2 += 0.01;
-    cout << num << "," << num2 << endl;
+    // cout << num << "," << num2 << endl;
     assert(fabs(num - num2) < eps);
+}
+
+int RandomInt(int lower, int upper) {
+    int num = (rand() % (upper - lower + 1)) + lower;
+    // printf("%d \n", num);
+    return num;
+}
+
+void validate2(float num) {
+    float eps = 1e-3;
+    int R = RandomInt(3, 10);
+    int exp = RandomInt(6, 8);
+    int man = RandomInt(10, 30);
+    Rfloat num1 = Rfloat(R, exp, man, num);
+    float num2 = num1.from_Rfloat();
+    cout << num << "," << num2 << endl;
+    assert(fabs((num - num2) / num) < eps);
 }
 
 float RandomFloat(float a, float b) {
@@ -32,6 +50,7 @@ int main() {
     cout << d << endl;
     for (int i = 0; i < 100000; i++) {
         validate(RandomFloat(-1e5, 1e5));
+        validate2(RandomFloat(-1e5, 1e5));
     }
     float to_be_tested[] = {0, -1, 1, 0.000001, -0.000001};
     for (auto f: to_be_tested) {

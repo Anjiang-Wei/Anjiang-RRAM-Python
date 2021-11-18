@@ -8,8 +8,8 @@
 #include <math.h>
 using namespace std;
 
-#define maxE 8
-#define maxM 23
+#define maxE 20
+#define maxM 40
 
 class Rfloat {
     public: 
