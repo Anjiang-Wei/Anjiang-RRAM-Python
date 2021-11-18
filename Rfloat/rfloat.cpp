@@ -22,12 +22,20 @@ class Rfloat {
         uint8_t exp[maxE]; // each element should be within [0, radix-1]
         uint8_t mant[maxM];
 
+        Rfloat();
         Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, bool sign_, uint8_t leadingM_, uint8_t exp_[maxE], uint8_t mant_[maxM]);
         Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val);
+
+        friend ofstream& operator<<(ofstream &output, const Rfloat &D);
+        friend ifstream& operator>>(ifstream &input, const Rfloat &D);
 
         void print();
         float from_Rfloat();
 };
+
+Rfloat::Rfloat() {
+    return;
+}
 
 Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, bool sign_, uint8_t leadingM_, uint8_t exp_[maxE], uint8_t mant_[maxM]) {
     R = R_; E = E_; M = M_; sign = sign_; leadingM = leadingM_;
@@ -79,17 +87,53 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
     }
 }
 
+ofstream& operator<<(ofstream& output, const Rfloat& D) {
+    output << (int) D.R << " " << (int) D.E << " " << (int) D.M <<  " " << (int) D.sign 
+        << " " << (int) D.bias << " " << (int) D.leadingM << endl;
+    for (int i = 0; i < D.E; i++) {
+        output << (int) D.exp[i] << " ";
+    }
+    output << endl;
+    for (int i = 0; i < D.M; i++) {
+        output << (int) D.mant[i] << " ";
+    }
+    output << endl;
+    return output;
+}
+
+inline uint8_t get_uint8(ifstream &input) {
+    int x;
+    input >> x;
+    return (uint8_t) x;
+}
+
+ifstream& operator>>(ifstream &input, Rfloat &D){
+    D.R = get_uint8(input);
+    D.E = get_uint8(input);
+    D.M = get_uint8(input);
+    D.sign = (bool) get_uint8(input);
+    input >> D.bias;
+    D.leadingM = get_uint8(input);
+    for (int i = 0; i < D.E; i++) {
+        D.exp[i] = get_uint8(input);
+    }
+    for (int i = 0; i < D.M; i++) {
+        D.mant[i] = get_uint8(input);
+    }
+    return input;
+}
+
 void Rfloat::print() {
     cout << "Radix: " << (int) R << endl;
     cout << "Sign : " << sign << endl;
     cout << "Exp-" << (int) E << ": " << endl;
-    for (auto elem: exp) {
-        cout << (int) elem;
+    for (int i = 0; i < E; i++) {
+        cout << (int) exp[i];
     }
     cout << endl << "Man-" << (int) M << ": " << endl;
     cout << (int) leadingM << ".";
-    for (auto elem: mant) {
-        cout << (int) elem;
+    for (int i = 0; i < M; i++) {
+        cout << (int) mant[i];
     }
     cout << endl;
 }
