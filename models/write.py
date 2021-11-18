@@ -82,7 +82,7 @@ class WriteModel(object):
 if __name__ == "__main__":
     WriteModel.data_init()
     import numpy as np
-    max_attempts = 50
+    max_attempts = 100
     Rmin, Rmax = 8000, 50000-1000
     Nctr = 100
     for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr):
