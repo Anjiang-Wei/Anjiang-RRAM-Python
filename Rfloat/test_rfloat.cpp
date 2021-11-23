@@ -79,7 +79,15 @@ int main() {
     for (auto f: to_be_tested) {
         validate(f);
     }
-    // cout << "-----------" << endl;
-    // cout << a << endl;
+    cout << "------test mutation-----" << endl;
+    vector<float> mutation_input;
+    for (int i = 0; i < 10; i++) {
+        float a = RandomFloat(-100, 100);
+        mutation_input.push_back(a);
+    }
+    auto output = mutate_vec_float(mutation_input, 5, 7, 20, 0.0, 0.9, 0);
+    for (int i = 0; i < output.size(); i++) {
+        cout << mutation_input[i] << " " << output[i] << endl;
+    }
     return 0;
 }

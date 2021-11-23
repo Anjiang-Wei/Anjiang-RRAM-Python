@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <stdint.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <math.h>
 using namespace std;
@@ -31,6 +32,11 @@ class Rfloat {
 
         void print();
         float from_Rfloat();
+        void mutate(float exp_ber, float mant_ber, float signleading_ber);
+        static vector<Rfloat> mutate_vec_Rfloat(vector<Rfloat> input, 
+                        float exp_ber, float mant_ber, float signleading_ber);
+        static vector<float> mutate_vec_float(vector<float> input, uint8_t R, uint8_t E, uint8_t M, 
+                        float exp_ber, float mant_ber, float signleading_ber);
 };
 
 Rfloat::Rfloat() {
@@ -160,4 +166,59 @@ float Rfloat::from_Rfloat() {
         val = -val;
     }
     return val;
+}
+
+inline bool random_bool(float ber) {
+    bool TrueFalse = (rand() % 100) < (ber * 100);
+    return TrueFalse;
+}
+
+inline uint8_t mutate_uint8(uint8_t original, uint8_t R) {
+    if (original == 0)
+        return original + 1;
+    if (original == R - 1) {
+        return original - 1;
+    }
+    if (random_bool(0.5)) {
+        return original + 1;
+    } else{ 
+        return original - 1;
+    }
+}
+
+void Rfloat::mutate(float exp_ber, float mant_ber, float signleading_ber) {
+    srand(time(0));
+    for (int i = 0; i < E; i++) {
+        if (random_bool(exp_ber)) {
+            exp[i] = mutate_uint8(exp[i], R);
+        }
+    }
+    for (int i = 0; i < M; i++) {
+        if (random_bool(mant_ber)) {
+            mant[i] = mutate_uint8(mant[i], R);
+        }
+    }
+    // TODO: implement signleading_ber mutation
+}
+
+static vector<Rfloat> mutate_vec_Rfloat(vector<Rfloat> input, 
+    float exp_ber, float mant_ber, float signleading_ber) {
+    int size = input.size();
+    for (int i = 0; i < size; i++) {
+        input[i].mutate(exp_ber, mant_ber, signleading_ber);
+    }
+    return input;
+}
+
+
+static vector<float> mutate_vec_float(vector<float> input, uint8_t R, uint8_t E, uint8_t M, 
+    float exp_ber, float mant_ber, float signleading_ber) {
+    int size = input.size();
+    for (int i = 0; i < size; i++) {
+        float val = input[i];
+        Rfloat a = Rfloat(R, E, M, val);
+        a.mutate(exp_ber, mant_ber, signleading_ber);
+        input[i] = a.from_Rfloat();
+    }
+    return input;
 }
