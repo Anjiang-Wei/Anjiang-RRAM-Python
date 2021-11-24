@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     while (infile >> x) {
         all_floats.push_back(x);
     }
-    auto output = mutate_vec_float(all_floats, 5, 7, 20, 0.0, 0.5, 0);
+    auto output = mutate_vec_float(all_floats, 5, 3, 3, 0.01, 0.5, 0);
 
     for (auto item: output) {
         outfile << item << endl;

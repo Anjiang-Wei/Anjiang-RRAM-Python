@@ -12,6 +12,9 @@ using namespace std;
 #define maxE 20
 #define maxM 40
 
+//#define DEBUG
+#define inf2zero
+
 class Rfloat {
     public: 
         uint8_t R; // radix
@@ -153,27 +156,38 @@ float Rfloat::from_Rfloat() {
         weight = weight * R;
         // cout << "weight:" << weight << endl;
     }
-    // cout << "val:" << val << endl;
+    #ifdef DEBUG
+    cout << "val:" << val << endl;
+    #endif
     int exp_val = 0;
     for (int i = 0; i < E; i++) {
         exp_val = exp_val * R + (int) exp[i];
     }
-    // cout << "exp_val:" << exp_val << endl;
-    // cout << "bias:" << bias << endl; 
+    #ifdef DEBUG
+    cout << "exp_val:" << exp_val << endl;
+    cout << "bias:" << bias << endl;
+    #endif 
     exp_val -= bias;
     val = val * pow(R, exp_val);
     if (sign) {
         val = -val;
     }
+    #ifdef inf2zero
+    if (isinf(val)) {
+        val = 0;
+    }
+    #endif
     return val;
 }
 
 inline bool random_bool(float ber) {
+    srand(time(0));
     bool TrueFalse = (rand() % 100) < (ber * 100);
     return TrueFalse;
 }
 
 inline uint8_t mutate_uint8(uint8_t original, uint8_t R) {
+    srand(time(0));
     if (original == 0)
         return original + 1;
     if (original == R - 1) {
@@ -186,13 +200,29 @@ inline uint8_t mutate_uint8(uint8_t original, uint8_t R) {
     }
 }
 
+void print_uint8(uint8_t array[], int num) {
+    cout << "-----" << endl;
+    for (int i = 0; i < num; i++) {
+        cout << (int) array[i] << " ";
+    }
+    cout << endl << "-------" << endl;
+}
+
 void Rfloat::mutate(float exp_ber, float mant_ber, float signleading_ber) {
-    srand(time(0));
+    #ifdef DEBUG
+    cout << "Prior" << endl;
+    print_uint8(exp, E);
+    #endif
     for (int i = 0; i < E; i++) {
         if (random_bool(exp_ber)) {
             exp[i] = mutate_uint8(exp[i], R);
         }
     }
+    #ifdef DEBUG
+    cout << "After" << endl;
+    print_uint8(exp, E);
+    cout << "==============" << endl;
+    #endif
     for (int i = 0; i < M; i++) {
         if (random_bool(mant_ber)) {
             mant[i] = mutate_uint8(mant[i], R);

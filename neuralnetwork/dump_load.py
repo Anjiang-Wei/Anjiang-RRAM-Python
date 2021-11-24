@@ -13,9 +13,9 @@ def dump_list(vals):
             raise NotImplementedError
 
 def get_list(num_vals):
-    res = []
-    for i in range(num_vals):
-        res.append(all_float_in.pop())
+    global all_float_in
+    res = all_float_in[:num_vals]
+    all_float_in = all_float_in[num_vals:]
     return res
 
 def dump_tensor(tensor):

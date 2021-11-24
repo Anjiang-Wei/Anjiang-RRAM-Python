@@ -183,7 +183,8 @@ if __name__ == '__main__':
     # main()
     # test_net()
     # fault_inject()
-    dump_float()
+    
+    # dump_float()
     subprocess.run(["./a.out", original_float, mutate_float])
     print("Mutation finished")
     load_float()
