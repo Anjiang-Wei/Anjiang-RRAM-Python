@@ -73,7 +73,7 @@ def test_drift():
     means = []
     while start < maxi:
         res = []
-        for t in range(100):
+        for t in range(1000):
             res.append(drift(start, fixed_timept))
         sigs.append(np.std(res))
         means.append(np.mean(res) - start)

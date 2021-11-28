@@ -33,6 +33,8 @@ dead_cells = []
 # the number of times for read --> corresponding timestamps
 read2time = {0: 0.0, 1: 0.01, 2: 0.1, 3: 1, 4: 2}
 
+fixed_timept = 1.0
+
 def dead_cell_init(logdir=""):
     '''
     Consider two log files to initialize the dead cell tracking
@@ -214,28 +216,30 @@ def figure_d_r():
 def figure_s_r():
     y, z = [], []
     print(min(s.keys()), max(s.keys()))
-    for tt in s.keys():
-        print(tt)
-        for yy in s[tt].keys():
-            y.append(yy)
-            z.append(s[tt][yy])
-            y_, z_ = np.array(y), np.array(z)
-        plt.plot(y_, z_)
-        plt.show()
-        break
+    # for tt in s.keys():
+    tt = fixed_timept
+    print(tt)
+    for yy in s[tt].keys():
+        y.append(yy)
+        z.append(s[tt][yy])
+        y_, z_ = np.array(y), np.array(z)
+    plt.plot(y_, z_)
+    plt.show()
+    # break
 
 def figure_m_g():
     y, z = [], []
     print(min(m.keys()), max(m.keys()))
-    for tt in m.keys():
-        print(tt)
-        for yy in m[tt].keys():
-            y.append(yy)
-            z.append(m[tt][yy])
-            y_, z_ = np.array(y), np.array(z)
-        plt.plot(y_, z_)
-        plt.show()
-        break
+    # for tt in m.keys():
+    tt = fixed_timept
+    print(tt)
+    for yy in m[tt].keys():
+        y.append(yy)
+        z.append(m[tt][yy])
+        y_, z_ = np.array(y), np.array(z)
+    plt.plot(y_, z_)
+    plt.show()
+    # break
 
 def compute_t():
     for t in s.keys():
@@ -245,37 +249,39 @@ def compute_t():
 def figure_s_r_smooth():
     y, z = [], []
     print(min(s.keys()), max(s.keys()))
-    for tt in s.keys():
-        print(tt)
-        for yy in s[tt].keys():
-            y.append(yy)
-            z.append(s[tt][yy])
-            y_, z_ = np.array(y), np.array(z)
-        model=make_interp_spline(y_, z_)
-        ys=np.linspace(min(y),max(y),50)
-        zs=model(ys)
-        z_smoothed = gaussian_filter1d(zs, sigma=3)
-        plt.plot(ys, z_smoothed)
-        plt.show()
-        break
+    # for tt in s.keys():
+    tt = fixed_timept
+    print(tt)
+    for yy in s[tt].keys():
+        y.append(yy)
+        z.append(s[tt][yy])
+        y_, z_ = np.array(y), np.array(z)
+    model=make_interp_spline(y_, z_)
+    ys=np.linspace(min(y),max(y),50)
+    zs=model(ys)
+    z_smoothed = gaussian_filter1d(zs, sigma=2)
+    plt.plot(ys, z_smoothed)
+    plt.show()
+    # break
 
 
 def figure_m_r_smooth():
     y, z = [], []
     print(min(m.keys()), max(m.keys()))
-    for tt in m.keys():
-        print(tt)
-        for yy in m[tt].keys():
-            y.append(yy)
-            z.append(m[tt][yy])
-            y_, z_ = np.array(y), np.array(z)
-        model=make_interp_spline(y_, z_)
-        ys=np.linspace(min(y),max(y),50)
-        zs=model(ys)
-        z_smoothed = gaussian_filter1d(zs, sigma=3)
-        plt.plot(ys, z_smoothed)
-        plt.show()
-        break
+    # for tt in m.keys():
+    tt = fixed_timept
+    print(tt)
+    for yy in m[tt].keys():
+        y.append(yy)
+        z.append(m[tt][yy])
+        y_, z_ = np.array(y), np.array(z)
+    model=make_interp_spline(y_, z_)
+    ys=np.linspace(min(y),max(y),50)
+    zs=model(ys)
+    z_smoothed = gaussian_filter1d(zs, sigma=2)
+    plt.plot(ys, z_smoothed)
+    plt.show()
+    # break
 
 
 if __name__ == "__main__":
