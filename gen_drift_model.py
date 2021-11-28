@@ -3,7 +3,8 @@ import pprint
 import seaborn as sns
 import matplotlib.pyplot as plt
 import scipy.stats as stats
-from mpl_toolkits.mplot3d import Axes3D
+from scipy.interpolate import make_interp_spline
+from scipy.ndimage import gaussian_filter1d
 
 logfile = "testlog/13collect_data_100_1_0"
 
@@ -19,6 +20,9 @@ d = {}
 
 # s[timept][R_0] -> sigma(R_t - R_0)
 s = {}
+
+# m[timept][R_0] -> mean(R_t - R_0)
+m = {}
 
 model_char = "C13"
 config = {
@@ -104,31 +108,38 @@ def compute_d():
             assert R[0][r_0] == r_0
             d[t][r_0] = R[t][r_0] - R[0][r_0]
 
-good = 0
-total = 0
-last_normal_value = 0.0
-def compute_std(dic, keys):
-    global last_normal_value
-    global good, total
+# good = 0
+# total = 0
+# last_normal_value = 0.0
+# def compute_std_old(dic, keys):
+#     global last_normal_value
+#     global good, total
+#     res = []
+#     for k in keys:
+#         res.append(dic[k])
+#     assert len(res) >= 1, res
+#     try:
+#         test = stats.normaltest(res)
+#         print(test)
+#         if test.pvalue > 1e-3:
+#             good = good + 1
+#         else:
+#             sns.distplot(res, kde=True,bins=100)
+#             plt.show()
+#             # pass
+#         total += 1
+#     except:
+#         print("Exception occurs")
+#         return last_normal_value
+#     last_normal_value = np.std(res)
+#     return np.std(res)
+
+def compute_mean_std(dic, keys):
     res = []
     for k in keys:
         res.append(dic[k])
     assert len(res) >= 1, res
-    try:
-        test = stats.normaltest(res)
-        print(test)
-        if test.pvalue > 1e-3:
-            good = good + 1
-        else:
-            sns.distplot(res, kde=True,bins=100)
-            plt.show()
-            # pass
-        total += 1
-    except:
-        print("Exception occurs")
-        return last_normal_value
-    last_normal_value = np.std(res)
-    return np.std(res)
+    return np.mean(res), np.std(res)
 
 # def find_index(vals, low_val):
 #     for i in range(len(vals)):
@@ -138,7 +149,7 @@ def compute_std(dic, keys):
 
 def export(vals, append=True):
     vals_ = list(map(str, vals))
-    with open("conf" + model_char, "a" if append else "w") as fout:
+    with open("models/conf" + model_char, "a" if append else "w") as fout:
         fout.write(",".join(vals_) + "\n")
 
 # def old_compute_sigma(bins = 30):
@@ -177,29 +188,30 @@ def compute_sigma():
     '''
     Compute the sigmas for a whole bunch of write_centers
     '''
-    global total, good
+    w_smallest, w_biggest = min(write_centers.keys()), max(write_centers.keys())
+    export([w_smallest, w_biggest], append=False)
     for t in times[1:]:
         for w_center in write_centers.keys():
-            sigma = compute_std(d[t], write_centers[w_center])
+            mean, sigma = compute_mean_std(d[t], write_centers[w_center])
+            if t not in m.keys():
+                m[t] = {}
+            m[t][w_center] = mean
             if t not in s.keys():
                 s[t] = {}
             s[t][w_center] = sigma
-            export([t, w_center, sigma])
-        print("good normal: ", good, total, good / total)
-        good = total = 0
-    
+            export([t, w_center, mean, sigma])
 
-def figure_d_g():
+def figure_d_r():
     y, z = [], []
     print(min(d.keys()), max(d.keys()))
-    for yy in list(filter(lambda x: x < config[model_char][0], d[0.1].keys())):
+    for yy in list(d[0.1].keys()):
         y.append(yy)
         z.append(d[0.1][yy])
     y_, z_ = np.array(y), np.array(z)
     plt.plot(y_, z_, 'ro')
     plt.show()
 
-def figure_s_g():
+def figure_s_r():
     y, z = [], []
     print(min(s.keys()), max(s.keys()))
     for tt in s.keys():
@@ -212,25 +224,58 @@ def figure_s_g():
         plt.show()
         break
 
+def figure_m_g():
+    y, z = [], []
+    print(min(m.keys()), max(m.keys()))
+    for tt in m.keys():
+        print(tt)
+        for yy in m[tt].keys():
+            y.append(yy)
+            z.append(m[tt][yy])
+            y_, z_ = np.array(y), np.array(z)
+        plt.plot(y_, z_)
+        plt.show()
+        break
+
 def compute_t():
     for t in s.keys():
         vals = list(s[t].values())
         print(t, sum(vals) / len(vals))
 
+def figure_s_r_smooth():
+    y, z = [], []
+    print(min(s.keys()), max(s.keys()))
+    for tt in s.keys():
+        print(tt)
+        for yy in s[tt].keys():
+            y.append(yy)
+            z.append(s[tt][yy])
+            y_, z_ = np.array(y), np.array(z)
+        model=make_interp_spline(y_, z_)
+        ys=np.linspace(min(y),max(y),50)
+        zs=model(ys)
+        z_smoothed = gaussian_filter1d(zs, sigma=3)
+        plt.plot(ys, z_smoothed)
+        plt.show()
+        break
 
-def figure_3d():
-    # fig = plt.figure()
-    # ax = Axes3D(fig)
-    # x, y, z = [], [], []
-    # for xx in s1.keys():
-    #     for yy in s2.keys():
-    #         x.append(xx)
-    #         y.append(yy)
-    #         z.append(s1[xx][yy])
-    # x, y, z = np.array(x), np.array(y), np.array(z)
-    # ax.plot_trisurf(x, y, z)
-    # plt.show()
-    pass
+
+def figure_m_r_smooth():
+    y, z = [], []
+    print(min(m.keys()), max(m.keys()))
+    for tt in m.keys():
+        print(tt)
+        for yy in m[tt].keys():
+            y.append(yy)
+            z.append(m[tt][yy])
+            y_, z_ = np.array(y), np.array(z)
+        model=make_interp_spline(y_, z_)
+        ys=np.linspace(min(y),max(y),50)
+        zs=model(ys)
+        z_smoothed = gaussian_filter1d(zs, sigma=3)
+        plt.plot(ys, z_smoothed)
+        plt.show()
+        break
 
 
 if __name__ == "__main__":
@@ -238,7 +283,9 @@ if __name__ == "__main__":
     init()
     compute_d()
     compute_sigma()
-    figure_d_g()
-    figure_s_g()
-    compute_t()
-    # figure_3d()
+    # figure_d_r()
+    # figure_s_r()
+    # figure_m_g()
+    # compute_t()
+    figure_s_r_smooth()
+    figure_m_r_smooth()
