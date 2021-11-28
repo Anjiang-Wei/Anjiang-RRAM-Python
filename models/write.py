@@ -10,7 +10,7 @@ class WriteModel(object):
     def data_init():
         collect_analyze.dead_cell_init("../log/")
         print(f"Write data init from {collect_analyze.logfile}")
-        fname = "../testlog/collect_data_" + collect_analyze.logfile
+        fname = "../testlog/13collect_data_" + collect_analyze.logfile
         collect_analyze.data_init(fname)
         print("Write data init finished")
     
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     WriteModel.data_init()
     import numpy as np
     max_attempts = 100
-    Rmin, Rmax = 8000, 50000-1000
+    Rmin, Rmax = 8000, 40000
     Nctr = 100
     for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr):
         width_mean = {}
