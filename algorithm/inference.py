@@ -42,8 +42,8 @@ def init():
 
 def level_inference_test():
     import numpy as np
-    max_attempts = 50
-    Rmin, Rmax = 8000, 50000-1000
+    max_attempts = 100
+    Rmin, Rmax = 8000, 40000
     Nctr = 100
     T = 1
     for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr):
@@ -62,7 +62,7 @@ def level_inference_test():
                 width_mean[width] = float(abs(r_mean - Wctr))
                 width_std[width] = float(r_std)
             except Exception as e:
-                # print(f'{e}')
+                print(f'{e}')
                 continue
         std_best_width = min(width_std, key=width_std.get)
         mean_best_width = min(width_mean, key=width_mean.get)
@@ -71,43 +71,14 @@ def level_inference_test():
 if __name__ == "__main__":
     init()
     # level_inference_test()
-    #                        Rmin,   Rmax,     Nctr,att, T, BER 
-    levels = level_inference(8000, 50000-1000, 400, 100, 1, 0.1) # 8
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 100, 1, 0.2) # 10
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 100, 0.1, 0.1) # 9
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 100, 0.01, 0.2) # 16
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 50, 1, 0.1) # 7
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 50, 1, 0.2) # 9
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.05) # 6
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.01) # 4
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.001) # 3
-    print(len(levels))
-    Level.draw(levels)
-
-    levels = level_inference(8000, 50000-1000, 400, 25, 1, 0.1) # 7
-    print(len(levels))
-    Level.draw(levels)
+    Rmin = 8000
+    Rmax = 40000
+    Nctr = 500
+    max_attempts = 100
+    timestmp = 1
+    BER_list = [0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3]
+    for ber in BER_list:
+        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, ber)
+        file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
+            + "_" + str(timestmp) + ".json"
+        Level.export_to_file(levels, fout=file_tag)
