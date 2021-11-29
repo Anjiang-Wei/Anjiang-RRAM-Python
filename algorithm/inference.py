@@ -29,6 +29,32 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
                 continue
     return Level.longest_non_overlap(levels)
 
+def level_inference_without_relaxation(Rmin, Rmax, Nctr, max_attempts, T, BER):
+    '''
+    Rmin, Rmax: set by hardware constraints
+    Nctr: how many write center values to try in [Rmin, Rmax]
+    max_attempts: the maximum number of attempts
+    T: time for relaxation
+    BER: bit error rate specification
+    '''
+    assert T == 0
+    levels = []
+    for Wctr in tqdm.tqdm(range(Rmin, Rmax, (Rmax-Rmin)//Nctr)):
+        for width in range(50, 1000, 100): # pre-set values during data collection
+            # run monte carlo simulation based on measurement data
+            Write_N = 100
+            Read_N = 100
+            WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
+            try:
+                RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
+                Rlow, Rhigh = getReadRange(RelaxDistr, BER)
+                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=1-BER, assertion=True))
+            except Exception as e:
+                # print(f"{str(e)}: {Rlow}, {Rhigh}, {Wctr-width/2}, {Wctr+width/2}")
+                continue
+    return Level.longest_non_overlap(levels)
+
+
 def getReadRange(vals, BER):
     num_discard = int(BER * len(vals) / 2)
     # print(f'from {len(vals)} delete {num_discard}')
@@ -77,8 +103,13 @@ if __name__ == "__main__":
     max_attempts = 100
     timestmp = 1
     BER_list = [0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3]
+    # for ber in BER_list:
+    #     levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, ber)
+    #     file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
+    #         + "_" + str(timestmp) + ".json"
+    #     Level.export_to_file(levels, fout="../scheme/" + file_tag)
     for ber in BER_list:
-        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, ber)
-        file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
+        levels = level_inference_without_relaxation(Rmin, Rmax, Nctr, max_attempts, 0, ber)
+        file_tag = "falseC13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
             + "_" + str(timestmp) + ".json"
         Level.export_to_file(levels, fout="../scheme/" + file_tag)

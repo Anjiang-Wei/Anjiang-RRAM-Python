@@ -61,6 +61,8 @@ def get_adjacent_weight(x1, x2, v):
     return a / (a + b), b / (a + b)
 
 def drift(r0, t):
+    if t == 0:
+        return r0
     avg, sig = get_mean_sigma(r0, t)
     diff = np.random.normal(avg, sig)
     return r0 + diff
