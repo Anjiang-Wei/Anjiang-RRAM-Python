@@ -81,4 +81,4 @@ if __name__ == "__main__":
         levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, ber)
         file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
             + "_" + str(timestmp) + ".json"
-        Level.export_to_file(levels, fout=file_tag)
+        Level.export_to_file(levels, fout="../scheme/" + file_tag)
