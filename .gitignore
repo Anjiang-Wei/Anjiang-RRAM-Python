@@ -133,3 +133,5 @@ dmypy.json
 
 retention.tsv.gz
 relaxdata.tsv.gz
+
+parsec-2.1/
