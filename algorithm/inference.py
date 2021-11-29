@@ -48,7 +48,7 @@ def level_inference_without_relaxation(Rmin, Rmax, Nctr, max_attempts, T, BER):
             try:
                 RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
                 Rlow, Rhigh = getReadRange(RelaxDistr, BER)
-                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=1-BER, assertion=True))
+                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=1-BER, assertion=False))
             except Exception as e:
                 # print(f"{str(e)}: {Rlow}, {Rhigh}, {Wctr-width/2}, {Wctr+width/2}")
                 continue
@@ -102,15 +102,15 @@ if __name__ == "__main__":
     Nctr = 500
     max_attempts = 100
     timestmp = 1
-    # BER_list = [0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3]
-    # for ber in BER_list:
-    #     levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, ber)
-    #     file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
-    #         + "_" + str(timestmp) + ".json"
-    #     Level.export_to_file(levels, fout="../scheme/" + file_tag)
-    BER_list2 = [0.001, 0.002, 0.003, 0.01, 0.02, 0.05]
-    for ber in BER_list2:
-        levels = level_inference_without_relaxation(Rmin, Rmax, Nctr, max_attempts, 0, ber)
-        file_tag = "falseC13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
+    BER_list = [0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3]
+    for ber in BER_list:
+        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, ber)
+        file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
             + "_" + str(timestmp) + ".json"
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
+    # BER_list2 = [0.001, 0.002, 0.003, 0.05, 0.01, 0.02, 0.05, 0.1]
+    # for ber in BER_list2:
+    #     levels = level_inference_without_relaxation(Rmin, Rmax, Nctr, max_attempts, 0, ber)
+    #     file_tag = "falseC13_" + str(len(levels)) + "_" + str(ber) + "_" + str(Nctr) \
+    #         + "_" + str(timestmp) + ".json"
+    #     Level.export_to_file(levels, fout="../scheme/false/" + file_tag)
