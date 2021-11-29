@@ -10,13 +10,22 @@ exp_id = 0
 start_addr = 0
 end_addr = 65536
 dead_cells = []
-levels = Level.load_from_file("scheme/C13_Nov14_1.json")
+test_scheme_files = [
+    'scheme/C13_6_0.02_500_1.json',
+    'scheme/C13_7_0.01_500_1.json',
+    'scheme/C13_8_0.05_500_1.json',
+    'scheme/C13_10_0.1_500_1.json',
+    'scheme/C13_12_0.15_500_1.json',
+    'scheme/C13_13_0.2_500_1.json',
+    'scheme/C13_16_0.3_500_1.json',
+]
+random_seed = 2 + exp_id
+levels = Level.load_from_file(test_scheme_files[exp_id])
 high_init_config = {
     "B": [levels[-1].r1, levels[-1].r2]
 }
 timestamps = [0.01, 0.1, 1.0]
 
-random_seed = 0
 
 def write_init(addr):
     nisys.set_addr(addr)
@@ -88,8 +97,8 @@ if __name__ == "__main__":
     dead_init()
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
-    n_cells = 30
-    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}", "w")
+    n_cells = 100
+    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_Nov29", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
