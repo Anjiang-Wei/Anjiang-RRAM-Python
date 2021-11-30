@@ -62,8 +62,13 @@ class Level(object):
         return sorted(all_levels, key=lambda x: (x.w1 + x.w2) / 2)
     
     @staticmethod
-    def longest_non_overlap(all_levels):
+    def sort_by_read_high(all_levels):
+        return sorted(all_levels, key=lambda x: x.r2)
+    
+    @staticmethod
+    def longest_non_overlap_old(all_levels):
         '''
+        Deprecated!
         This is inaccurate greedy algorithm
         Assumption:
             interval of read ranges increases with the resistance
@@ -75,6 +80,22 @@ class Level(object):
         for i in range(1, len(sorted_levels)):
             nxt = sorted_levels[i]
             if Level.overlap(cur, nxt) == False:
+                res.append(nxt)
+                cur = nxt
+        return res
+    
+    @staticmethod
+    def longest_non_overlap(all_levels):
+        '''
+        This is a greedy algorithm
+        '''
+        res = []
+        sorted_levels = Level.sort_by_read_high(all_levels)
+        res.append(sorted_levels[0])
+        cur = sorted_levels[0]
+        for i in range(1, len(sorted_levels)):
+            nxt = sorted_levels[i]
+            if nxt.r1 >= cur.r2:
                 res.append(nxt)
                 cur = nxt
         return res
