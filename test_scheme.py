@@ -24,7 +24,7 @@ levels = Level.load_from_file(test_scheme_files[exp_id])
 high_init_config = {
     "B": [levels[-1].r1, levels[-1].r2]
 }
-timestamps = [0.01, 0.1, 1.0]
+timestamps = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
 
 
 def write_init(addr):
@@ -85,8 +85,8 @@ def testscheme(ncells):
             print(addr)
             write_init(addr)
             write(addr, level.w1, level.w2)
-            for t in timestamps:
-                time.sleep(t)
+            for i in range(1, len(timestamps)):
+                time.sleep(timestamps[i] - timestamps[i-1])
                 read(addr, level.r1, level.r2)
     print("Start dead cell detection")
     dead_detection.detect(cells, dead_log, nisys)

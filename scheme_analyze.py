@@ -152,7 +152,8 @@ if __name__ == "__main__":
         # read_bad = Result.compute_prob(Result.read, "read")
         # all_bad = Result.compute_prob(Result.all, "all")
         # Result.analyze_level_prob(Result.all)
-        Result.report_by_elasped_time(Result.read, 3, report_last=True, hint=test_scheme_files[i])
+        # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
+        Result.report_by_elasped_time(Result.read, 8, report_last=True, hint=test_scheme_files[i])
         # print(sorted(set(init_bad)))
         # print(sorted(set(write_bad)))
         # print(sorted(set(read_bad)))
