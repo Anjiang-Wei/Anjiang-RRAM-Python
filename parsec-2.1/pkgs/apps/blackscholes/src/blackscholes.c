@@ -69,6 +69,7 @@ fptype * rate;
 fptype * volatility;
 fptype * otime;
 int numError = 0;
+int total = 0;
 int nThreads;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -253,8 +254,9 @@ int bs_thread(void *tid_ptr) {
                 printf("Error on %d. Computed=%.5f, Ref=%.5f, Delta=%.5f\n",
                        i, price, data[i].DGrefval, priceDelta);
                 numError ++;
+		total ++;
             } else {
-	      printf("Fine\n");
+	      total ++;
 	    }
 #endif
         }
@@ -434,6 +436,7 @@ int main (int argc, char **argv)
 
 #ifdef ERR_CHK
     printf("Num Errors: %d\n", numError);
+    printf("Total: %d\n", total);
 #endif
     free(data);
     free(prices);
