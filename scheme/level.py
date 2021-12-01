@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import json
+import sys
 
 class Level(object):
     '''
@@ -101,4 +102,4 @@ class Level(object):
         return res
     
 if __name__ == "__main__":
-    Level.load_from_file()
+    Level.load_from_file(fin=sys.argv[1], draw=True)
