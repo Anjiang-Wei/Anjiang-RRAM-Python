@@ -11,5 +11,5 @@ class RelaxModel(object):
     def distr(WriteDistr, T, N):
         res = []
         for v in WriteDistr:
-            res.append(drift_model.get_distribution(v, T, N))
+            res += drift_model.get_distribution(v, T, N)
         return res
