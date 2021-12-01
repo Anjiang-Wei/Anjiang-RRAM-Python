@@ -1,16 +1,11 @@
-import numpy as np
-import pprint
-import seaborn as sns
-import matplotlib.pyplot as plt
-import scipy.stats as stats
-from scipy.interpolate import make_interp_spline
-from scipy.ndimage import gaussian_filter1d
-
 logfile = "testlog/13collect_data_100_1_0"
 
 # R[timept][R_0] -> R_t
 R = {}
 times = [] # [0.0, 0.01, 0.1, 1.0, 2.0]
+
+# d[timept][R_0] -> R_t - R_0
+d = {}
 
 # write_center: (w_low + w_high) / 2 --> list of R_0
 write_centers = {}
@@ -90,8 +85,17 @@ def init(fname=""):
                 R[timept][resistance_0] = resistance_t
     global times
     times = sorted(list(R.keys()))
-    w_smallest, w_biggest = min(write_centers.keys()), max(write_centers.keys())
-    export([w_smallest, w_biggest], append=False)
+
+def compute_d():
+    '''
+    Compute the difference w.r.t time, given the same address [same initial g0]
+    '''
+    for t in times[1:]:
+        if t not in d.keys():
+            d[t] = {}
+        for r_0 in R[t].keys():
+            assert R[0][r_0] == r_0
+            d[t][r_0] = R[t][r_0] - R[0][r_0]
 
 
 def export(vals, append=True):
@@ -99,8 +103,19 @@ def export(vals, append=True):
     with open("models/conf" + model_char, "a" if append else "w") as fout:
         fout.write(",".join(vals_) + "\n")
 
+def to_conf():
+    w_smallest, w_biggest = min(write_centers.keys()), max(write_centers.keys())
+    export([w_smallest, w_biggest], append=False)
+    for t in times[1:]:
+        for w_center in write_centers.keys():
+            r0_list = write_centers[w_center]
+            diff_list = list(map(lambda x: d[t][x], r0_list))
+            t_w_diff = [t] + [w_center] + diff_list
+            export(t_w_diff)
 
 
 if __name__ == "__main__":
     dead_cell_init()
     init()
+    compute_d()
+    to_conf()
