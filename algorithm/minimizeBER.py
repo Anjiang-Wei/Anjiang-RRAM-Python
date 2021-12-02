@@ -51,16 +51,19 @@ def minimal_BER(specified_levels, eps, timestamp):
     low_BER, high_BER = 0, 1
     while high_BER - low_BER > eps:
         cur_BER = (low_BER + high_BER) / 2
-        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestamp, cur_BER)
-        if len(levels) < specified_levels: # the precision requirement is too strict to be met
+        cur_levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestamp, cur_BER)
+        if len(cur_levels) < specified_levels: # the precision requirement is too strict to be met
             low_BER = cur_BER # make BER looser
-        elif len(levels) >= specified_levels:
+        elif len(cur_levels) > specified_levels:
             high_BER = cur_BER
-    return levels, cur_BER
+        else:
+            high_BER = cur_BER
+            best_level, best_BER = cur_levels, cur_BER
+    return best_level, best_BER
 
 if __name__ == "__main__":
     init()
-    for num_level in range(1, 33):
+    for num_level in range(5, 33):
         levels, ber = minimal_BER(num_level, 0.001, timestmp)
         print(f"Solved for {num_level}: {len(levels)}, {ber}")
         file_tag = "C13_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
