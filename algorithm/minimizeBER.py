@@ -23,7 +23,7 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
     for Wctr in tqdm.tqdm(range(Rmin, Rmax, (Rmax-Rmin)//Nctr)):
         for width in range(50, 1000, 100): # pre-set values during data collection
             # run monte carlo simulation based on measurement data
-            Write_N = 1000
+            Write_N = 100
             Read_N = 1000
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
             try:
@@ -47,11 +47,11 @@ def init():
     WriteModel.data_init()
     RelaxModel.data_init()
 
-def minimal_BER(specified_levels, eps):
+def minimal_BER(specified_levels, eps, timestamp):
     low_BER, high_BER = 0, 1
     while high_BER - low_BER > eps:
         cur_BER = (low_BER + high_BER) / 2
-        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, cur_BER)
+        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestamp, cur_BER)
         if len(levels) < specified_levels: # the precision requirement is too strict to be met
             low_BER = cur_BER # make BER looser
         elif len(levels) >= specified_levels:
@@ -61,6 +61,7 @@ def minimal_BER(specified_levels, eps):
 if __name__ == "__main__":
     init()
     for num_level in range(1, 33):
-        levels, ber = minimal_BER(num_level, 0.001)
+        levels, ber = minimal_BER(num_level, 0.001, timestmp)
+        print(f"Solved for {num_level}: {len(levels)}, {ber}")
         file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
