@@ -63,5 +63,5 @@ if __name__ == "__main__":
     for num_level in range(1, 33):
         levels, ber = minimal_BER(num_level, 0.001, timestmp)
         print(f"Solved for {num_level}: {len(levels)}, {ber}")
-        file_tag = "C13_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
+        file_tag = "C13_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
