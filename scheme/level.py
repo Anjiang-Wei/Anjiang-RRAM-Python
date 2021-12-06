@@ -55,7 +55,7 @@ class Level(object):
     def refine_read_ranges(levels):
         levels[0].r1 = 0
         levels[-1].r2 = 10000000
-        for i in range(1, len(levels)-1):
+        for i in range(0, len(levels)-1):
             avg = (levels[i].r2 + levels[i+1].r1) / 2
             levels[i].r2 = avg
             levels[i+1].r1 = avg

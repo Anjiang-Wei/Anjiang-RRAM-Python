@@ -71,6 +71,7 @@ def generate_schemes():
         levels, ber = minimal_BER(num_level, 0.005, timestmp)
         print(f"Solved for {num_level}: {len(levels)}, {ber}")
         file_tag = "C13_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
+        levels = Level.refine_read_ranges(levels)
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
 
 def refine_levels():
