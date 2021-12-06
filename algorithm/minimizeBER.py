@@ -65,10 +65,19 @@ def minimal_BER(specified_levels, eps, timestamp):
             best_level, best_BER = cur_levels, cur_BER
     return best_level, best_BER
 
-if __name__ == "__main__":
+def generate_schemes():
     init()
-    for num_level in range(10, 17):
-        levels, ber = minimal_BER(num_level, 0.001, timestmp)
+    for num_level in range(6, 17):
+        levels, ber = minimal_BER(num_level, 0.005, timestmp)
         print(f"Solved for {num_level}: {len(levels)}, {ber}")
         file_tag = "C13_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
+
+def refine_levels():
+    filename = sys.argv[1]
+    levels = Level.load_from_file(filename)
+    new_levels = Level.refine_read_ranges(levels)
+    Level.export_to_file(new_levels, fout=filename)
+
+if __name__ == "__main__":
+    refine_levels()
