@@ -1,13 +1,18 @@
 logfiles = [
-    'testlog/13scheme_test_100_2_0_Nov29',
-    'testlog/13scheme_test_100_3_1_Nov29',
-    'testlog/13scheme_test_100_4_2_Nov29',
-    'testlog/13scheme_test_100_5_3_Nov29',
-    'testlog/13scheme_test_100_6_4_Nov29',
-    'testlog/13scheme_test_100_7_5_Nov29',
-    'testlog/13scheme_test_100_8_6_Nov29'
+    'testlog/13scheme_test_100_9_6_Dec6',
+    'testlog/13scheme_test_100_10_7_Dec6',
+    'testlog/13scheme_test_100_11_8_Dec6',
+    'testlog/13scheme_test_100_12_9_Dec6',
+    'testlog/13scheme_test_100_13_10_Dec6',
+    'testlog/13scheme_test_100_14_11_Dec6',
+    'testlog/13scheme_test_100_15_12_Dec6',
+    'testlog/13scheme_test_100_16_13_Dec6',
+    'testlog/13scheme_test_100_17_14_Dec6',
+    'testlog/13scheme_test_100_18_15_Dec6',
+    'testlog/13scheme_test_100_19_16_Dec6',
 ]
 
+'''
 test_scheme_files = [
     '6, 0.02',
     '7, 0.01',
@@ -17,6 +22,9 @@ test_scheme_files = [
     '13, 0.2',
     '16, 0.3'
 ]
+
+timestamp = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
+'''
 
 all_lows = []
 dead_cells = []
@@ -67,7 +75,7 @@ class Result(object):
             if write_failrate != 0:
                 print(f"P(read_fail | write_fail) = {both_fail_prob}/{write_failrate} = {both_fail_prob/write_failrate}")
     
-    def report_by_elasped_time(results, num_cat, report_last=False, hint=""):
+    def report_by_elasped_time(results, num_cat, only_report=None, hint=""):
         # results are only about read, assuming all read for same address are consecutive
         # num_cat is the number of timestamps
         categorized = {}
@@ -75,8 +83,8 @@ class Result(object):
             categorized[i] = []
         for i in range(0, len(results)):
             categorized[i%num_cat].append(results[i])
-        if report_last:
-            Result.compute_prob(categorized[num_cat-1], hint)
+        if only_report is not None:
+            Result.compute_prob(categorized[only_report], hint)
             return
         for i in range(num_cat):
             Result.compute_prob(categorized[i], "timebin_" + str(i))
@@ -153,7 +161,7 @@ if __name__ == "__main__":
         # all_bad = Result.compute_prob(Result.all, "all")
         # Result.analyze_level_prob(Result.all)
         # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
-        Result.report_by_elasped_time(Result.read, 8, report_last=True, hint=test_scheme_files[i])
+        Result.report_by_elasped_time(Result.read, 8, only_report=5, hint=str(i + 6))
         # print(sorted(set(init_bad)))
         # print(sorted(set(write_bad)))
         # print(sorted(set(read_bad)))
