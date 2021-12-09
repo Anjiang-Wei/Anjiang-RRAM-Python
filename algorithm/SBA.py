@@ -1,78 +1,83 @@
-import tqdm
 import sys
 sys.path.append("..")
 from scheme.level import Level
 from models.write import WriteModel
 from models.relax import RelaxModel
+import numpy as np
+from scipy.stats import norm
 
-def sba(Rmin, Rmax, Nctr, max_attempts, T, BER):
+Rmin = 8000
+Rmax = 40000
+Nctr = 500
+max_attempts = 100
+timestmp = 1
+
+def sigma_Based_Read_Range(write_distr, number_of_sigma):
+    '''
+    Goal: get the read range based on the specified sigma
+
+    write_distr: the resistance distribution of write (no relaxation error)
+    number_of_sigma: the SBA technique's input, e.g., 3.
+    3 simga is the reported number used in the paper: 
+    - Resistive RAM With Multiple Bits Per Cell: Array-Level Demonstration of 3 Bits Per Cell
+
+    API reference:
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
+    '''
+    # here we get the read range based on the specified sigma
+    sigma = np.std(write_distr)
+    mean = np.mean(write_distr)
+    # Get percentiles using Cumulative Distribution Function (cdf) for normal distribution
+    # E.g., norm.cdf(-1, loc=0, scale=1) = 15.87%
+    # E.g., normal.cdf(1, loc=0, scale=1) = 84.13%
+    percentile1 = norm.cdf(-number_of_sigma, loc=0, scale=1)
+    percentile2 = norm.cdf(number_of_sigma, loc=0, scale=1)
+    # Given the percentile, and the distribution of write, get the read regions
+    read_low = norm.ppf(percentile1, loc=mean, scale=sigma)
+    read_high = norm.ppf(percentile2, loc=mean, scale=sigma)
+    return read_low, read_high
+
+def level_inference(Rmin, Rmax, Nctr, max_attempts, T, number_of_sigma):
     '''
     Rmin, Rmax: set by hardware constraints
     Nctr: how many write center values to try in [Rmin, Rmax]
-    max_attempts: the maximum number of attempts
-    T: time for relaxation
-    BER: bit error rate specification
+    max_attempts: the maximum number of attempts, 100 (a fixed number)
+    T: time for relaxation, 1s (fixed)
+    number_of_sigma: the specification parameter for sigma based technique (SBA)
     '''
     levels = []
-    for Wctr in tqdm.tqdm(range(Rmin, Rmax, (Rmax-Rmin)//Nctr)):
-        for width in range(50, 1000, 100): # pre-set values during data collection
+    for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr): # write_center
+        for width in range(50, 1000, 100): # write_width: pre-set values during data collection
             # run monte carlo simulation based on measurement data
-            Write_N = 100
-            Read_N = 100
+            Write_N = 1000
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
-            try:
-                RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
-                Rlow, Rhigh = getReadRange(RelaxDistr, BER)
-                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=1-BER, assertion=True))
-            except Exception as e:
-                # print(f"{str(e)}: {Rlow}, {Rhigh}, {Wctr-width/2}, {Wctr+width/2}")
+            Rlow, Rhigh = sigma_Based_Read_Range(WriteDistr, number_of_sigma)
+            if len(levels) == 0:
+                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=0, assertion=True))
                 continue
-    return Level.longest_non_overlap(levels)
-
-def getReadRange(vals, BER):
-    num_discard = int(BER * len(vals) / 2)
-    # print(f'from {len(vals)} delete {num_discard}')
-    sorted_v = sorted(vals)
-    return sorted_v[num_discard], sorted_v[-num_discard]
+            if Rlow > levels[-1].r2: # current level does not overlap with prior level
+                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=0, assertion=True))
+    return levels
 
 
 def init():
     WriteModel.data_init()
     RelaxModel.data_init()
 
-def level_inference_test():
-    import numpy as np
-    max_attempts = 50
-    Rmin, Rmax = 8000, 50000-1000
-    Nctr = 100
-    T = 1
-    for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr):
-        width_mean = {}
-        width_std = {}
-        for width in range(50, 1000, 100): # pre-set values during data collection
-            # run monte carlo simulation based on measurement data
-            Write_N = 100
-            Read_N = 100
-            WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
-            try:
-                RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
-                w_mean, w_std = np.mean(WriteDistr), np.std(WriteDistr)
-                r_mean, r_std = np.mean(RelaxDistr), np.std(RelaxDistr)
-                # print(Wctr, width, ":", w_mean, r_mean, w_std, r_std)
-                width_mean[width] = float(abs(r_mean - Wctr))
-                width_std[width] = float(r_std)
-            except Exception as e:
-                # print(f'{e}')
-                continue
-        std_best_width = min(width_std, key=width_std.get)
-        mean_best_width = min(width_mean, key=width_mean.get)
-        print(Wctr, std_best_width, mean_best_width)
+def generate_schemes():
+    init()
+    sigma_start = 3
+    sigma_end = 10
+    sigma_delta = 1
+    while sigma_start <= sigma_end:
+        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, sigma_start)
+        num_level = len(levels)
+        print(f"Solved for {num_level}")
+        file_tag = f"C13_{num_level}_{sigma_start}.json"
+        levels = Level.refine_read_ranges(levels)
+        Level.export_to_file(levels, fout="../scheme/SBA/" + file_tag)
+        sigma_start += sigma_delta
 
 if __name__ == "__main__":
     init()
-    # level_inference_test()
-    #            Rmin,   Rmax,     Nctr,att, T, BER 
-    levels = sba(8000, 50000-1000, 400, 100, 1, 0.003) # 5 -> 2bit
-    print(len(levels))
-    levels = sba(8000, 50000-1000, 400, 100, 1, 0.01) # 5 -> 3bit
-    print(len(levels))
+    generate_schemes()

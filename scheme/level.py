@@ -53,6 +53,9 @@ class Level(object):
     
     @staticmethod
     def refine_read_ranges(levels):
+        '''
+        This makes sure that there won't be holes between levels
+        '''
         levels[0].r1 = 0
         levels[-1].r2 = 10000000
         for i in range(0, len(levels)-1):
