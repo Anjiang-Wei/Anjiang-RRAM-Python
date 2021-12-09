@@ -22,9 +22,9 @@ test_scheme_files = [
     '13, 0.2',
     '16, 0.3'
 ]
+'''
 
 timestamp = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
-'''
 
 all_lows = []
 dead_cells = []
@@ -81,6 +81,7 @@ class Result(object):
         categorized = {}
         for i in range(num_cat):
             categorized[i] = []
+        assert len(results) % num_cat == 0
         for i in range(0, len(results)):
             categorized[i%num_cat].append(results[i])
         if only_report is not None:
@@ -104,13 +105,16 @@ def data_init(logfile):
                 # print(f"{addr} is dead, skipping")
                 continue           
             if action == "Init":
+                assert i % (len(timestamp) + 1) == 0
                 Result.init.append(r)
             elif action == "Write":
+                assert i % (len(timestamp) + 1) == 1
                 Result.write.append(r)
                 if low not in all_lows:
                     all_lows.append(low)
             else:
                 assert action == "Read"
+                assert i % (len(timestamp) + 1) >= 2
                 Result.read.append(r)
                 if low not in all_lows:
                     all_lows.append(low)
@@ -161,7 +165,7 @@ if __name__ == "__main__":
         # all_bad = Result.compute_prob(Result.all, "all")
         # Result.analyze_level_prob(Result.all)
         # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
-        Result.report_by_elasped_time(Result.read, 8, only_report=5, hint=str(i + 6))
+        Result.report_by_elasped_time(Result.read, len(timestamp) - 1, only_report=5, hint=str(i + 6))
         # print(sorted(set(init_bad)))
         # print(sorted(set(write_bad)))
         # print(sorted(set(read_bad)))
