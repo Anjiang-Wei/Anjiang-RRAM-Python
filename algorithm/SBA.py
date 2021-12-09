@@ -12,11 +12,11 @@ Nctr = 500
 max_attempts = 100
 timestmp = 1
 
-def sigma_Based_Read_Range(write_distr, number_of_sigma):
+def sigma_Based_Read_Range(distr, number_of_sigma):
     '''
     Goal: get the read range based on the specified sigma
 
-    write_distr: the resistance distribution of write (no relaxation error)
+    distr: the resistance distribution
     number_of_sigma: the SBA technique's input, e.g., 3.
     3 simga is the reported number used in the paper: 
     - Resistive RAM With Multiple Bits Per Cell: Array-Level Demonstration of 3 Bits Per Cell
@@ -25,8 +25,8 @@ def sigma_Based_Read_Range(write_distr, number_of_sigma):
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
     '''
     # here we get the read range based on the specified sigma
-    sigma = np.std(write_distr)
-    mean = np.mean(write_distr)
+    sigma = np.std(distr)
+    mean = np.mean(distr)
     # Get percentiles using Cumulative Distribution Function (cdf) for normal distribution
     # E.g., norm.cdf(-1, loc=0, scale=1) = 15.87%
     # E.g., normal.cdf(1, loc=0, scale=1) = 84.13%
@@ -37,7 +37,7 @@ def sigma_Based_Read_Range(write_distr, number_of_sigma):
     read_high = norm.ppf(percentile2, loc=mean, scale=sigma)
     return read_low, read_high
 
-def level_inference(Rmin, Rmax, Nctr, max_attempts, T, number_of_sigma):
+def level_inference(Rmin, Rmax, Nctr, max_attempts, T, number_of_sigma, write_model_only):
     '''
     Rmin, Rmax: set by hardware constraints
     Nctr: how many write center values to try in [Rmin, Rmax]
@@ -49,14 +49,22 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, number_of_sigma):
     for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr): # write_center
         for width in range(50, 1000, 100): # write_width: pre-set values during data collection
             # run monte carlo simulation based on measurement data
-            Write_N = 1000
+            Write_N = 100
+            Read_N = 100
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
-            Rlow, Rhigh = sigma_Based_Read_Range(WriteDistr, number_of_sigma)
-            if len(levels) == 0:
-                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=0, assertion=True))
+            if write_model_only:
+                distr = WriteDistr
+            else:
+                distr = RelaxModel.distr(WriteDistr, T, Read_N)
+            Rlow, Rhigh = sigma_Based_Read_Range(distr, number_of_sigma)
+            try:
+                if len(levels) == 0:
+                    levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=0, assertion=True))
+                    continue
+                if Rlow > levels[-1].r2: # current level does not overlap with prior level
+                    levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=0, assertion=True))
+            except Exception as e:
                 continue
-            if Rlow > levels[-1].r2: # current level does not overlap with prior level
-                levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=0, assertion=True))
     return levels
 
 
@@ -66,14 +74,14 @@ def init():
 
 def generate_schemes():
     init()
-    sigma_start = 3
+    sigma_start = 1
     sigma_end = 10
     sigma_delta = 1
     while sigma_start <= sigma_end:
-        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, sigma_start)
+        levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, sigma_start, False)
         num_level = len(levels)
         print(f"Solved for {num_level}")
-        file_tag = f"C13_{num_level}_{sigma_start}.json"
+        file_tag = f"C13_both_{num_level}_{sigma_start}.json"
         levels = Level.refine_read_ranges(levels)
         Level.export_to_file(levels, fout="../scheme/SBA/" + file_tag)
         sigma_start += sigma_delta
