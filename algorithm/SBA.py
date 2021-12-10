@@ -1,3 +1,4 @@
+import tqdm
 import sys
 sys.path.append("..")
 from scheme.level import Level
@@ -46,11 +47,11 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, number_of_sigma, write_mo
     number_of_sigma: the specification parameter for sigma based technique (SBA)
     '''
     levels = []
-    for Wctr in range(Rmin, Rmax, (Rmax-Rmin)//Nctr): # write_center
+    for Wctr in tqdm.tqdm(range(Rmin, Rmax, (Rmax-Rmin)//Nctr)): # write_center
         for width in range(50, 1000, 100): # write_width: pre-set values during data collection
             # run monte carlo simulation based on measurement data
             Write_N = 100
-            Read_N = 100
+            Read_N = 1000
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
             if write_model_only:
                 distr = WriteDistr
@@ -73,10 +74,9 @@ def init():
     RelaxModel.data_init()
 
 def generate_schemes():
-    init()
-    sigma_start = 1
-    sigma_end = 10
-    sigma_delta = 1
+    sigma_start = 0.8
+    sigma_end = 2
+    sigma_delta = 0.1
     while sigma_start <= sigma_end:
         levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, sigma_start, False)
         num_level = len(levels)
