@@ -85,6 +85,20 @@ def generate_schemes():
         levels = Level.refine_read_ranges(levels)
         Level.export_to_file(levels, fout="../scheme/SBA/" + file_tag)
         sigma_start += sigma_delta
+    # starts = [1.2, 1.1, 0.9]
+    # ends = [1.3, 1.2, 1.0]
+    # for kkk in range(len(starts)):
+    #     sigma_delta = 0.01
+    #     sigma_start = starts[kkk] + sigma_delta
+    #     sigma_end = ends[kkk]
+    #     while sigma_start < sigma_end:
+    #         levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, sigma_start, False)
+    #         num_level = len(levels)
+    #         print(f"Solved for {num_level}")
+    #         file_tag = f"C13_both_{num_level}_{sigma_start}.json"
+    #         levels = Level.refine_read_ranges(levels)
+    #         Level.export_to_file(levels, fout="../scheme/SBA/" + file_tag)
+    #         sigma_start += sigma_delta
 
 if __name__ == "__main__":
     init()
