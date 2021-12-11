@@ -26,7 +26,8 @@ class Level(object):
         for i in range(len(levels)):
             color = sns.color_palette(n_colors=len(levels))[i]
             plt.axvline(levels[i].r1, color=color, linestyle=':', linewidth=1)
-            plt.axvline(levels[i].r2, color=color, linestyle=':', linewidth=1)
+            if i != len(levels) - 1:
+                plt.axvline(levels[i].r2, color=color, linestyle=':', linewidth=1)
             plt.axvline(levels[i].w1, color=color, linestyle='-', linewidth=1)
             plt.axvline(levels[i].w2, color=color, linestyle='-', linewidth=1)
         plt.show()
@@ -115,4 +116,4 @@ class Level(object):
         return res
     
 if __name__ == "__main__":
-    Level.load_from_file(fin=sys.argv[1], draw=True)
+    levels = Level.load_from_file(fin=sys.argv[1], draw=True)
