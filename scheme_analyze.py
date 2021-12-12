@@ -1,15 +1,22 @@
 logfiles = [
-    'testlog/13scheme_test_100_9_6_Dec6',
-    'testlog/13scheme_test_100_10_7_Dec6',
-    'testlog/13scheme_test_100_11_8_Dec6',
-    'testlog/13scheme_test_100_12_9_Dec6',
-    'testlog/13scheme_test_100_13_10_Dec6',
-    'testlog/13scheme_test_100_14_11_Dec6',
-    'testlog/13scheme_test_100_15_12_Dec6',
-    'testlog/13scheme_test_100_16_13_Dec6',
-    'testlog/13scheme_test_100_17_14_Dec6',
-    'testlog/13scheme_test_100_18_15_Dec6',
-    'testlog/13scheme_test_100_19_16_Dec6',
+    # 'testlog/13scheme_test_100_9_6_Dec6',
+    # 'testlog/13scheme_test_100_10_7_Dec6',
+    # 'testlog/13scheme_test_100_11_8_Dec6',
+    # 'testlog/13scheme_test_100_12_9_Dec6',
+    # 'testlog/13scheme_test_100_13_10_Dec6',
+    # 'testlog/13scheme_test_100_14_11_Dec6',
+    # 'testlog/13scheme_test_100_15_12_Dec6',
+    # 'testlog/13scheme_test_100_16_13_Dec6',
+    # 'testlog/13scheme_test_100_17_14_Dec6',
+    # 'testlog/13scheme_test_100_18_15_Dec6',
+    # 'testlog/13scheme_test_100_19_16_Dec6',
+    'testlog/13scheme_test_100_20_4_Dec10',
+    'testlog/13scheme_test_100_21_5_Dec10',
+    'testlog/13scheme_test_100_22_6_Dec10',
+    'testlog/13scheme_test_100_23_7_Dec10',
+    'testlog/13scheme_test_100_24_8_Dec10',
+    'testlog/13scheme_test_100_25_9_Dec10',
+    'testlog/13scheme_test_100_26_10_Dec10'
 ]
 
 '''
@@ -165,7 +172,7 @@ if __name__ == "__main__":
         # all_bad = Result.compute_prob(Result.all, "all")
         # Result.analyze_level_prob(Result.all)
         # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
-        Result.report_by_elasped_time(Result.read, len(timestamp) - 1, only_report=5, hint=str(i + 6))
+        Result.report_by_elasped_time(Result.read, len(timestamp) - 1, only_report=5, hint=str(i + 4))
         # print(sorted(set(init_bad)))
         # print(sorted(set(write_bad)))
         # print(sorted(set(read_bad)))
