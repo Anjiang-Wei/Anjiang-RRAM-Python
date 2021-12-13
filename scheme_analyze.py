@@ -16,7 +16,13 @@ logfiles = [
     'testlog/13scheme_test_100_23_7_Dec10',
     'testlog/13scheme_test_100_24_8_Dec10',
     'testlog/13scheme_test_100_25_9_Dec10',
-    'testlog/13scheme_test_100_26_10_Dec10'
+    'testlog/13scheme_test_100_26_10_Dec10',
+    'testlog/13scheme_test_100_27_11_Dec10',
+    'testlog/13scheme_test_100_28_12_Dec10',
+    'testlog/13scheme_test_100_29_13_Dec10',
+    'testlog/13scheme_test_100_30_14_Dec10',
+    'testlog/13scheme_test_100_31_15_Dec10',
+    'testlog/13scheme_test_100_32_16_Dec10'
 ]
 
 '''
@@ -172,6 +178,7 @@ if __name__ == "__main__":
         # all_bad = Result.compute_prob(Result.all, "all")
         # Result.analyze_level_prob(Result.all)
         # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
+        # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
         Result.report_by_elasped_time(Result.read, len(timestamp) - 1, only_report=5, hint=str(i + 4))
         # print(sorted(set(init_bad)))
         # print(sorted(set(write_bad)))
