@@ -301,6 +301,8 @@ int main (int argc, char **argv)
     if(file == NULL) {
       printf("ERROR: Unable to open file `%s'.\n", inputFile);
       exit(1);
+    } else {
+        printf("Success: Read from file %s.\n", inputFile);
     }
     rv = fscanf(file, "%i", &numOptions);
     if(rv != 1) {
