@@ -13,6 +13,7 @@
 #include <string.h>
 
 #define ERR_CHK
+#define MUTATE
 
 #ifdef ENABLE_PARSEC_HOOKS
 #include <hooks.h>
@@ -250,9 +251,9 @@ int bs_thread(void *tid_ptr) {
             
 #ifdef ERR_CHK   
             priceDelta = data[i].DGrefval - price;
-            if( fabs(priceDelta) >= 1e-4 ){
-                printf("Error on %d. Computed=%.5f, Ref=%.5f, Delta=%.5f\n",
-                       i, price, data[i].DGrefval, priceDelta);
+            if( fabs(priceDelta) >= 1e-2 ){
+                // printf("Error on %d. Computed=%.5f, Ref=%.5f, Delta=%.5f\n",
+                //        i, price, data[i].DGrefval, priceDelta);
                 numError ++;
 		total ++;
             } else {
@@ -334,6 +335,21 @@ int main (int argc, char **argv)
           exit(1);
         }
     }
+#ifdef MUTATE
+    printf("Mutation Turned ON!\n");
+    float epsilon = 0.001;
+    for (int i = 0; i < numOptions; i++) {
+        data[i].s = data[i].s - epsilon;
+        data[i].strike = data[i].strike + epsilon;
+        data[i].r = data[i].r + epsilon;
+        data[i].divq = data[i].divq + epsilon;
+        data[i].v = data[i].v + epsilon;
+        data[i].t = data[i].t + epsilon;
+        // data[loopnum].OptionType;
+        data[i].divs = data[i].divs + epsilon;
+        // data[loopnum].DGrefval = data[loopnum].DGrefval + epsilon;
+    }
+#endif
     rv = fclose(file);
     if(rv != 0) {
       printf("ERROR: Unable to close file `%s'.\n", inputFile);
