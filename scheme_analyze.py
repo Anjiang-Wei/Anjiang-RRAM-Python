@@ -1,15 +1,18 @@
+import pprint
 logfiles = [
-    # 'testlog/13scheme_test_100_9_6_Dec6',
-    # 'testlog/13scheme_test_100_10_7_Dec6',
-    # 'testlog/13scheme_test_100_11_8_Dec6',
-    # 'testlog/13scheme_test_100_12_9_Dec6',
-    # 'testlog/13scheme_test_100_13_10_Dec6',
-    # 'testlog/13scheme_test_100_14_11_Dec6',
-    # 'testlog/13scheme_test_100_15_12_Dec6',
-    # 'testlog/13scheme_test_100_16_13_Dec6',
-    # 'testlog/13scheme_test_100_17_14_Dec6',
-    # 'testlog/13scheme_test_100_18_15_Dec6',
-    # 'testlog/13scheme_test_100_19_16_Dec6',
+    'testlog/13scheme_test_100_9_6_Dec6',
+    'testlog/13scheme_test_100_10_7_Dec6',
+    'testlog/13scheme_test_100_11_8_Dec6',
+    'testlog/13scheme_test_100_12_9_Dec6',
+    'testlog/13scheme_test_100_13_10_Dec6',
+    'testlog/13scheme_test_100_14_11_Dec6',
+    'testlog/13scheme_test_100_15_12_Dec6',
+    'testlog/13scheme_test_100_16_13_Dec6',
+    'testlog/13scheme_test_100_17_14_Dec6',
+    'testlog/13scheme_test_100_18_15_Dec6',
+    'testlog/13scheme_test_100_19_16_Dec6'
+]
+logfiles2 = [
     'testlog/13scheme_test_100_20_4_Dec10',
     'testlog/13scheme_test_100_21_5_Dec10',
     'testlog/13scheme_test_100_22_6_Dec10',
@@ -38,6 +41,7 @@ test_scheme_files = [
 '''
 
 timestamp = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
+num_cells = 100
 
 all_lows = []
 dead_cells = []
@@ -88,18 +92,20 @@ class Result(object):
             if write_failrate != 0:
                 print(f"P(read_fail | write_fail) = {both_fail_prob}/{write_failrate} = {both_fail_prob/write_failrate}")
     
-    def report_by_elasped_time(results, num_cat, only_report=None, hint=""):
+    def report_by_elasped_time(results, num_cat, only_report=None, hint="", level_num=10):
         # results are only about read, assuming all read for same address are consecutive
         # num_cat is the number of timestamps
         categorized = {}
         for i in range(num_cat):
             categorized[i] = []
-        assert len(results) % num_cat == 0
+        # print(f"{len(results)} / ({num_cat} * {level_num})")
+        tested_cells = len(results) / (num_cat * level_num)
+        assert num_cells - tested_cells <= 1, f"{num_cells}, {tested_cells}"
         for i in range(0, len(results)):
             categorized[i%num_cat].append(results[i])
         if only_report is not None:
-            Result.compute_prob(categorized[only_report], hint)
-            return
+            _, res = Result.compute_prob(categorized[only_report], hint)
+            return res
         for i in range(num_cat):
             Result.compute_prob(categorized[i], "timebin_" + str(i))
 
@@ -169,18 +175,22 @@ def dead_cell_init(logdir=""):
 
 if __name__ == "__main__":
     dead_cell_init()
-    for i in range(len(logfiles)):
-        clear()
-        data_init(logfiles[i])
-        # init_bad = Result.compute_prob(Result.init, "init")
-        # write_bad = Result.compute_prob(Result.write, "write")
-        # read_bad = Result.compute_prob(Result.read, "read")
-        # all_bad = Result.compute_prob(Result.all, "all")
-        # Result.analyze_level_prob(Result.all)
-        # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
-        # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
-        Result.report_by_elasped_time(Result.read, len(timestamp) - 1, only_report=5, hint=str(i + 4))
-        # print(sorted(set(init_bad)))
-        # print(sorted(set(write_bad)))
-        # print(sorted(set(read_bad)))
-        # print(sorted(set(all_bad)))
+    map_report = {}
+    our = True
+    if our:
+        for i in range(len(logfiles)):
+            clear()
+            data_init(logfiles[i])
+            # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
+            # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
+            res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+6), level_num=i+6)
+            map_report[i+6] = 1-res
+    else:
+        for i in range(len(logfiles2)):
+            clear()
+            data_init(logfiles2[i])
+            # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
+            # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
+            res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
+            map_report[i+4] = 1-res
+    pprint.pprint(map_report)
