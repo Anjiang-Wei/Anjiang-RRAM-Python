@@ -63,26 +63,83 @@ def channel_capacity(n, m, P, sum_x=1):
         return prob.status, np.nan, np.nan
 
 def compute_level():
-    levels = 4
-    r = 0.9
-    n = levels # input symbols
-    m = levels # output symbols
-    # $p_{ij} = \mathbb{P}(Y(t)=i | X(t)=j)$
-    P = np.zeros((levels,levels))
-    for i in range(levels):
-        P[i][i] = r
-        if i == 0:
-            P[i+1][i] = 1-r
-        elif i == levels-1:
-            P[i-1][i] = 1-r
-        else:
-            P[i-1][i] = (1-r)/2
-            P[i+1][i] = (1-r)/2
-    print(P)
-    stat, C, x = channel_capacity(n, m, P)
-    print('Problem status: ',stat)
-    print('Optimal value of C = {:.4g}'.format(C))
-    print('Optimal variable x = \n', x)
+    ours_1 = {4: 1.0, # manually added
+            5: 1.0, # manually added
+            6: 0.995,
+            7: 0.9885714285714285,
+            8: 0.9825,
+            9: 0.9811111111111112,
+            10: 0.95,
+            11: 0.9581818181818181,
+            12: 0.9341666666666667,
+            13: 0.926923076923077,
+            14: 0.9185714285714286,
+            15: 0.8986666666666667,
+            16: 0.878125}
+    ours_10 = {4: 1.0,
+            5: 1.0,
+            6: 0.9833333333333333,
+            7: 0.9671428571428572,
+            8: 0.94875,
+            9: 0.9366666666666666,
+            10: 0.915,
+            11: 0.9027272727272727,
+            12: 0.8733333333333333,
+            13: 0.8576923076923078,
+            14: 0.85,
+            15: 0.7866666666666666,
+            16: 0.781875}
+    sba_1 =  {4: 0.9075,
+            5: 0.9,
+            6: 0.91,
+            7: 0.9114285714285715,
+            8: 0.8888888888888888,
+            9: 0.8611111111111112,
+            10: 0.88,
+            11: 0.8927272727272727,
+            12: 0.8666666666666667,
+            13: 0.8392307692307692,
+            14: 0.8514285714285714,
+            15: 0.8200000000000001,
+            16: 0.815625}
+    sba_10 = {4: 0.9025,
+            5: 0.868,
+            6: 0.87,
+            7: 0.8542857142857143,
+            8: 0.8371212121212122,
+            9: 0.7911111111111111,
+            10: 0.798,
+            11: 0.8045454545454546,
+            12: 0.7658333333333334,
+            13: 0.7384615384615385,
+            14: 0.7235714285714285,
+            15: 0.688,
+            16: 0.68125}
+    to_try_dict = [ours_1, sba_1, ours_10, sba_10]
+    for try_dict in to_try_dict:
+        for levels in range(4, 17):
+            r = try_dict[levels]
+            n = levels # input symbols
+            m = levels # output symbols
+            # $p_{ij} = \mathbb{P}(Y(t)=i | X(t)=j)$
+            P = np.zeros((levels,levels))
+            for i in range(levels):
+                P[i][i] = r
+                if i == 0:
+                    P[i+1][i] = 1-r
+                elif i == levels-1:
+                    P[i-1][i] = 1-r
+                else:
+                    P[i-1][i] = (1-r)/2
+                    P[i+1][i] = (1-r)/2
+            # if levels <= 6:
+            #     print(P)
+            stat, C, x = channel_capacity(n, m, P)
+            assert stat == "optimal"
+            print('level = {:d}, C = {:.4f}'.format(levels, C))
+            # print('Optimal variable x = \n', x)
+        print("=============")
+
 
 def test():
     n = 2
@@ -116,5 +173,5 @@ def test():
     print(x)
 
 if __name__ == "__main__":
-    test()
-    # compute_level()
+    # test()
+    compute_level()

@@ -182,6 +182,7 @@ if __name__ == "__main__":
             clear()
             data_init(logfiles[i])
             # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
+            # 4: 1s, 7: 10s
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
             res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+6), level_num=i+6)
             map_report[i+6] = 1-res
