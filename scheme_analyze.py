@@ -1,4 +1,5 @@
 import pprint
+import numpy as np
 logfiles = [
     'testlog/13scheme_test_100_9_6_Dec6',
     'testlog/13scheme_test_100_10_7_Dec6',
@@ -173,10 +174,35 @@ def dead_cell_init(logdir=""):
     print(f'Dead cell initialization finished: {len(dead_cells)} are dead')
 
 
+def gen_matrix(read_list, isOur, all_level):
+    lows = sorted(list(set(map(lambda x: x.low, read_list))))
+    highs = sorted(list(set(map(lambda x: x.high, read_list))))
+    assert len(lows) == len(highs)
+    num_levels = len(lows)
+    assert all_level == num_levels
+    P = np.zeros((num_levels, num_levels))
+    for j in range(num_levels): # target value is j level
+        input_j = list(filter(lambda x: x.low == lows[j], read_list))
+        input_j_ = list(filter(lambda x: x.high == highs[j], read_list))
+        assert len(input_j) == len(input_j_)
+        for i in range(num_levels): # final written value is i level
+            output_i = list(filter(lambda x: lows[i] <= x.final and x.final < highs[i], input_j))
+            prob = len(output_i) / len(input_j)
+            P[i][j] = prob
+    # print(P.tolist())
+    to_write = []
+    for i in range(num_levels):
+        to_write.append(",".join(map(str, P[i])) + "\n")
+    with open("capacity/" + ("ours" if isOur else "SBA") + str(all_level), "w") as f:
+        f.writelines(to_write)
+    # print(f"Success Rate for {num_levels}: ",
+    #     np.mean(list(map(lambda x: P[x][x], [k for k in range(0, num_levels)]))))
+
+
 if __name__ == "__main__":
     dead_cell_init()
     map_report = {}
-    our = True
+    our = False
     if our:
         for i in range(len(logfiles)):
             clear()
@@ -185,7 +211,8 @@ if __name__ == "__main__":
             # 4: 1s, 7: 10s
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
             res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+6), level_num=i+6)
-            map_report[i+6] = 1-res
+            map_report[i+6] = res
+            gen_matrix(Result.read, our, i+6)
     else:
         for i in range(len(logfiles2)):
             clear()
@@ -193,5 +220,6 @@ if __name__ == "__main__":
             # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
             res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
-            map_report[i+4] = 1-res
-    pprint.pprint(map_report)
+            map_report[i+4] = res
+            gen_matrix(Result.read, our, i+4)
+    # pprint.pprint(map_report)
