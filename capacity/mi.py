@@ -140,6 +140,27 @@ def compute_level():
             # print('Optimal variable x = \n', x)
         print("=============")
 
+def matrix_from_file(filename, level):
+    with open(filename, "r") as fin:
+            lines = fin.readlines()
+            assert len(lines) == level
+            P = np.zeros((level, level))
+            for i in range(level):
+                line = list(map(float, lines[i].split(",")))
+                assert len(line) == level
+                for j in range(level):
+                    P[i][j] = line[j]
+    return P
+
+
+def compute_matrix(isOur=True):
+    for level in range(6, 17):
+        filename = "capacity/" + ("ours" if isOur else "SBA") + str(level)
+        P = matrix_from_file(filename, level)
+        stat, C, x = channel_capacity(level, level, P)
+        assert stat == "optimal"
+        print(("our" if isOur else "SBA") + ' level = {:d}, C = {:.4f}'.format(level, C))
+
 
 def test():
     n = 2
@@ -174,4 +195,7 @@ def test():
 
 if __name__ == "__main__":
     # test()
-    compute_level()
+    # compute_level()
+    compute_matrix(True)
+    print("===============")
+    compute_matrix(False)
