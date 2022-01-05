@@ -53,7 +53,7 @@ def select_ratio(candidates, intended_uber, RBER):
     return res
 
 def best_overhead(candidates):
-    minimum = 10
+    minimum = 10e6
     best_cand = []
     for cand_uber in candidates:
         cand, uber = cand_uber
@@ -111,8 +111,8 @@ if __name__ == "__main__":
         require_uber = 1e-14
         res = get_all_candidates(intended_q)
         res = select_ratio(res, require_uber, rber)
+        print(f"q={intended_q}, n, k, d, uber<{require_uber}, candidates = {len(res)}")
         cand, overhead = best_overhead(res)
-        print(f"q={intended_q}, n, k, d, uber<{require_uber}")
         if len(cand) == 0:
             print("no solution")
         else:
