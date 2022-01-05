@@ -1,6 +1,7 @@
 from scipy.special import comb
 import pickle
 import math
+import numpy as np
 
 db = {}
 # (q, n, k) --> d
@@ -26,28 +27,28 @@ def load_db():
         db = pickle.load(fin)
 
 
-def get_all_candidates(prune=False):
+def get_all_candidates(intended_q=None):
     res = []
     for key in db.keys():
         q, n, k = key
         d = db[key]
         assert d <= n - k + 1
-        if prune:
-            if d == n - k + 1:
-                res.append((q, n, k, d))
-        else:
+        if intended_q == None:
             res.append((q, n, k, d))
+        else:
+            if q == intended_q:
+                res.append((q, n, k, d))
     return res
 
-def select_ratio(candidates, ratio):
+def select_ratio(candidates, intended_uber, RBER):
     res = []
     for cand in candidates:
         q, n, k, d = cand
-        p_cw = P_cw(n, int((d-1)/2), 0.01)
+        p_cw = P_cw(n, int((d-1)/2), RBER)
         # User_Data_bits_per_CW = log(pow(q^m, k), base=2) = k / log(2, base=q^m)
         bits_per_cw = k / math.log(2, q)
         uber = p_cw / bits_per_cw
-        if uber <= ratio:
+        if uber <= intended_uber:
             res.append((cand, uber))
     return res
 
@@ -66,19 +67,53 @@ def best_overhead(candidates):
     return best_cand, minimum
 
 
+all_files = []
+
+def get_matrix_from_file(filename):
+    with open(filename, "r") as fin:
+        lines = fin.readlines()
+        n = len(lines)
+        matrix = np.zeros((n, n))
+        for i in range(n):
+            line = list((map(float, lines[i].split(","))))
+            assert len(line) == n
+            for j in range(n):
+                matrix[i][j] = line[j]
+    return matrix
+            
+def get_rber_from_matrix(matrix):
+    '''
+    worst case analysis
+    '''
+    n = len(matrix)
+    minimum_diag = 1.0
+    for i in range(n):
+        elem = matrix[i][i]
+        minimum_diag = min(elem, minimum_diag)
+    return n, 1.0 - minimum_diag
+
+def get_all_q_uber():
+    ours_list = ["ours" + str(i) for i in range(6, 17)]
+    # sba_list = ["SBA" + str(i) for i in range(4, 17)]
+    all_files.extend(ours_list)
+    # all_files.extend(sba_list)
+    res = []
+    for f in all_files:
+        matrix = get_matrix_from_file(f)
+        n, rber = get_rber_from_matrix(matrix)
+        # print(n, rber, f)
+        res.append((n, rber))
+    return res
+
 if __name__ == "__main__":
     load_db()
-    res = get_all_candidates(prune=False)
-    res = select_ratio(res, 1e-16)
-    cand, overhead = best_overhead(res)
-    print(len(cand), overhead)
-    print("q, n, k, d, uber")
-    print(cand)
-    # RBER: 0.01
-    # With Pruning:
-    # No
-
-    # Without Pruning:
-    # 1 1.6538461538461537
-    # q, n, k, d, uber
-    # [(16, 129, 78, 33, 7.857483952855776e-17)]
+    for intended_q, rber in get_all_q_uber():
+        require_uber = 1e-14
+        res = get_all_candidates(intended_q)
+        res = select_ratio(res, require_uber, rber)
+        cand, overhead = best_overhead(res)
+        print(f"q={intended_q}, n, k, d, uber<{require_uber}")
+        if len(cand) == 0:
+            print("no solution")
+        else:
+            print(cand, f"overhead={overhead}")
