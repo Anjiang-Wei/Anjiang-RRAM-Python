@@ -5,8 +5,7 @@ import numpy as np
 
 db = {}
 # (q, n, k) --> d
-# The bound: d <= n - k + 1
-# smallest overhead: 1 - k / n
+# overhead: n / k
 
 def P_cw(N, E, RBER):
     '''
