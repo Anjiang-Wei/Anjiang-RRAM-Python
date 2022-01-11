@@ -104,6 +104,41 @@ def get_all_q_uber():
         res.append((n, rber))
     return res
 
+def pick_e(I_data, q):
+    pass
+
+def pick_mp(n_p, q):
+    pass
+
+def pick_nkd(k_max, p_rel):
+    pass
+
+def pick_ma(n_a, q):
+    pass
+
+def tuning_algorithm(n_max, p_rel, I_data, n_p, n_a):
+    '''
+    Arg list:
+    n_max: # maximum fp values for batched read
+    p_rel: spec for reliable storage, UBER
+    I_data: tuple, range of data
+    n_p: number of precise digits (base-10)
+    n_a: number of approximate digits (base-10)
+
+    Other args:
+    m_p: # precise mantissa
+    m_a: # approximate mantissa
+    e: # exponent bits
+    q: base (q^m)
+    <n, k, d>: linear code params
+    '''
+    for q, rber in get_all_q_uber():
+        e = pick_e(I_data, q)
+        m_p = pick_mp(n_p, q)
+        n, k, d = pick_nkd(n_max * (e+m_p+1), p_rel)
+        m_a = pick_ma(n_a, q)
+
+
 if __name__ == "__main__":
     load_db()
     for intended_q, rber in get_all_q_uber():
