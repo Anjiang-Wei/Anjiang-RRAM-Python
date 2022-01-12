@@ -2,6 +2,7 @@ from scipy.special import comb
 import pickle
 import math
 import numpy as np
+import pprint
 
 db = {}
 # (q, n, k) --> d
@@ -51,6 +52,15 @@ def select_ratio(candidates, intended_uber, RBER):
             res.append((cand, uber))
     return res
 
+def select_kmax(candidates, k_max):
+    res = []
+    for cand_uber in candidates:
+        cand, uber = cand_uber
+        q, n, k, d = cand
+        if k <= k_max:
+            res.append(cand_uber)
+    return res
+
 def best_overhead(candidates):
     minimum = 10e6
     best_cand = []
@@ -64,6 +74,18 @@ def best_overhead(candidates):
         elif overhead == minimum:
             best_cand.append((q, n, k, d, uber))
     return best_cand, minimum
+
+def minimize_n_k(candidates):
+    minimum = 10e6
+    best_cand = [0, 0, 0]
+    for cand_uber in candidates:
+        cand, uber = cand_uber
+        q, n, k, d = cand
+        overhead = n / k
+        if overhead < minimum:
+            minimum = overhead
+            best_cand = [n, k, d]
+    return best_cand
 
 
 all_files = []
@@ -105,16 +127,41 @@ def get_all_q_uber():
     return res
 
 def pick_e(I_data, q):
-    pass
+    low, high = I_data
+    low, high = abs(low), abs(high)
+    value = max(low, high)
+    # print(f"value = {value}")
+    for e_bit in range(1, 8):
+        bias = pow(q, e_bit-1) - 1
+        e_max = str(q-1) * e_bit
+        e_max = int(e_max, q)
+        exp = e_max - bias
+        max_value = pow(q, exp) * q
+        # print(f"e_bit = {e_bit}, e_max = {e_max}, exp = {exp}, max_value = {max_value}")
+        if max_value > value:
+            return e_bit
+    raise Exception
 
 def pick_mp(n_p, q):
-    pass
+    return int(n_p * math.log(10, q)) + 1
 
-def pick_nkd(k_max, p_rel):
-    pass
+def pick_nkd(k_max, p_rel, q, rber):
+    '''
+    k <= k_max, fail_prob <= p_rel, minimize n / k
+    q: base
+    rber: prob of level drift
+    '''
+    res = get_all_candidates(intended_q=q)
+    # print(len(res))
+    res = select_ratio(res, p_rel, rber)
+    # print(len(res))
+    res = select_kmax(res, k_max)
+    # print(len(res))
+    n, k, d = minimize_n_k(res)
+    return n, k, d
 
 def pick_ma(n_a, q):
-    pass
+    return pick_mp(n_a, q)
 
 def tuning_algorithm(n_max, p_rel, I_data, n_p, n_a):
     '''
@@ -126,28 +173,24 @@ def tuning_algorithm(n_max, p_rel, I_data, n_p, n_a):
     n_a: number of approximate digits (base-10)
 
     Other args:
+    q: base (q^m)
+    rber: level drift prob
+    e: # exponent bits
     m_p: # precise mantissa
     m_a: # approximate mantissa
-    e: # exponent bits
-    q: base (q^m)
     <n, k, d>: linear code params
     '''
+    res = []
     for q, rber in get_all_q_uber():
         e = pick_e(I_data, q)
         m_p = pick_mp(n_p, q)
-        n, k, d = pick_nkd(n_max * (e+m_p+1), p_rel)
+        n, k, d = pick_nkd(n_max * (e+m_p+1), p_rel, q, rber)
         m_a = pick_ma(n_a, q)
+        res.append((q, rber, e, m_p, m_a, (n, k, d)))
+    return res
 
 
 if __name__ == "__main__":
     load_db()
-    for intended_q, rber in get_all_q_uber():
-        require_uber = 1e-14
-        res = get_all_candidates(intended_q)
-        res = select_ratio(res, require_uber, rber)
-        print(f"q={intended_q}, n, k, d, uber<{require_uber}, candidates = {len(res)}")
-        cand, overhead = best_overhead(res)
-        if len(cand) == 0:
-            print("no solution")
-        else:
-            print(cand, f"overhead={overhead}")
+    print("q, rber, e, m_p, m_a, (n, k, d)")
+    pprint.pprint(tuning_algorithm(100, 1e-12, (-1e5, 1e5), 4, 5))
