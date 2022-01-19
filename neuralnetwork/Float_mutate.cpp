@@ -26,6 +26,9 @@ int main(int argc, char* argv[]) {
     raw_ber = atof(argv[9]);
 
     vector<float> all_floats;
+
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
     
     float x;
     while (infile >> x) {

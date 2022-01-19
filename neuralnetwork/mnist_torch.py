@@ -77,7 +77,7 @@ def test(model, device, test_loader):
 
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
-        100. * correct / len(test_loader.dataset)))
+        100. * correct / len(test_loader.dataset)), flush=True)
 
 
 def main():
@@ -165,18 +165,18 @@ def test_net():
     # print("===========Original============")
     # model.load_state_dict(torch.load(original_model))
     # test(model, device, test_loader)
-    # # fault_inject()
-    print("===========Fault Injected==============")
+    # fault_inject()
+    print("===========Fault Injected==============", flush=True)
     model.load_state_dict(torch.load(mutate_model))
     test(model, device, test_loader)
 
 def dump_float():
     dump_load.dump_net_from_path(original_model, original_float)
-    print("Dump finished")
+    print("Dump finished", flush=True)
 
 def load_float():
     dump_load.load_net_from_float(mutate_float, mutate_model)
-    print("Load finished")
+    print("Load finished", flush=True)
 
 
 if __name__ == '__main__':
@@ -185,17 +185,18 @@ if __name__ == '__main__':
     # fault_inject()
     
     # dump_float()
-    R, E, M = 10, 1, 5
-    m_p, m_a = 5, 0
-    spec_ber, raw_ber = 1e-13, 0.1
-    print(f"R={R}, E={E}, M={M}, m_p_start={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}")
-    while m_p >= 0:
-        print(f"Current configuration: M={M}, m_p={m_p}, m_a={m_a}")
-        subprocess.run(["./a.out", original_float, mutate_float, str(R), str(E), str(M), 
-                str(m_p), str(m_a), str(spec_ber), str(raw_ber)])
-        print("Mutation finished")
-        load_float()
-        test_net()
-        M -= 1
-        m_p -= 1
+    for E in [3, 2, 1]:
+        R, M = 10, 8
+        m_p, m_a = 5, 0
+        spec_ber, raw_ber = 1e-13, 0.1
+        print(f"R={R}, E={E}, M={M}, m_p_start={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}", flush=True)
+        while m_p >= 4:
+            print(f"Current configuration: E={E}, M={M}, m_p={m_p}, m_a={m_a}", flush=True)
+            subprocess.run(["./a.out", original_float, mutate_float, str(R), str(E), str(M), 
+                    str(m_p), str(m_a), str(spec_ber), str(raw_ber)])
+            print("Mutation finished", flush=True)
+            load_float()
+            test_net()
+            M -= 1
+            m_p -= 1
     

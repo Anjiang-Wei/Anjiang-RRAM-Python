@@ -13,7 +13,7 @@ using namespace std;
 #define maxE 20
 #define maxM 40
 
-//#define DEBUG
+// #define DEBUG
 #define inf2zero
 
 class Rfloat {
@@ -80,20 +80,34 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
     val = fabs(val);
     int y = (int) (log(val) / log(R));
     int exp_val = y + bias;
-    for (int i = E-1; i >= 0; i--) {
-        // cout << "exp_val % R = " << exp_val % R << endl;
-        exp[i] = exp_val % R;
-        exp_val = exp_val / R;
-    }
-    float R_to_y = pow(R, y);
-    float remainder = val / R_to_y;
-    leadingM = (int) remainder;
-    remainder -= leadingM;
-    // cout << "remainder = " << remainder << endl;
-    for (int i = 0; i < M; i++) {
-        remainder *= R;
-        mant[i] = (int) remainder;
-        remainder -= (int) remainder;
+    if (exp_val < 0) { // for very small numbers, just convert them to zero
+        for (int i = E-1; i >= 0; i--) {
+            exp[i] = 0;
+        }
+        leadingM = 0;
+        for (int i = 0; i < M; i++) {
+            mant[i] = 0;
+        }
+    } else {
+        for (int i = E-1; i >= 0; i--) {
+            #ifdef DEBUG
+                cout << "exp_val % R = " << exp_val % R << endl;
+            #endif
+            exp[i] = exp_val % R;
+            exp_val = exp_val / R;
+        }
+        float R_to_y = pow(R, y);
+        float remainder = val / R_to_y;
+        leadingM = (int) remainder;
+        remainder -= leadingM;
+        #ifdef DEBUG
+            cout << "remainder = " << remainder << endl;
+        #endif
+        for (int i = 0; i < M; i++) {
+            remainder *= R;
+            mant[i] = (int) remainder;
+            remainder -= (int) remainder;
+        }
     }
 }
 
@@ -217,6 +231,7 @@ void Rfloat::mutate(int m_p, int m_a, float spec_ber, float raw_ber) {
     #ifdef DEBUG
     cout << "Prior" << endl;
     print_uint8(exp, E);
+    print_uint8(mant, M);
     #endif
     for (int i = 0; i < E; i++) {
         if (random_bool(spec_ber)) {
@@ -242,6 +257,7 @@ void Rfloat::mutate(int m_p, int m_a, float spec_ber, float raw_ber) {
     #ifdef DEBUG
     cout << "After" << endl;
     print_uint8(exp, E);
+    print_uint8(mant, M);
     cout << "==============" << endl;
     #endif
 }
@@ -273,6 +289,9 @@ static vector<float> mutate_vec_float(vector<float> input,
         Rfloat a = Rfloat(R_, E_, M_, val);
         a.mutate(m_p, m_a, spec_ber, raw_ber);
         input[i] = a.from_Rfloat();
+        #ifdef DEBUG
+            cout << val << " " << input[i] << endl;
+        #endif
     }
     return input;
 }
