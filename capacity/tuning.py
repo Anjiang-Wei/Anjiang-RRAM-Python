@@ -193,4 +193,4 @@ def tuning_algorithm(n_max, p_rel, I_data, n_p, n_a):
 if __name__ == "__main__":
     load_db()
     print("q, rber, e, m_p, m_a, (n, k, d)")
-    pprint.pprint(tuning_algorithm(100, 1e-12, (-1e6, 1e6), 4, 5))
+    pprint.pprint(tuning_algorithm(100, 1e-13, (-0.5, 0.5), 4, 5))

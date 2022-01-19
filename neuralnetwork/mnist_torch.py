@@ -162,10 +162,10 @@ def test_net():
     dataset2 = datasets.MNIST('./data', train=False, download=True,
                        transform=transform)
     test_loader = torch.utils.data.DataLoader(dataset2, batch_size=1000)
-    print("===========Original============")
-    model.load_state_dict(torch.load(original_model))
-    test(model, device, test_loader)
-    # fault_inject()
+    # print("===========Original============")
+    # model.load_state_dict(torch.load(original_model))
+    # test(model, device, test_loader)
+    # # fault_inject()
     print("===========Fault Injected==============")
     model.load_state_dict(torch.load(mutate_model))
     test(model, device, test_loader)
@@ -185,7 +185,17 @@ if __name__ == '__main__':
     # fault_inject()
     
     # dump_float()
-    subprocess.run(["./a.out", original_float, mutate_float])
-    print("Mutation finished")
-    load_float()
-    test_net()
+    R, E, M = 10, 1, 5
+    m_p, m_a = 5, 0
+    spec_ber, raw_ber = 1e-13, 0.1
+    print(f"R={R}, E={E}, M={M}, m_p_start={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}")
+    while m_p >= 0:
+        print(f"Current configuration: M={M}, m_p={m_p}, m_a={m_a}")
+        subprocess.run(["./a.out", original_float, mutate_float, str(R), str(E), str(M), 
+                str(m_p), str(m_a), str(spec_ber), str(raw_ber)])
+        print("Mutation finished")
+        load_float()
+        test_net()
+        M -= 1
+        m_p -= 1
+    
