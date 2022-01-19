@@ -12,16 +12,18 @@ int main(int argc, char* argv[]) {
     outfile.open(argv[2]);
 
     int R; int E; int M;
-    int rel_bits; int approx_bits;
-    float rel_ber; float approx_ber;
+    int m_p; int m_a; // m_p + m_a = M
+    float spec_ber; float raw_ber;
 
     R = atoi(argv[3]);
     E = atoi(argv[4]);
     M = atoi(argv[5]);
-    rel_bits = atoi(argv[6]);
-    approx_bits = atoi(argv[7]);
-    rel_ber = atof(argv[8]);
-    approx_ber = atof(argv[9]);
+    m_p = atoi(argv[6]);
+    m_a = atoi(argv[7]);
+    assert(m_p + m_a == M);
+
+    spec_ber = atof(argv[8]);
+    raw_ber = atof(argv[9]);
 
     vector<float> all_floats;
     
@@ -29,7 +31,7 @@ int main(int argc, char* argv[]) {
     while (infile >> x) {
         all_floats.push_back(x);
     }
-    auto output = mutate_vec_float(all_floats, R, E, M, 0.01, 0.5, 0);
+    auto output = mutate_vec_float(all_floats, R, E, M, m_p, m_a, spec_ber, raw_ber);
 
     for (auto item: output) {
         outfile << item << endl;
