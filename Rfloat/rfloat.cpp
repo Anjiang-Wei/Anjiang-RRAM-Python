@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+#include <random>
 using namespace std;
 
 #define maxE 20
@@ -19,7 +20,7 @@ class Rfloat {
     public: 
         uint8_t R; // radix
         uint8_t E; // number of bits in exponent
-        uint8_t M; // number of bits in mantissa
+        uint8_t M; // number of bits in mantissa. The actual bits for mantissa is: (leadingM) 1 + M
         bool sign;
         int bias; // to be deducted when computing exponent
         uint8_t leadingM; // within [1, R-1]
@@ -35,11 +36,11 @@ class Rfloat {
 
         void print();
         float from_Rfloat();
-        void mutate(float exp_ber, float mant_ber, float signleading_ber);
+        void mutate(int m_p, int m_a, float spec_ber, float raw_ber);
         static vector<Rfloat> mutate_vec_Rfloat(vector<Rfloat> input, 
-                        float exp_ber, float mant_ber, float signleading_ber);
-        static vector<float> mutate_vec_float(vector<float> input, uint8_t R, uint8_t E, uint8_t M, 
-                        float exp_ber, float mant_ber, float signleading_ber);
+                        int m_p, int m_a, float spec_ber, float raw_ber);
+        static vector<float> mutate_vec_float(vector<float> input,
+                        int R, int E, int M, int m_p, int m_a, float spec_ber, float raw_ber);
 };
 
 Rfloat::Rfloat() {
@@ -181,8 +182,12 @@ float Rfloat::from_Rfloat() {
 }
 
 inline bool random_bool(float ber) {
-    srand(time(0));
-    bool TrueFalse = (rand() % 100) < (ber * 100);
+    // srand(time(0));
+    random_device rd;  // Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+    std::uniform_real_distribution<> dis(0.0, 1e15);
+    float rand_gen = dis(gen);
+    bool TrueFalse = rand_gen < (ber * 1e15);
     return TrueFalse;
 }
 
@@ -208,14 +213,30 @@ void print_uint8(uint8_t array[], int num) {
     cout << endl << "-------" << endl;
 }
 
-void Rfloat::mutate(float exp_ber, float mant_ber, float signleading_ber) {
+void Rfloat::mutate(int m_p, int m_a, float spec_ber, float raw_ber) {
     #ifdef DEBUG
     cout << "Prior" << endl;
     print_uint8(exp, E);
     #endif
     for (int i = 0; i < E; i++) {
-        if (random_bool(exp_ber)) {
+        if (random_bool(spec_ber)) {
             exp[i] = mutate_uint8(exp[i], R);
+        }
+    }
+    for (int i = 0; i < m_p; i++) {
+        if (random_bool(spec_ber)) {
+            if (i == 0) {
+                leadingM = mutate_uint8(leadingM, R);
+            } else {
+                mant[i-1] = mutate_uint8(mant[i-1], R);
+            }
+        }
+    }
+    for (int i = 0; i < m_a; i++) {
+        if (random_bool(raw_ber)) {
+            int start_idx = ((m_p - 1) > 0 ? (m_p - 1) : 0);
+            int cur_idx = start_idx + i;
+            mant[cur_idx] = mutate_uint8(mant[cur_idx], R);
         }
     }
     #ifdef DEBUG
@@ -223,31 +244,34 @@ void Rfloat::mutate(float exp_ber, float mant_ber, float signleading_ber) {
     print_uint8(exp, E);
     cout << "==============" << endl;
     #endif
-    for (int i = 0; i < M; i++) {
-        if (random_bool(mant_ber)) {
-            mant[i] = mutate_uint8(mant[i], R);
-        }
-    }
-    // TODO: implement signleading_ber mutation
 }
 
 static vector<Rfloat> mutate_vec_Rfloat(vector<Rfloat> input, 
-    float exp_ber, float mant_ber, float signleading_ber) {
+    int m_p, int m_a, float spec_ber, float raw_ber) {
     int size = input.size();
     for (int i = 0; i < size; i++) {
-        input[i].mutate(exp_ber, mant_ber, signleading_ber);
+        input[i].mutate(m_p, m_a, spec_ber, raw_ber);
     }
     return input;
 }
 
 
-static vector<float> mutate_vec_float(vector<float> input, uint8_t R, uint8_t E, uint8_t M, 
-    float exp_ber, float mant_ber, float signleading_ber) {
+static vector<float> mutate_vec_float(vector<float> input,
+    int R, int E, int M, int m_p, int m_a, float spec_ber, float raw_ber) {
+    /*
+    R, E, M: base, number of bits for exponent, mantissa [including leading] 
+    m_p, m_a: m_p + m_a = M; number of precise/approximate bits
+    spec_ber: specification for precise drift error probability
+    raw_ber: for the base R, the drift error probability 
+    */
     int size = input.size();
+    uint8_t R_ = (uint8_t) R;
+    uint8_t E_ = (uint8_t) E;
+    uint8_t M_ = (uint8_t) (M - 1);
     for (int i = 0; i < size; i++) {
         float val = input[i];
-        Rfloat a = Rfloat(R, E, M, val);
-        a.mutate(exp_ber, mant_ber, signleading_ber);
+        Rfloat a = Rfloat(R_, E_, M_, val);
+        a.mutate(m_p, m_a, spec_ber, raw_ber);
         input[i] = a.from_Rfloat();
     }
     return input;

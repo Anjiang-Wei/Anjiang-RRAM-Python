@@ -85,7 +85,9 @@ int main() {
         float a = RandomFloat(-100, 100);
         mutation_input.push_back(a);
     }
-    auto output = mutate_vec_float(mutation_input, 5, 3, 20, 0.1, 0.9, 0);
+    int R = 7, E = 3, M = 5, m_p = 1, m_a = 4;
+    float spec_ber = 1e-13, raw_ber = 0.1;
+    auto output = mutate_vec_float(mutation_input, R, E, M, m_p, m_a, spec_ber, raw_ber);
     for (int i = 0; i < output.size(); i++) {
         cout << mutation_input[i] << " " << output[i] << endl;
     }
