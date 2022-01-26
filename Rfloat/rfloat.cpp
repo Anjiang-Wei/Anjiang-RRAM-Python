@@ -16,6 +16,10 @@ using namespace std;
 // #define DEBUG
 #define inf2zero
 
+random_device rd;  // Will be used to obtain a seed for the random number engine
+std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+std::uniform_real_distribution<> dis(0.0, 1e15);
+
 class Rfloat {
     public: 
         uint8_t R; // radix
@@ -80,34 +84,29 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
     val = fabs(val);
     int y = (int) (log(val) / log(R));
     int exp_val = y + bias;
-    if (exp_val < 0) { // for very small numbers, just convert them to zero
-        for (int i = E-1; i >= 0; i--) {
-            exp[i] = 0;
-        }
-        leadingM = 0;
-        for (int i = 0; i < M; i++) {
-            mant[i] = 0;
-        }
-    } else {
-        for (int i = E-1; i >= 0; i--) {
-            #ifdef DEBUG
-                cout << "exp_val % R = " << exp_val % R << endl;
-            #endif
-            exp[i] = exp_val % R;
-            exp_val = exp_val / R;
-        }
-        float R_to_y = pow(R, y);
-        float remainder = val / R_to_y;
-        leadingM = (int) remainder;
-        remainder -= leadingM;
+    if (exp_val < 0) {
+        y = y - exp_val;
+        exp_val = 0;
+    }
+    for (int i = E-1; i >= 0; i--) {
         #ifdef DEBUG
-            cout << "remainder = " << remainder << endl;
+            cout << "exp_val % R = " << exp_val % R << endl;
         #endif
-        for (int i = 0; i < M; i++) {
-            remainder *= R;
-            mant[i] = (int) remainder;
-            remainder -= (int) remainder;
-        }
+        exp[i] = exp_val % R;
+        exp_val = exp_val / R;
+    }
+    float R_to_y = pow(R, y);
+    float remainder = val / R_to_y;
+    leadingM = (int) remainder;
+    assert(leadingM >= 0 && leadingM < R);
+    remainder -= leadingM;
+    #ifdef DEBUG
+        cout << "remainder = " << remainder << endl;
+    #endif
+    for (int i = 0; i < M; i++) {
+        remainder *= R;
+        mant[i] = (int) remainder;
+        remainder -= (int) remainder;
     }
 }
 
@@ -197,16 +196,13 @@ float Rfloat::from_Rfloat() {
 
 inline bool random_bool(float ber) {
     // srand(time(0));
-    random_device rd;  // Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-    std::uniform_real_distribution<> dis(0.0, 1e15);
     float rand_gen = dis(gen);
     bool TrueFalse = rand_gen < (ber * 1e15);
     return TrueFalse;
 }
 
 inline uint8_t mutate_uint8(uint8_t original, uint8_t R) {
-    srand(time(0));
+    // srand(time(0));
     if (original == 0)
         return original + 1;
     if (original == R - 1) {
