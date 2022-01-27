@@ -34,8 +34,9 @@ int main(int argc, char* argv[]) {
     while (infile >> x) {
         all_floats.push_back(x);
     }
-    cout << "Float_mutate configutation " << R << " " << E << " " << M
-         << " " << m_p  << " " <<  m_a  << " " << spec_ber  << " " << raw_ber << std::endl;
+    cout << "Float_mutate configutation " << argv[1] << " " << argv[2] << " " 
+        << R << " " << E << " " << M
+        << " " << m_p  << " " <<  m_a  << " " << spec_ber  << " " << raw_ber << std::endl;
     auto output = mutate_vec_float(all_floats, R, E, M, m_p, m_a, spec_ber, raw_ber);
 
     for (auto item: output) {

@@ -66,7 +66,7 @@ def load_net_from_float(float_file2, model_path2):
     cnt = 0
     for item in state_dict:
         cnt += 1
-        print(cnt, end=",", flush=True)
+        # print(cnt, end=",", flush=True)
         if not should_skip(item):
             v = state_dict[item]
             v2 = get_tensor(v)

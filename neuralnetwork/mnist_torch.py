@@ -75,9 +75,10 @@ def test(model, device, test_loader):
 
     test_loss /= len(test_loader.dataset)
 
-    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+    print('Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)), flush=True)
+    return correct / len(test_loader.dataset)
 
 
 def main():
@@ -166,18 +167,73 @@ def test_net():
     # model.load_state_dict(torch.load(original_model))
     # test(model, device, test_loader)
     # fault_inject()
-    print("===========Fault Injected==============", flush=True)
+    # print("Fault Injected", flush=True)
     model.load_state_dict(torch.load(mutate_model))
-    test(model, device, test_loader)
+    return test(model, device, test_loader)
 
 def dump_float():
     dump_load.dump_net_from_path(original_model, original_float)
-    print("Dump finished", flush=True)
+    # print("Dump finished", flush=True)
 
 def load_float():
     dump_load.load_net_from_float(mutate_float, mutate_model)
     print("Load finished", flush=True)
 
+def drop_bits(R, E, spec_ber, raw_ber, start_M, minimum_accuracy):
+    # R, E, M = 10, 1, 4
+    # m_p, m_a = 4, 0
+    # spec_ber, raw_ber = 1e-13, 0.1
+    M = start_M
+    m_p, m_a = M, 0
+    print(f"R={R}, E={E}, M={M}, m_p_start={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}", flush=True)
+    while m_p >= 0:
+        print(f"Current configuration: E={E}, M={M}, m_p={m_p}, m_a={m_a}", flush=True)
+        subprocess.run(["./a.out", original_float, mutate_float, str(R), str(E), str(M), 
+                str(m_p), str(m_a), str(spec_ber), str(raw_ber)])
+        load_float()
+        acc = test_net()
+        if acc >= minimum_accuracy:
+            start_M = M
+        else:
+            return start_M
+        M -= 1
+        m_p -= 1
+        print("------", flush=True)
+
+def drop_precise(R, E, spec_ber, raw_ber, start_M, minimum_accuracy):
+    # R, M = 10, 3
+    # m_p, m_a = 3, 0
+    # spec_ber, raw_ber = 1e-13, 0.1
+    M = start_M
+    m_p, m_a = M, 0
+    print(f"R={R}, E={E}, M={M}, m_p_start={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}", flush=True)
+    while m_p >= 0:
+        print(f"Current configuration: E={E}, M={M}, m_p={m_p}, m_a={m_a}", flush=True)
+        subprocess.run(["./a.out", original_float, mutate_float, str(R), str(E), str(M), 
+                str(m_p), str(m_a), str(spec_ber), str(raw_ber)])
+        load_float()
+        acc = test_net()
+        if acc >= minimum_accuracy:
+            start_M = m_p
+        else:
+            return start_M
+        m_p -= 1
+        m_a += 1
+        print("--------", flush=True)
+    return 0 # no precise mantissa
+
+# q, rber, e, m_p, m_a, (n, k, d)
+algo_res = [(6, 0.012499999999999956, 1, 6, 7, (0, 0, 0)),
+    (7, 0.02749999999999997, 1, 5, 6, (100, 33, 39)),
+    (8, 0.043749999999999956, 1, 5, 6, (129, 41, 53)),
+    (9, 0.043749999999999956, 1, 5, 6, (128, 43, 53)),
+    (10, 0.09999999999999998, 1, 5, 6, (0, 0, 0)),
+    (11, 0.15749999999999997, 1, 4, 5, (130, 6, 107)),
+    (12, 0.21250000000000002, 1, 4, 5, (0, 0, 0)),
+    (13, 0.16749999999999998, 1, 4, 5, (129, 5, 111)),
+    (14, 0.15874999999999995, 1, 4, 5, (0, 0, 0)),
+    (15, 0.23375, 1, 4, 5, (0, 0, 0)),
+    (16, 0.25125, 1, 4, 5, (0, 0, 0))]
 
 if __name__ == '__main__':
     # main()
@@ -185,18 +241,12 @@ if __name__ == '__main__':
     # fault_inject()
     
     # dump_float()
-    for E in [3, 2, 1]:
-        R, M = 10, 8
-        m_p, m_a = 5, 0
-        spec_ber, raw_ber = 1e-13, 0.1
-        print(f"R={R}, E={E}, M={M}, m_p_start={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}", flush=True)
-        while m_p >= 4:
-            print(f"Current configuration: E={E}, M={M}, m_p={m_p}, m_a={m_a}", flush=True)
-            subprocess.run(["./a.out", original_float, mutate_float, str(R), str(E), str(M), 
-                    str(m_p), str(m_a), str(spec_ber), str(raw_ber)])
-            print("Mutation finished", flush=True)
-            load_float()
-            test_net()
-            M -= 1
-            m_p -= 1
-    
+    for item in algo_res:
+        q, rber, e, _, __, code_param = item
+        if code_param == (0, 0, 0):
+            continue
+        print(f"-----------drop bits for R={q}, raw_ber={rber}, E={e}------", flush=True)
+        min_M = drop_bits(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=3, minimum_accuracy=0.98)
+        print(f"-----------drop precise bits for R={q}, raw_ber={rber}, E={e}, min_M={min_M}------", flush=True)
+        min_m_p = drop_precise(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=min_M, minimum_accuracy=0.98)
+        print(f"Config found: R={q}, raw_ber={rber}, E={e}, min_M={min_M}, min_m_p={min_m_p}", flush=True)
