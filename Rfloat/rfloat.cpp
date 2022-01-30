@@ -60,11 +60,17 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, bool sign_, uint8_t leadingM_
         mant[i] = mant_[i];
     }
     bias = (int) pow(R, E-1) - 1;
+    if (E == 0) {
+      bias = 0;
+    }
 }
 
 Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
     R = R_; E = E_; M = M_;
     bias = (int) pow(R, E-1) - 1;
+    if (E == 0) {
+      bias = 0;
+    }
     if (val == 0) {
         sign = false;
         leadingM = 0;
