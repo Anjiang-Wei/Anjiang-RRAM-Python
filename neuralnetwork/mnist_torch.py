@@ -11,6 +11,7 @@ from torch.optim.lr_scheduler import StepLR
 # from fault import mutate_tensor
 import dump_load
 import subprocess
+import pprint
 
 original_model = "mnist_torch.pt"
 original_float = "float"
@@ -223,17 +224,19 @@ def drop_precise(R, E, spec_ber, raw_ber, start_M, minimum_accuracy):
     return 0 # no precise mantissa
 
 # q, rber, e, m_p, m_a, (n, k, d)
-algo_res = [(6, 0.012499999999999956, 1, 6, 7, (0, 0, 0)),
-    (7, 0.02749999999999997, 1, 5, 6, (100, 33, 39)),
-    (8, 0.043749999999999956, 1, 5, 6, (129, 41, 53)),
-    (9, 0.043749999999999956, 1, 5, 6, (128, 43, 53)),
-    (10, 0.09999999999999998, 1, 5, 6, (0, 0, 0)),
-    (11, 0.15749999999999997, 1, 4, 5, (130, 6, 107)),
-    (12, 0.21250000000000002, 1, 4, 5, (0, 0, 0)),
-    (13, 0.16749999999999998, 1, 4, 5, (129, 5, 111)),
-    (14, 0.15874999999999995, 1, 4, 5, (0, 0, 0)),
-    (15, 0.23375, 1, 4, 5, (0, 0, 0)),
-    (16, 0.25125, 1, 4, 5, (0, 0, 0))]
+algo_res = {4: (0.003750000000000031, 0),
+ 5: (0.006249999999999978, 0),
+ 6: (0.012499999999999956, 0),
+ 7: (0.02749999999999997, 0),
+ 8: (0.043749999999999956, 0),
+ 9: (0.043749999999999956, 0),
+ 10: (0.09999999999999998, 0),
+ 11: (0.15749999999999997, 0),
+ 12: (0.21250000000000002, 0),
+ 13: (0.16749999999999998, 0),
+ 14: (0.15874999999999995, 0),
+ 15: (0.23375, 0),
+ 16: (0.25125, 0)}
 
 if __name__ == '__main__':
     # main()
@@ -241,12 +244,14 @@ if __name__ == '__main__':
     # fault_inject()
     
     # dump_float()
-    for item in algo_res:
-        q, rber, e, _, __, code_param = item
-        if code_param == (0, 0, 0):
-            continue
+    res = {}
+    for q, rber_e in algo_res.items():
+        rber, e = rber_e
         print(f"-----------drop bits for R={q}, raw_ber={rber}, E={e}------", flush=True)
-        min_M = drop_bits(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=3, minimum_accuracy=0.98)
+        min_M = drop_bits(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=4, minimum_accuracy=0.98)
         print(f"-----------drop precise bits for R={q}, raw_ber={rber}, E={e}, min_M={min_M}------", flush=True)
         min_m_p = drop_precise(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=min_M, minimum_accuracy=0.98)
         print(f"Config found: R={q}, raw_ber={rber}, E={e}, min_M={min_M}, min_m_p={min_m_p}", flush=True)
+        res[q] = (min_m_p, min_M-min_m_p)
+    print("q --> (m_p, m_a)")
+    pprint.pprint(res)
