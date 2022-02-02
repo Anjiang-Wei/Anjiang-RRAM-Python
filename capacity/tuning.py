@@ -145,14 +145,11 @@ def pick_e(I_data, q):
     raise Exception
 
 def compute_rber_e(I_data):
-    q2rber = {}
-    q2e = {}
+    q2rber_e = {}
     for q, rber in get_all_q_uber():
-        q2rber[q] = rber
         e = pick_e(I_data, q)
-        q2e[q] = e
-    pprint.pprint(q2rber)
-    pprint.pprint(q2e)
+        q2rber_e[q] = (rber, e)
+    pprint.pprint(q2rber_e)
 
 
 def pick_nkd(k_max, p_rel, q, rber):
