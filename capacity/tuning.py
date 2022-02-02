@@ -114,7 +114,7 @@ def get_rber_from_matrix(matrix):
     return n, 1.0 - minimum_diag
 
 def get_all_q_uber():
-    ours_list = ["ours" + str(i) for i in range(6, 17)]
+    ours_list = ["ours" + str(i) for i in range(4, 17)]
     # sba_list = ["SBA" + str(i) for i in range(4, 17)]
     all_files.extend(ours_list)
     # all_files.extend(sba_list)
@@ -131,6 +131,8 @@ def pick_e(I_data, q):
     low, high = abs(low), abs(high)
     value = max(low, high)
     # print(f"value = {value}")
+    if q > value: # e_bit = 0
+        return 0
     for e_bit in range(1, 8):
         bias = pow(q, e_bit-1) - 1
         e_max = str(q-1) * e_bit
@@ -142,8 +144,16 @@ def pick_e(I_data, q):
             return e_bit
     raise Exception
 
-def pick_mp(n_p, q):
-    return int(n_p * math.log(10, q)) + 1
+def compute_rber_e(I_data):
+    q2rber = {}
+    q2e = {}
+    for q, rber in get_all_q_uber():
+        q2rber[q] = rber
+        e = pick_e(I_data, q)
+        q2e[q] = e
+    pprint.pprint(q2rber)
+    pprint.pprint(q2e)
+
 
 def pick_nkd(k_max, p_rel, q, rber):
     '''
@@ -159,9 +169,6 @@ def pick_nkd(k_max, p_rel, q, rber):
     # print(len(res))
     n, k, d = minimize_n_k(res)
     return n, k, d
-
-def pick_ma(n_a, q):
-    return pick_mp(n_a, q)
 
 def tuning_algorithm(n_max, p_rel, I_data, n_p, n_a):
     '''
@@ -192,5 +199,6 @@ def tuning_algorithm(n_max, p_rel, I_data, n_p, n_a):
 
 if __name__ == "__main__":
     load_db()
-    print("q, rber, e, m_p, m_a, (n, k, d)")
-    pprint.pprint(tuning_algorithm(100, 1e-13, (-0.5, 0.5), 4, 5))
+    # print("q, rber, e, m_p, m_a, (n, k, d)")
+    computer_uber_e((-0.5, 0.5))
+    # pprint.pprint(tuning_algorithm(100, 1e-13, (-0.5, 0.5), 4, 5))
