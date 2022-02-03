@@ -52,40 +52,44 @@ def select_ratio(candidates, intended_uber, RBER):
             res.append((cand, uber))
     return res
 
-def select_kmax(candidates, k_max):
+
+def compute_blksize(q, e, m_p, k):
+    '''
+    the maximum integer x, such that
+    x * (e + m_p) + ceil(x / floor(log(q, base=2))) <= k
+
+    '''
+    x = 0
+    while True:
+        if x * (e + m_p) + math.ceil(x / math.floor(math.log(q, 2))) <= k:
+            x += 1
+        else:
+            break
+    return x - 1
+
+def select_blksize(candidates, n_max, e, m_p):
     res = []
     for cand_uber in candidates:
         cand, uber = cand_uber
         q, n, k, d = cand
-        if k <= k_max:
-            res.append(cand_uber)
+        blksize = compute_blksize(q, e, m_p, k)
+        if blksize <= n_max:
+            res.append((q, n, k, d, uber, blksize))
     return res
 
-def best_overhead(candidates):
-    minimum = 10e6
-    best_cand = []
-    for cand_uber in candidates:
-        cand, uber = cand_uber
-        q, n, k, d = cand
-        overhead = n / k
-        if overhead < minimum:
-            minimum = overhead
-            best_cand = [(q, n, k, d, uber)]
-        elif overhead == minimum:
-            best_cand.append((q, n, k, d, uber))
-    return best_cand, minimum
-
-def minimize_n_k(candidates):
-    minimum = 10e6
-    best_cand = [0, 0, 0]
-    for cand_uber in candidates:
-        cand, uber = cand_uber
-        q, n, k, d = cand
-        overhead = n / k
-        if overhead < minimum:
-            minimum = overhead
-            best_cand = [n, k, d]
-    return best_cand
+def minimum_overhead(candidates, total_floats, m_a):
+    '''
+    ceil((#total floats) / blksize ) ∗ n + # total floats * m_a
+    '''
+    res = ()
+    cur_best = 1e20
+    for param in candidates:
+        q, n, k, d, uber, blksize = param
+        overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
+        if overhead < cur_best:
+           res = (q, n, k, d, uber, blksize, overhead)
+           cur_best = overhead
+    return res
 
 
 all_files = []
@@ -101,7 +105,7 @@ def get_matrix_from_file(filename):
             for j in range(n):
                 matrix[i][j] = line[j]
     return matrix
-            
+
 def get_rber_from_matrix(matrix):
     '''
     worst case analysis
@@ -152,50 +156,77 @@ def compute_rber_e(I_data):
     pprint.pprint(q2rber_e)
 
 
-def pick_nkd(k_max, p_rel, q, rber):
+def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats):
     '''
-    k <= k_max, fail_prob <= p_rel, minimize n / k
+    n_max (maximum of block size)
+    fail_prob <= p_rel
     q: base
+    e: # exponent bits
+    m_p: # precise mantissa
     rber: prob of level drift
     '''
     res = get_all_candidates(intended_q=q)
-    # print(len(res))
-    res = select_ratio(res, p_rel, rber)
-    # print(len(res))
-    res = select_kmax(res, k_max)
-    # print(len(res))
-    n, k, d = minimize_n_k(res)
-    return n, k, d
+    # print("after q", len(res), flush=True)
+    res = select_ratio(res, p_rel, rber) # compute_uber
+    # print("after ratio", len(res), flush=True)
+    res = select_blksize(res, n_max, e, m_p) # compute_blksize
+    # print("after blksize", len(res), flush=True)
+    # (q, n, k, d, uber, blksize)
+    res = minimum_overhead(res, total_floats, m_a)
 
-def tuning_algorithm(n_max, p_rel, I_data, n_p, n_a):
+    return res
+
+def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats=1199882):
     '''
     Arg list:
     n_max: # maximum fp values for batched read
     p_rel: spec for reliable storage, UBER
-    I_data: tuple, range of data
-    n_p: number of precise digits (base-10)
-    n_a: number of approximate digits (base-10)
-
-    Other args:
     q: base (q^m)
-    rber: level drift prob
-    e: # exponent bits
     m_p: # precise mantissa
     m_a: # approximate mantissa
+
+    Other args:
+    rber: level drift prob
+    e: # exponent bits
     <n, k, d>: linear code params
     '''
-    res = []
-    for q, rber in get_all_q_uber():
-        e = pick_e(I_data, q)
-        m_p = pick_mp(n_p, q)
-        n, k, d = pick_nkd(n_max * (e+m_p+1), p_rel, q, rber)
-        m_a = pick_ma(n_a, q)
-        res.append((q, rber, e, m_p, m_a, (n, k, d)))
-    return res
+    for q_, rber in get_all_q_uber():
+        if q_ != q:
+            continue
+        cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats)
+        print(f'q = {q}, e = {e}, m_p = {m_p}, m_a = {m_a}, rber=  {rber}, cand = {cand}', flush=True)
+        return cand
 
+
+# q --> (m_p, m_a)
+dynamic_result = {4: (0, 4),
+                  5: (0, 4),
+                  6: (2, 1),
+                  7: (0, 3),
+                  8: (0, 3),
+                  9: (0, 3),
+                  10: (0, 3),
+                  11: (0, 3),
+                  12: (1, 2),
+                  13: (0, 3),
+                  14: (0, 3),
+                  15: (0, 3),
+                  16: (0, 3)}
 
 if __name__ == "__main__":
     load_db()
     # print("q, rber, e, m_p, m_a, (n, k, d)")
-    compute_rber_e((-0.5, 0.5))
-    # pprint.pprint(tuning_algorithm(100, 1e-13, (-0.5, 0.5), 4, 5))
+    # compute_rber_e((-0.5, 0.5))
+    res = ()
+    optimal = 1e20
+    for q, mp_ma in dynamic_result.items():
+        m_p, m_a = mp_ma
+        e = 0
+        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a)
+        if cand != ():
+            q, n, k, d, uber, blksize, overhead = cand
+            if overhead < optimal:
+                optimal = overhead
+                res = cand
+    print("q, n, k, d, uber, blksize, overhead")
+    print(res)
