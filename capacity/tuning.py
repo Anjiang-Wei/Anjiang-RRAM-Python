@@ -215,7 +215,7 @@ dynamic_result = {4: (0, 4),
                   16: (0, 3)}
 
 # q --> (m_p, m_a)
-dynamic_result = {4: (2, 2),
+dynamic_result2 = {4: (2, 2),
                   5: (2, 2),
                   6: (2, 1),
                   7: (1, 2),
@@ -244,6 +244,7 @@ def tool():
     print("====tool======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
+    # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714)
 
 def sota():
     res = ()
