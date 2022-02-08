@@ -223,7 +223,7 @@ def drop_precise(R, E, spec_ber, raw_ber, start_M, minimum_accuracy):
         print("--------", flush=True)
     return 0 # no precise mantissa
 
-# q, rber, e, m_p, m_a, (n, k, d)
+# q: (rber, e)
 algo_res = {4: (0.003750000000000031, 0),
  5: (0.006249999999999978, 0),
  6: (0.012499999999999956, 0),
@@ -238,6 +238,20 @@ algo_res = {4: (0.003750000000000031, 0),
  15: (0.23375, 0),
  16: (0.25125, 0)}
 
+algo_res2 = {4: (0.125, 0),
+ 5: (0.16500000000000004, 0),
+ 6: (0.13249999999999995, 0),
+ 7: (0.14, 0),
+ 8: (0.2234848484848485, 0),
+ 9: (0.25, 0),
+ 10: (0.16625, 0),
+ 11: (0.21375, 0),
+ 12: (0.24624999999999997, 0),
+ 13: (0.25, 0),
+ 14: (0.26875000000000004, 0),
+ 15: (0.38749999999999996, 0),
+ 16: (0.33875, 0)}
+
 if __name__ == '__main__':
     # main()
     # test_net()
@@ -245,7 +259,7 @@ if __name__ == '__main__':
     
     # dump_float()
     res = {}
-    for q, rber_e in algo_res.items():
+    for q, rber_e in algo_res2.items():
         rber, e = rber_e
         print(f"-----------drop bits for R={q}, raw_ber={rber}, E={e}------", flush=True)
         min_M = drop_bits(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=4, minimum_accuracy=0.98)

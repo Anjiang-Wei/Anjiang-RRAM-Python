@@ -93,8 +93,6 @@ def minimum_overhead(candidates, total_floats, m_a):
     return res
 
 
-all_files = []
-
 def get_matrix_from_file(filename):
     with open(filename, "r") as fin:
         lines = fin.readlines()
@@ -118,13 +116,13 @@ def get_rber_from_matrix(matrix):
         minimum_diag = min(elem, minimum_diag)
     return n, 1.0 - minimum_diag
 
-def get_all_q_uber():
-    ours_list = ["ours" + str(i) for i in range(4, 17)]
-    # sba_list = ["SBA" + str(i) for i in range(4, 17)]
-    all_files.extend(ours_list)
-    # all_files.extend(sba_list)
+def get_all_q_uber(ours):
+    if ours:
+        ours_list = ["ours" + str(i) for i in range(4, 17)]
+    else:
+        ours_list = ["SBA" + str(i) for i in range(4, 17)]
     res = []
-    for f in all_files:
+    for f in ours_list:
         matrix = get_matrix_from_file(f)
         n, rber = get_rber_from_matrix(matrix)
         # print(n, rber, f)
@@ -149,9 +147,9 @@ def pick_e(I_data, q):
             return e_bit
     raise Exception
 
-def compute_rber_e(I_data):
+def compute_rber_e(I_data, ours):
     q2rber_e = {}
-    for q, rber in get_all_q_uber():
+    for q, rber in get_all_q_uber(ours):
         e = pick_e(I_data, q)
         q2rber_e[q] = (rber, e)
     pprint.pprint(q2rber_e)
@@ -177,7 +175,7 @@ def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats):
 
     return res
 
-def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose=True):
+def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours):
     '''
     Arg list:
     n_max: # maximum fp values for batched read
@@ -191,7 +189,7 @@ def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose=True):
     e: # exponent bits
     <n, k, d>: linear code params
     '''
-    for q_, rber in get_all_q_uber():
+    for q_, rber in get_all_q_uber(ours):
         if q_ != q:
             continue
         cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats)
@@ -251,5 +249,5 @@ def sota():
 
 if __name__ == "__main__":
     load_db()
-    # compute_rber_e((-0.5, 0.5))
-    tool()
+    compute_rber_e((-0.5, 0.5), False)
+    # tool()
