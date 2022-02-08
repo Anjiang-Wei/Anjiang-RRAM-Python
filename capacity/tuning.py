@@ -86,6 +86,7 @@ def minimum_overhead(candidates, total_floats, m_a):
     for param in candidates:
         q, n, k, d, uber, blksize = param
         overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
+        overhead = overhead / total_floats
         if overhead < cur_best:
            res = (q, n, k, d, uber, blksize, overhead)
            cur_best = overhead
@@ -213,10 +214,7 @@ dynamic_result = {4: (0, 4),
                   15: (0, 3),
                   16: (0, 3)}
 
-if __name__ == "__main__":
-    load_db()
-    # print("q, rber, e, m_p, m_a, (n, k, d)")
-    # compute_rber_e((-0.5, 0.5))
+def tool():
     res = ()
     optimal = 1e20
     for q, mp_ma in dynamic_result.items():
@@ -227,6 +225,13 @@ if __name__ == "__main__":
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
                 optimal = overhead
-                res = cand
-    print("q, n, k, d, uber, blksize, overhead")
+                res = (e, m_p, m_a, *cand)
+    print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
+
+
+if __name__ == "__main__":
+    load_db()
+    # compute_rber_e((-0.5, 0.5))
+    tool()
+
