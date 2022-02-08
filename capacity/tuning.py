@@ -214,13 +214,28 @@ dynamic_result = {4: (0, 4),
                   15: (0, 3),
                   16: (0, 3)}
 
+# q --> (m_p, m_a)
+dynamic_result = {4: (2, 2),
+                  5: (2, 2),
+                  6: (2, 1),
+                  7: (1, 2),
+                  8: (2, 1),
+                  9: (1, 2),
+                  10: (2, 1),
+                  11: (2, 1),
+                  12: (2, 1),
+                  13: (2, 1),
+                  14: (0, 3),
+                  15: (0, 3),
+                  16: (1, 2)}
+
 def tool():
     res = ()
     optimal = 1e20
     for q, mp_ma in dynamic_result.items():
         m_p, m_a = mp_ma
         e = 0
-        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, False)
+        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -233,10 +248,10 @@ def tool():
 def sota():
     res = ()
     optimal = 1e20
-    for q, mp_ma in dynamic_result.items():
-        m_p, m_a = mp_ma
-        e = 0
-        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, True)
+    for q in [2, 4, 8, 16]:
+        m_p, m_a = 23, 0
+        e = 8
+        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, verbose=True, ours=False)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -249,5 +264,5 @@ def sota():
 
 if __name__ == "__main__":
     load_db()
-    compute_rber_e((-0.5, 0.5), False)
-    # tool()
+    # compute_rber_e((-0.5, 0.5), False)
+    tool()
