@@ -177,7 +177,7 @@ def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats):
 
     return res
 
-def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats=1199882):
+def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose=True):
     '''
     Arg list:
     n_max: # maximum fp values for batched read
@@ -195,11 +195,13 @@ def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats=1199882):
         if q_ != q:
             continue
         cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats)
-        print(f'q = {q}, e = {e}, m_p = {m_p}, m_a = {m_a}, rber=  {rber}, cand = {cand}', flush=True)
+        if verbose:
+            print(f'q = {q}, e = {e}, m_p = {m_p}, m_a = {m_a}, rber=  {rber}, cand = {cand}', flush=True)
         return cand
 
 
 # q --> (m_p, m_a)
+# our result
 dynamic_result = {4: (0, 4),
                   5: (0, 4),
                   6: (2, 1),
@@ -220,12 +222,29 @@ def tool():
     for q, mp_ma in dynamic_result.items():
         m_p, m_a = mp_ma
         e = 0
-        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a)
+        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, False)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
                 optimal = overhead
                 res = (e, m_p, m_a, *cand)
+    print("====tool======")
+    print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
+    print(res)
+
+def sota():
+    res = ()
+    optimal = 1e20
+    for q, mp_ma in dynamic_result.items():
+        m_p, m_a = mp_ma
+        e = 0
+        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, True)
+        if cand != ():
+            q, n, k, d, uber, blksize, overhead = cand
+            if overhead < optimal:
+                optimal = overhead
+                res = (e, m_p, m_a, *cand)
+    print("====sota======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
 
@@ -234,4 +253,3 @@ if __name__ == "__main__":
     load_db()
     # compute_rber_e((-0.5, 0.5))
     tool()
-
