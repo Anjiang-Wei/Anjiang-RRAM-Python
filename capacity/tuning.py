@@ -288,8 +288,30 @@ def sota():
     # (8, 23, 0, 4, 65, 1, 65, 9.15947789395613e-14, 0.03125, 1040.0)
     print("if assuming 2 reliable: overhead=", 32)
 
+def m32():
+    res = ()
+    optimal = 1e20
+    for q_iter in [2, 4, 8, 16]:
+        q = 2
+        iter = math.log(q_iter, q)
+        m_p, m_a = 23, 0
+        e = 8
+        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=True, ours=True, q_binary=True)
+        if cand != () and cand != None:
+            q, n, k, d, uber, blksize, overhead = cand
+            overhead = overhead / iter
+            if overhead < optimal:
+                optimal = overhead
+                res = (e, m_p, m_a, q_iter, n, k, d, uber, blksize, overhead)
+    print("====m32======")
+    print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
+    print(res)
+    # (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333372781657)
+    print("if assuming 2 reliable: overhead=", 32)
+
 if __name__ == "__main__":
     load_db()
     # compute_rber_e((-0.5, 0.5), False)
     # tool()
-    sota()
+    # sota()
+    m32()
