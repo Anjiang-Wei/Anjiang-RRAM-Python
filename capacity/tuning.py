@@ -257,7 +257,7 @@ def tool():
     for q, mp_ma in dynamic_result.items():
         m_p, m_a = mp_ma
         e = 0
-        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        cand = tuning_algorithm(128, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -267,7 +267,44 @@ def tool():
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
     # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714) # <= 100 blksize
+    # <= 128 blksize
     # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
+
+def tool_binary():
+    res = ()
+    optimal = 1e20
+    for q, mp_ma in dynamic_result.items():
+        if q not in [2, 4, 8, 16]:
+            continue
+        m_p, m_a = mp_ma
+        e = 0
+        cand = tuning_algorithm(128, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        if cand != ():
+            q, n, k, d, uber, blksize, overhead = cand
+            if overhead < optimal:
+                optimal = overhead
+                res = (e, m_p, m_a, *cand)
+    print("====toolbinary======")
+    print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
+    print(res)
+
+def tool_any_blksize():
+    res = ()
+    optimal = 1e20
+    for q, mp_ma in dynamic_result.items():
+        m_p, m_a = mp_ma
+        e = 0
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        if cand != ():
+            q, n, k, d, uber, blksize, overhead = cand
+            if overhead < optimal:
+                optimal = overhead
+                res = (e, m_p, m_a, *cand)
+    print("====tool======")
+    print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
+    print(res)
+    # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
+
 
 def rprec():
     res = ()
@@ -318,7 +355,7 @@ def sota():
         iter = math.log(q_iter, q)
         m_p, m_a = 23, 0
         e = 8
-        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=True, ours=False, q_binary=True)
+        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=False, ours=False, q_binary=True)
         if cand != () and cand != None:
             q, n, k, d, uber, blksize, overhead = cand
             overhead = overhead / iter
@@ -339,7 +376,7 @@ def m32():
         iter = math.log(q_iter, q)
         m_p, m_a = 23, 0
         e = 8
-        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=True, ours=True, q_binary=True)
+        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=False, ours=True, q_binary=True)
         if cand != () and cand != None:
             q, n, k, d, uber, blksize, overhead = cand
             overhead = overhead / iter
@@ -355,8 +392,10 @@ def m32():
 if __name__ == "__main__":
     load_db()
     # compute_rber_e((-0.5, 0.5), False)
-    # tool()
-    # sota()
-    # m32()
+    sota()
+    m32()
     mprec()
-    # rprec()
+    rprec()
+    tool()
+    tool_binary()
+    tool_any_blksize()
