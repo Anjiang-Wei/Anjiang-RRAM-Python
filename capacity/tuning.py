@@ -267,8 +267,18 @@ def tool():
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
     # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714) # <= 100 blksize
-    # <= 128 blksize
+    # (0, 0, 3, 9, 127, 42, 53, 6.137498140690585e-14, 126, 4.007949948411594) <= 128 blksize
     # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
+    overhead_bin = 1e20
+    for q, mp_ma in dynamic_result.items():
+        iter = math.ceil(math.log(q, 2))
+        m_p, m_a = mp_ma
+        e = 0
+        overhead = 1 + (e + m_p) * iter + m_a
+        if overhead < overhead_bin:
+            overhead_bin = overhead
+            res = (q, e, m_p, m_a, overhead)
+    print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
 def tool_binary():
     res = ()
@@ -284,9 +294,19 @@ def tool_binary():
             if overhead < optimal:
                 optimal = overhead
                 res = (e, m_p, m_a, *cand)
-    print("====toolbinary======")
+    print("====tool_binary======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
+    for q, mp_ma in dynamic_result.items():
+        if q not in [2, 4, 8, 16]:
+            continue
+        m_p, m_a = mp_ma
+        e = 0
+        overhead = 1 + (e + m_p) * iter + m_a
+        if overhead < overhead_bin:
+            overhead_bin = overhead
+            res = (q, e, m_p, m_a, overhead)
+    print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
 def tool_any_blksize():
     res = ()
@@ -300,11 +320,19 @@ def tool_any_blksize():
             if overhead < optimal:
                 optimal = overhead
                 res = (e, m_p, m_a, *cand)
-    print("====tool======")
+    print("====tool_any_blksize======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
     # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
-
+    for q, mp_ma in dynamic_result.items():
+        iter = math.ceil(math.log(q, 2))
+        m_p, m_a = mp_ma
+        e = 0
+        overhead = 1 + (e + m_p) * iter + m_a
+        if overhead < overhead_bin:
+            overhead_bin = overhead
+            res = (q, e, m_p, m_a, overhead)
+    print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
 def rprec():
     res = ()
@@ -324,6 +352,18 @@ def rprec():
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
     ## (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
+    overhead_bin = 1e20
+    for q, mp_ma in dynamic_result.items():
+        iter = math.ceil(math.log(q, 2))
+        m_p, m_a = mp_ma
+        m_p += m_a
+        m_a = 0
+        e = 0
+        overhead = 1 + (e + m_p) * iter + m_a
+        if overhead < overhead_bin:
+            overhead_bin = overhead
+            res = (q, e, m_p, m_a, overhead)
+    print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
 def mprec():
     res = ()
@@ -345,6 +385,20 @@ def mprec():
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
     # (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
+    overhead_bin = 1e20
+    for q, mp_ma in dynamic_result.items():
+        if q not in [2, 4, 8, 16]:
+            continue
+        iter = math.log(q, 2)
+        m_p, m_a = mp_ma
+        m_p += m_a
+        m_a = 0
+        e = 0
+        overhead = 1 + (e + m_p) * iter + m_a
+        if overhead < overhead_bin:
+            overhead_bin = overhead
+            res = (q, e, m_p, m_a, overhead)
+    print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
 
 def sota():
