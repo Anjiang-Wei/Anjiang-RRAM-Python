@@ -67,17 +67,29 @@ def compute_blksize(q, e, m_p, k):
             break
     return x - 1
 
-def select_blksize(candidates, n_max, e, m_p):
+def compute_blksize2(q, e, m_p, k):
+    '''
+    the maximum float x, such that
+    x * (e + m_p) + ceil(x / floor(log(q, base=2))) <= k
+
+    '''
+    assert q == 2
+    return k / (e + m_p + 1)
+
+def select_blksize(candidates, n_max, e, m_p, q_binary):
     res = []
     for cand_uber in candidates:
         cand, uber = cand_uber
         q, n, k, d = cand
-        blksize = compute_blksize(q, e, m_p, k)
-        if blksize <= n_max and blksize > 0:
+        if q_binary:
+            blksize = compute_blksize2(q, e, m_p, k)
+        else:
+            blksize = compute_blksize(q, e, m_p, k)
+        if blksize <= n_max:
             res.append((q, n, k, d, uber, blksize))
     return res
 
-def minimum_overhead(candidates, total_floats, m_a):
+def minimum_overhead(candidates, total_floats, m_a, q_binary):
     '''
     ceil((#total floats) / blksize ) ∗ n + # total floats * m_a
     '''
@@ -85,12 +97,16 @@ def minimum_overhead(candidates, total_floats, m_a):
     cur_best = 1e20
     for param in candidates:
         q, n, k, d, uber, blksize = param
-        overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
+        if q_binary:
+            overhead = math.ceil(total_floats / blksize * n) + total_floats * m_a
+        else:
+            overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
         overhead = overhead / total_floats
         if overhead < cur_best:
            res = (q, n, k, d, uber, blksize, overhead)
            cur_best = overhead
     return res
+
 
 
 def get_matrix_from_file(filename):
@@ -155,7 +171,7 @@ def compute_rber_e(I_data, ours):
     pprint.pprint(q2rber_e)
 
 
-def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats):
+def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary):
     '''
     n_max (maximum of block size)
     fail_prob <= p_rel
@@ -168,10 +184,10 @@ def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats):
     # print("after q", len(res), flush=True)
     res = select_ratio(res, p_rel, rber) # compute_uber
     # print("after ratio", len(res), flush=True)
-    res = select_blksize(res, n_max, e, m_p) # compute_blksize
+    res = select_blksize(res, n_max, e, m_p, q_binary) # compute_blksize
     # print("after blksize", len(res), flush=True)
     # (q, n, k, d, uber, blksize)
-    res = minimum_overhead(res, total_floats, m_a)
+    res = minimum_overhead(res, total_floats, m_a, q_binary)
 
     return res
 
@@ -196,7 +212,7 @@ def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours, 
             if verbose:
                 print(f'q_original = {q}')
             q = 2
-        cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats)
+        cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary)
         if verbose:
             print(f'q = {q}, e = {e}, m_p = {m_p}, m_a = {m_a}, rber=  {rber}, cand = {cand}', flush=True)
         return cand
@@ -269,8 +285,8 @@ def sota():
     print("====sota======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
+    # (8, 23, 0, 4, 65, 1, 65, 9.15947789395613e-14, 0.03125, 1040.0)
     print("if assuming 2 reliable: overhead=", 32)
-
 
 if __name__ == "__main__":
     load_db()
