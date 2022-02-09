@@ -73,7 +73,7 @@ def select_blksize(candidates, n_max, e, m_p):
         cand, uber = cand_uber
         q, n, k, d = cand
         blksize = compute_blksize(q, e, m_p, k)
-        if blksize <= n_max:
+        if blksize <= n_max and blksize > 0:
             res.append((q, n, k, d, uber, blksize))
     return res
 
@@ -175,7 +175,7 @@ def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats):
 
     return res
 
-def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours):
+def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours, q_binary=False):
     '''
     Arg list:
     n_max: # maximum fp values for batched read
@@ -192,6 +192,10 @@ def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours):
     for q_, rber in get_all_q_uber(ours):
         if q_ != q:
             continue
+        if q_binary:
+            if verbose:
+                print(f'q_original = {q}')
+            q = 2
         cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats)
         if verbose:
             print(f'q = {q}, e = {e}, m_p = {m_p}, m_a = {m_a}, rber=  {rber}, cand = {cand}', flush=True)
@@ -244,26 +248,32 @@ def tool():
     print("====tool======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714)
+    # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714) # <= 100 blksize
+    # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
 
 def sota():
     res = ()
     optimal = 1e20
-    for q in [2, 4, 8, 16]:
+    for q_iter in [2, 4, 8, 16]:
+        q = 2
+        iter = math.log(q_iter, q)
         m_p, m_a = 23, 0
         e = 8
-        cand = tuning_algorithm(100, 1e-13, q, e, m_p, m_a, 1199882, verbose=True, ours=False)
-        if cand != ():
+        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=True, ours=False, q_binary=True)
+        if cand != () and cand != None:
             q, n, k, d, uber, blksize, overhead = cand
+            overhead = overhead / iter
             if overhead < optimal:
                 optimal = overhead
-                res = (e, m_p, m_a, *cand)
+                res = (e, m_p, m_a, q_iter, n, k, d, uber, blksize, overhead)
     print("====sota======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
+    print("if assuming 2 reliable: overhead=", 32)
 
 
 if __name__ == "__main__":
     load_db()
     # compute_rber_e((-0.5, 0.5), False)
-    tool()
+    # tool()
+    sota()
