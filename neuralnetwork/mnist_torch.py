@@ -252,12 +252,10 @@ algo_res2 = {4: (0.125, 0),
  15: (0.38749999999999996, 0),
  16: (0.33875, 0)}
 
-if __name__ == '__main__':
-    # main()
-    # test_net()
-    # fault_inject()
-    
-    # dump_float()
+def normal():
+    '''
+    algo_res or algo_res2
+    '''
     res = {}
     for q, rber_e in algo_res2.items():
         rber, e = rber_e
@@ -269,3 +267,25 @@ if __name__ == '__main__':
         res[q] = (min_m_p, min_M-min_m_p)
     print("q --> (m_p, m_a)")
     pprint.pprint(res)
+
+def rdrop():
+    res = {}
+    for q, rber_e in algo_res2.items():
+        rber, e = rber_e
+        print(f"-----------drop bits for R={q}, raw_ber={rber}, E={e}------", flush=True)
+        min_M = drop_bits(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=4, minimum_accuracy=0.98)
+        print(f"-----------drop precise bits for R={q}, raw_ber={rber}, E={e}, min_M={min_M}------", flush=True)
+        min_m_p = drop_precise(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=min_M, minimum_accuracy=0.98)
+        print(f"Config found: R={q}, raw_ber={rber}, E={e}, min_M={min_M}, min_m_p={min_m_p}", flush=True)
+        res[q] = (min_m_p, min_M-min_m_p)
+    print("q --> (m_p, m_a)")
+    pprint.pprint(res)
+
+if __name__ == '__main__':
+    # main()
+    # test_net()
+    # fault_inject()
+    
+    # dump_float()
+    # normal()
+    rdrop()
