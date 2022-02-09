@@ -97,6 +97,8 @@ def minimum_overhead(candidates, total_floats, m_a, q_binary):
     cur_best = 1e20
     for param in candidates:
         q, n, k, d, uber, blksize = param
+        if blksize == 0:
+            continue
         if q_binary:
             overhead = math.ceil(total_floats / blksize * n) + total_floats * m_a
         else:
@@ -267,6 +269,25 @@ def tool():
     # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714) # <= 100 blksize
     # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
 
+def rprec():
+    res = ()
+    optimal = 1e20
+    for q, mp_ma in dynamic_result.items():
+        m_p, m_a = mp_ma
+        m_p += m_a
+        m_a = 0
+        e = 0
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        if cand != ():
+            q, n, k, d, uber, blksize, overhead = cand
+            if overhead < optimal:
+                optimal = overhead
+                res = (e, m_p, m_a, *cand)
+    print("====rprec======")
+    print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
+    print(res)
+    ## (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
+
 def mprec():
     res = ()
     optimal = 1e20
@@ -277,7 +298,7 @@ def mprec():
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(100, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=False, ours=True, q_binary=True)
+        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=False, ours=True, q_binary=True)
         if cand != () and cand != None:
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -285,7 +306,7 @@ def mprec():
                 res = (e, m_p, m_a, q_iter, *cand)
     print("====mprec======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
-    # (0, 4, 0, 4, 2, 242, 150, 25, 9.84006560104058e-14, 30.0, 8.066667388959914)
+    ## (0, 4, 0, 4, 2, 242, 150, 25, 9.84006560104058e-14, 30.0, 8.066667388959914)
     print(res)
 
 def sota():
@@ -336,4 +357,5 @@ if __name__ == "__main__":
     # tool()
     # sota()
     # m32()
-    mprec()
+    # mprec()
+    rprec()
