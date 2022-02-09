@@ -481,4 +481,9 @@ if __name__ == "__main__":
     ====tool_binary======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
     (0, 0, 3, 8, 129, 41, 53, 9.774053558937065e-14, 123, 4.048873139192021)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (8, 0, 0, 3, 4.0)
+    ====tool_any_blksize======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (7, 0, 0, 3, 4)
     '''
