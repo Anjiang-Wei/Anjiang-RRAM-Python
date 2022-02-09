@@ -269,8 +269,8 @@ def normal():
     pprint.pprint(res)
 
 def rdrop():
-    m_p, m_a = 0, 0
-    R, E, M = 9, 0, 0
+    m_p, m_a = 1, 0
+    R, E, M = 9, 0, 1
     spec_ber, raw_ber = 1e-13, algo_res[R][0]
     print(f"R={R}, E={E}, M={M}, m_p={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}", flush=True)
     print(f"Current configuration: E={E}, M={M}, m_p={m_p}, m_a={m_a}", flush=True)
@@ -279,6 +279,10 @@ def rdrop():
     load_float()
     acc = test_net()
     print(acc)
+    '''
+    Test set: Average loss: 2.3026, Accuracy: 980/10000 (10%)
+    0.098
+    '''
 
 if __name__ == '__main__':
     # main()
