@@ -300,6 +300,7 @@ def tool_binary():
     for q, mp_ma in dynamic_result.items():
         if q not in [2, 4, 8, 16]:
             continue
+        iter = math.log(q, 2)
         m_p, m_a = mp_ma
         e = 0
         overhead = 1 + (e + m_p) * iter + m_a
@@ -446,10 +447,36 @@ def m32():
 if __name__ == "__main__":
     load_db()
     # compute_rber_e((-0.5, 0.5), False)
-    sota()
-    m32()
-    mprec()
-    rprec()
-    tool()
+    # sota()
+    # m32()
+    # mprec()
+    # rprec()
+    # tool()
     tool_binary()
     tool_any_blksize()
+    '''
+
+    ====sota======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (8, 23, 0, 4, 65, 1, 65, 9.15947789395613e-14, 0.03125, 1040.0)
+    if assuming 2 reliable: overhead= 32
+    ====m32======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333372781657)
+    if assuming 2 reliable: overhead= 32
+    ====mprec======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 4, 0, 9.0)
+    ====rprec======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 4, 0, 9)
+    ====tool======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 0, 3, 9, 127, 42, 53, 6.137498140690585e-14, 126, 4.007949948411594)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (7, 0, 0, 3, 4)
+    ====tool_binary======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 0, 3, 8, 129, 41, 53, 9.774053558937065e-14, 123, 4.048873139192021)
+    '''
