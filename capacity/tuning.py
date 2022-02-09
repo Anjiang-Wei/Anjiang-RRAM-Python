@@ -297,6 +297,7 @@ def tool_binary():
     print("====tool_binary======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
+    overhead_bin = 1e20
     for q, mp_ma in dynamic_result.items():
         if q not in [2, 4, 8, 16]:
             continue
@@ -325,6 +326,7 @@ def tool_any_blksize():
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
     # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
+    overhead_bin = 1e20
     for q, mp_ma in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
         m_p, m_a = mp_ma
