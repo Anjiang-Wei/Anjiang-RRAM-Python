@@ -269,23 +269,22 @@ def normal():
     pprint.pprint(res)
 
 def rdrop():
-    res = {}
-    for q, rber_e in algo_res2.items():
-        rber, e = rber_e
-        print(f"-----------drop bits for R={q}, raw_ber={rber}, E={e}------", flush=True)
-        min_M = drop_bits(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=4, minimum_accuracy=0.98)
-        print(f"-----------drop precise bits for R={q}, raw_ber={rber}, E={e}, min_M={min_M}------", flush=True)
-        min_m_p = drop_precise(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=min_M, minimum_accuracy=0.98)
-        print(f"Config found: R={q}, raw_ber={rber}, E={e}, min_M={min_M}, min_m_p={min_m_p}", flush=True)
-        res[q] = (min_m_p, min_M-min_m_p)
-    print("q --> (m_p, m_a)")
-    pprint.pprint(res)
+    m_p, m_a = 0, 0
+    R, E, M = 9, 0, 0
+    spec_ber, raw_ber = 1e-13, algo_res[R][0]
+    print(f"R={R}, E={E}, M={M}, m_p={m_p}, m_a={m_a}, spec_ber={spec_ber}, raw_ber={raw_ber}", flush=True)
+    print(f"Current configuration: E={E}, M={M}, m_p={m_p}, m_a={m_a}", flush=True)
+    subprocess.run(["./a.out", original_float, mutate_float, str(R), str(E), str(M), 
+                    str(m_p), str(m_a), str(spec_ber), str(raw_ber)])
+    load_float()
+    acc = test_net()
+    print(acc)
 
 if __name__ == '__main__':
     # main()
     # test_net()
     # fault_inject()
-    
+
     # dump_float()
     # normal()
     rdrop()
