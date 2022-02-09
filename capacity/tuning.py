@@ -291,23 +291,24 @@ def rprec():
 def mprec():
     res = ()
     optimal = 1e20
-    for q_iter in [4, 8, 16]:
-        q = 2
-        iter = math.log(q_iter, q)
-        m_p, m_a = dynamic_result[q_iter]
+    for q, mp_ma in dynamic_result.items():
+        if q not in [2, 4, 8, 16]:
+            continue
+        m_p, m_a = mp_ma
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=False, ours=True, q_binary=True)
-        if cand != () and cand != None:
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
                 optimal = overhead
-                res = (e, m_p, m_a, q_iter, *cand)
+                res = (e, m_p, m_a, *cand)
     print("====mprec======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
-    ## (0, 4, 0, 4, 2, 242, 150, 25, 9.84006560104058e-14, 30.0, 8.066667388959914)
     print(res)
+    # (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
+
 
 def sota():
     res = ()
@@ -357,5 +358,5 @@ if __name__ == "__main__":
     # tool()
     # sota()
     # m32()
-    # mprec()
-    rprec()
+    mprec()
+    # rprec()
