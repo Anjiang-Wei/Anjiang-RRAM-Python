@@ -74,31 +74,20 @@ inline uint8_t get_uint8(ifstream &input) {
 
 ifstream& operator>>(ifstream &input, Rfloat &D){
     D.R = get_uint8(input);
-    D.E = get_uint8(input);
     D.M = get_uint8(input);
     D.sign = (bool) get_uint8(input);
-    input >> D.bias;
-    D.leadingM = get_uint8(input);
-    for (int i = 0; i < D.E; i++) {
-        D.exp[i] = get_uint8(input);
-    }
     for (int i = 0; i < D.M; i++) {
-        D.mant[i] = get_uint8(input);
+        D.content[i] = get_uint8(input);
     }
     return input;
 }
 
 void Rfloat::print() {
     cout << "Radix: " << (int) R << endl;
+    cout << "M: " << (int) M << ": " << endl;
     cout << "Sign : " << sign << endl;
-    cout << "Exp-" << (int) E << ": " << endl;
-    for (int i = 0; i < E; i++) {
-        cout << (int) exp[i];
-    }
-    cout << endl << "Man-" << (int) M << ": " << endl;
-    cout << (int) leadingM << ".";
     for (int i = 0; i < M; i++) {
-        cout << (int) mant[i];
+        cout << (int) content[i];
     }
     cout << endl;
 }
