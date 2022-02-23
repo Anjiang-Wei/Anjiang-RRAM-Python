@@ -37,7 +37,7 @@ public:
   void mutate(int m_p, int m_a, float spec_ber, float raw_ber);
   static vector<Rfix> mutate_vec_Rfix(vector<Rfix> input,
                                       int m_p, int m_a, float spec_ber, float raw_ber);
-  static vector<long long> mutate_vec_int(vector<long long> input, int R, int M,
+  static vector<long long> mutate_vec_ll(vector<long long> input, int R, int M,
                                       int m_p, int m_a, float spec_ber, float raw_ber);
 };
 
@@ -176,7 +176,7 @@ static vector<Rfix> mutate_vec_Rfix(vector<Rfix> input,
 }
 
 
-static vector<long long> mutate_vec_int(vector<long long> input, int R, int M,
+static vector<long long> mutate_vec_ll(vector<long long> input, int R, int M,
                                   int m_p, int m_a, float spec_ber, float raw_ber)
 {
   int size = input.size();
