@@ -61,6 +61,7 @@ int main() {
     cout << "--------" << endl;
     Rfix c = Rfix(2, 23, b);
     c.print();
+    printf("===========================\n");
     long long d = c.from_Rfix();
     cout << d << endl;
     for (int i = 0; i < 1000; i++) {

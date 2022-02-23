@@ -10,8 +10,7 @@
 #include <random>
 using namespace std;
 
-#define maxM 40
-
+#define maxM 64
 // #define DEBUG
 
 random_device rd;  // Will be used to obtain a seed for the random number engine
@@ -57,12 +56,13 @@ Rfix::Rfix(uint8_t R_, uint8_t M_, long long val) {
     //Todo: implement this
     if (val < 0) {
       sign = true;
+      val = -val;
     } else {
       sign = false;
     }
     for (int i = 0; i < M; i++) {
-      content[i] = (uint8_t) (val % R);
-      val = val / R;
+      content[i] = (uint8_t) (val % (long long) R);
+      val = val / (long long) R;
     }
 }
 
@@ -118,8 +118,8 @@ long long Rfix::from_Rfix() {
 inline bool random_bool(float ber) {
   // srand(time(0));
   float rand_gen = dis(gen);
-    bool TrueFalse = rand_gen < (ber * 1e15);
-    return TrueFalse;
+  bool TrueFalse = rand_gen < (ber * 1e15);
+  return TrueFalse;
 }
 
 inline uint8_t mutate_uint8(uint8_t original, uint8_t R) {
@@ -149,13 +149,13 @@ void Rfix::mutate(int m_p, int m_a, float spec_ber, float raw_ber) {
     cout << "Prior" << endl;
     print_uint8(content, M);
     #endif
-    for (int i = 0; i < m_p; i++) {
-      if (random_bool(spec_ber)) {
+    for (int i = 0; i < m_a; i++) {
+      if (random_bool(raw_ber)) {
         content[i] = mutate_uint8(content[i], R);
       }
     }
-    for (int i = m_p; i < m_p + m_a; i++) {
-      if (random_bool(raw_ber)) {
+    for (int i = m_a; i < m_a + m_p; i++) {
+      if (random_bool(spec_ber)) {
         content[i] = mutate_uint8(content[i], R);
       }
     }
@@ -179,6 +179,7 @@ static vector<Rfix> mutate_vec_Rfix(vector<Rfix> input,
 static vector<long long> mutate_vec_ll(vector<long long> input, int R, int M,
                                   int m_p, int m_a, float spec_ber, float raw_ber)
 {
+  assert(m_p + m_a == M);
   int size = input.size();
   uint8_t R_ = (uint8_t) R;
   uint8_t M_ = (uint8_t) M;
