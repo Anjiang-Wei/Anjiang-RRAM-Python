@@ -53,7 +53,6 @@ Rfix::Rfix(uint8_t R_, uint8_t M_, bool sign_, uint8_t content_[maxM]) {
 
 Rfix::Rfix(uint8_t R_, uint8_t M_, long long val) {
     R = R_; M = M_;
-    //Todo: implement this
     if (val < 0) {
       sign = true;
       val = -val;
