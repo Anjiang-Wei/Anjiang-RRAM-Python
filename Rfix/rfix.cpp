@@ -22,12 +22,12 @@ class Rfix {
 public:
   uint8_t R; // radix
   uint8_t M; // number of bits in content
-  bool sign; // whether this is signed Rfix (can be negative) or unsigned (always positive) Rfix
-  uint8_t content[maxE]; // each element should be within [0, radix-1]
+  bool sign; // if true (1), then negative; if false (0), then positive
+  uint8_t content[maxM]; // each element should be within [0, radix-1]
 
   Rfix();
   Rfix(uint8_t R_, uint8_t M_, bool sign_, uint8_t content_[maxM]);
-  Rfix(uint8_t R_, uint8_t M_, bool sign_, long long val);
+  Rfix(uint8_t R_, uint8_t M_, long long val);
 
   friend ofstream& operator<<(ofstream &output, const Rfix &D);
   friend ifstream& operator>>(ifstream &input, const Rfix &D);
@@ -37,7 +37,7 @@ public:
   void mutate(int m_p, int m_a, float spec_ber, float raw_ber);
   static vector<Rfix> mutate_vec_Rfix(vector<Rfix> input,
                                       int m_p, int m_a, float spec_ber, float raw_ber);
-  static vector<float> mutate_vec_int(vector<long long> input, int R, int M, bool sign,
+  static vector<long long> mutate_vec_int(vector<long long> input, int R, int M,
                                       int m_p, int m_a, float spec_ber, float raw_ber);
 };
 
@@ -52,13 +52,21 @@ Rfix::Rfix(uint8_t R_, uint8_t M_, bool sign_, uint8_t content_[maxM]) {
   }
 }
 
-Rfix::Rfix(uint8_t R_, uint8_t M_, bool sign_, long long val) {
-    R = R_; M = M_; sign = sign_;
+Rfix::Rfix(uint8_t R_, uint8_t M_, long long val) {
+    R = R_; M = M_;
     //Todo: implement this
-
+    if (val < 0) {
+      sign = true;
+    } else {
+      sign = false;
+    }
+    for (int i = 0; i < M; i++) {
+      content[i] = (uint8_t) (val % R);
+      val = val / R;
+    }
 }
 
-ofstream& operator<<(ofstream& output, const Rfloat& D) {
+ofstream& operator<<(ofstream& output, const Rfix& D) {
   output << (int) D.R << " "  << (int) D.M <<  " " << (int) D.sign << " " << endl;
   for (int i = 0; i < D.M; i++) {
     output << (int) D.content[i] << " ";
@@ -73,7 +81,7 @@ inline uint8_t get_uint8(ifstream &input) {
   return (uint8_t) x;
 }
 
-ifstream& operator>>(ifstream &input, Rfloat &D){
+ifstream& operator>>(ifstream &input, Rfix &D){
   D.R = get_uint8(input);
   D.M = get_uint8(input);
   D.sign = (bool) get_uint8(input);
@@ -101,7 +109,9 @@ long long Rfix::from_Rfix() {
     val += base * content[i];
     base = base * R;
   }
-  
+  if (sign) { // negative
+    val = -val;
+  }
   return val;
 }
 
@@ -137,23 +147,21 @@ void print_uint8(uint8_t array[], int num) {
 void Rfix::mutate(int m_p, int m_a, float spec_ber, float raw_ber) {
     #ifdef DEBUG
     cout << "Prior" << endl;
-    print_uint8(exp, E);
-    print_uint8(mant, M);
+    print_uint8(content, M);
     #endif
     for (int i = 0; i < m_p; i++) {
-        if (random_bool(spec_ber)) {
-          // Todo: implement
-        }
+      if (random_bool(spec_ber)) {
+        content[i] = mutate_uint8(content[i], R);
+      }
     }
-    for (int i = 0; i < m_a; i++) {
+    for (int i = m_p; i < m_p + m_a; i++) {
       if (random_bool(raw_ber)) {
-          // Todo: implement
+        content[i] = mutate_uint8(content[i], R);
       }
     }
     #ifdef DEBUG
     cout << "After" << endl;
-    print_uint8(exp, E);
-    print_uint8(mant, M);
+    print_uint8(content, M);
     cout << "==============" << endl;
 #endif
 }
@@ -168,17 +176,17 @@ static vector<Rfix> mutate_vec_Rfix(vector<Rfix> input,
 }
 
 
-static vector<int> mutate_vec_int(vector<long long> input, int R, int M, bool sign,
+static vector<long long> mutate_vec_int(vector<long long> input, int R, int M,
                                   int m_p, int m_a, float spec_ber, float raw_ber)
 {
   int size = input.size();
   uint8_t R_ = (uint8_t) R;
   uint8_t M_ = (uint8_t) M;
   for (int i = 0; i < size; i++) {
-    int val = input[i];
-    Rfix a = Rfloat(R_, M_, val);
+    long long val = input[i];
+    Rfix a = Rfix(R_, M_, val);
     a.mutate(m_p, m_a, spec_ber, raw_ber);
-    input[i] = a.from_Rfloat();
+    input[i] = a.from_Rfix();
 #ifdef DEBUG
     cout << val << " " << input[i] << endl;
 #endif
