@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
     while (infile >> x) {
       all_fixed.push_back((long long)(x * scale));
     }
-    #ifdef DEBUG
+    #ifdef VERB
     cout << "Fixed_mutate configutation " << argv[1] << " " << argv[2] << " " 
         << R << " " << M
         << " " << m_p  << " " <<  m_a
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     }
     infile.close();
     outfile.close();
-    #ifdef DEBUG
+    #ifdef VERB
     cout << "finished!!" << endl;
     #endif
     return 0;
