@@ -42,7 +42,7 @@ def diffall(only3):
     all_diff = 0
     for i in range(0, len(f1s)):
         ediff = diff(f1s[i], f2s[i])
-        all_dff += ediff
+        all_diff += ediff
     return all_diff / len(f1s)
 
 if __name__ == "__main__":
