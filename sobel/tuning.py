@@ -58,6 +58,7 @@ def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
         subprocess.run(["python3", "reverse_intermediate.py", f2s[i]])
     for i in range(len(f2s)):
         subprocess.run(["./sobel", f2s[i], fout[i]])
+        subprocess.run(["python3", "create_intermediate.py", fout[i]])
     res = compute_diff.diffall(only3)
     print("image diff:", res)
     if res < 0.1 * 255:
