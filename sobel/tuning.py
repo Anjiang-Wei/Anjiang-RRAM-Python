@@ -1,3 +1,4 @@
+import subprocess
 import pprint
 import math
 import compute_diff
@@ -46,7 +47,7 @@ def find_start_M(R):
 
 def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
     f1s, f2s = compute_diff.all_files("rgb")
-    _, fout = compute_diff.allfiles("out")
+    _, fout = compute_diff.all_files("out")
     if only3:
         f1s, f2s = f1s[:3], f2s[:3]
         fout = fout[:3]
