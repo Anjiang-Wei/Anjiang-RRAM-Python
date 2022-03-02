@@ -60,7 +60,7 @@ def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
         subprocess.run(["./sobel", f2s[i], fout[i]])
         subprocess.run(["python3", "create_intermediate.py", fout[i]])
     res = compute_diff.diffall(only3)
-    print("image diff:", res)
+    print("image diff:", res, flush=True)
     if res < 0.1 * 255:
         return True
     else:
@@ -77,16 +77,17 @@ def find_s_mp_ma(start_scale, R, start_M, spec_ber, raw_ber):
             start_scale = scale
         else:
             break
-    print("M = ", start_M, "; scale = ", start_scale)
+    print("R = ", R, "; M = ", start_M, "; scale = ", start_scale, flush=True)
     m_p_start = start_M
     m_p = m_p_start
+    m_a = 0
     while m_p >= 0:
         m_p -= 1
         m_a += 1
         assert(m_p + m_a == start_M)
-        if run(R, M, m_p, m_a, start_scale, spec_ber, raw_ber, True):
+        if run(R, start_M, m_p, m_a, start_scale, spec_ber, raw_ber, True):
             m_p_start = m_p
-    print("m_p = ", m_p_start, "; m_a = ", start_M - m_p_start)
+    print("m_p = ", m_p_start, "; m_a = ", start_M - m_p_start, flush=True)
     return start_scale, m_p_start, start_M - m_p_start
 
 
