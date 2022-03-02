@@ -12,7 +12,7 @@ def reverse_inter(infile, outfile):
                 new_line.append(elem.strip())
             to_write.append(",".join(new_line) + "\n")
 
-    line_last = "{'bitdepth': 8, 'interlace': 0, 'background': (255, 255, 255), 'planes': 3, 'greyscale': False, 'alpha': False, 'size': (512, 512)}"
+    line_last = "\"{'bitdepth': 8, 'interlace': 0, 'background': (255, 255, 255), 'planes': 3, 'greyscale': False, 'alpha': False, 'size': (512, 512)}\""
     to_write.append(line_last)
 
     # print(to_write)
