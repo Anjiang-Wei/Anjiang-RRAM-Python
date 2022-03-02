@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
     #ifdef VERB
     cout << "Fixed_mutate configutation " << argv[1] << " " << argv[2] << " "
         << R << " " << M
-        << " " << m_p  << " " <<  m_a
+        << " " << m_p  << " " <<  m_a << " " << scale
         << " " << spec_ber  << " " << raw_ber << std::endl;
     #endif
     auto output = mutate_vec_ll(all_fixed, R, M, m_p, m_a, spec_ber, raw_ber);

@@ -85,6 +85,8 @@ def find_s_mp_ma(start_scale, R, start_M, spec_ber, raw_ber):
         m_p -= 1
         m_a += 1
         assert(m_p + m_a == start_M)
+        if m_p < 0:
+            continue
         if run(R, start_M, m_p, m_a, start_scale, spec_ber, raw_ber, True):
             m_p_start = m_p
     print("m_p = ", m_p_start, "; m_a = ", start_M - m_p_start, flush=True)
