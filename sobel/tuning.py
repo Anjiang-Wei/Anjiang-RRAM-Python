@@ -46,6 +46,7 @@ def find_start_M(R):
     return log_res
 
 def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
+    # f1s: intermediate/1.rgb, f2s: mutated/1.rgb, fout: mutated/1.out
     f1s, f2s = compute_diff.all_files("rgb")
     _, fout = compute_diff.all_files("out")
     if only3:
@@ -54,6 +55,7 @@ def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
     for i in range(len(f1s)):
         subprocess.run(["./bin_fix_mutate", f1s[i], f2s[i], str(R), str(M),
                         str(m_p), str(m_a), str(scale), str(spec_ber), str(raw_ber)])
+        subprocess.run(["python3", "reverse_intermediate.py", f2s[i]])
     for i in range(len(f2s)):
         subprocess.run(["./sobel", f2s[i], fout[i]])
     res = compute_diff.diffall(only3)
