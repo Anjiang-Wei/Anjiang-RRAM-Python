@@ -147,30 +147,6 @@ def get_all_q_uber(ours):
         res.append((n, rber))
     return res
 
-def pick_e(I_data, q):
-    low, high = I_data
-    low, high = abs(low), abs(high)
-    value = max(low, high)
-    # print(f"value = {value}")
-    if q > value: # e_bit = 0
-        return 0
-    for e_bit in range(1, 8):
-        bias = pow(q, e_bit-1) - 1
-        e_max = str(q-1) * e_bit
-        e_max = int(e_max, q)
-        exp = e_max - bias
-        max_value = pow(q, exp) * q
-        # print(f"e_bit = {e_bit}, e_max = {e_max}, exp = {exp}, max_value = {max_value}")
-        if max_value > value:
-            return e_bit
-    raise Exception
-
-def compute_rber_e(I_data, ours):
-    q2rber_e = {}
-    for q, rber in get_all_q_uber(ours):
-        e = pick_e(I_data, q)
-        q2rber_e[q] = (rber, e)
-    pprint.pprint(q2rber_e)
 
 
 def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary):
@@ -448,7 +424,6 @@ def m32():
 
 if __name__ == "__main__":
     load_db()
-    # compute_rber_e((-0.5, 0.5), False)
     # sota()
     # m32()
     # mprec()
