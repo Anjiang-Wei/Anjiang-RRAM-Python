@@ -230,10 +230,9 @@ dynamic_result2 = {4: [0.125, 0.0625, 1, 1],
 def tool():
     res = ()
     optimal = 1e20
-    for q, mp_ma in dynamic_result.items():
-        m_p, m_a = mp_ma
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         e = 0
-        cand = tuning_algorithm(128, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        cand = tuning_algorithm(128, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -264,7 +263,7 @@ def tool_binary():
             continue
         m_p, m_a = mp_ma
         e = 0
-        cand = tuning_algorithm(128, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        cand = tuning_algorithm(128, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -292,7 +291,7 @@ def tool_any_blksize():
     for q, mp_ma in dynamic_result.items():
         m_p, m_a = mp_ma
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -321,7 +320,7 @@ def rprec():
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -354,7 +353,7 @@ def mprec():
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 1199882, verbose=False, ours=True)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -363,6 +362,7 @@ def mprec():
     print("====mprec======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
+
     # (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
     overhead_bin = 1e20
     for q, mp_ma in dynamic_result.items():
@@ -388,7 +388,7 @@ def sota():
         iter = math.log(q_iter, q)
         m_p, m_a = 23, 0
         e = 8
-        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=False, ours=False, q_binary=True)
+        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 512*512*3, verbose=False, ours=False, q_binary=True)
         if cand != () and cand != None:
             q, n, k, d, uber, blksize, overhead = cand
             overhead = overhead / iter
@@ -409,7 +409,7 @@ def m32():
         iter = math.log(q_iter, q)
         m_p, m_a = 23, 0
         e = 8
-        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 1199882, verbose=False, ours=True, q_binary=True)
+        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 512*512*3, verbose=False, ours=True, q_binary=True)
         if cand != () and cand != None:
             q, n, k, d, uber, blksize, overhead = cand
             overhead = overhead / iter
@@ -429,17 +429,16 @@ if __name__ == "__main__":
     # mprec()
     # rprec()
     # tool()
-    tool_binary()
-    tool_any_blksize()
+    # tool_binary()
+    # tool_any_blksize()
     '''
-
     ====sota======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
     (8, 23, 0, 4, 65, 1, 65, 9.15947789395613e-14, 0.03125, 1040.0)
     if assuming 2 reliable: overhead= 32
     ====m32======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333372781657)
+    (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333351135254)
     if assuming 2 reliable: overhead= 32
     ====mprec======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
