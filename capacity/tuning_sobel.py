@@ -56,12 +56,12 @@ def select_ratio(candidates, intended_uber, RBER):
 def compute_blksize(q, e, m_p, k):
     '''
     the maximum integer x, such that
-    x * (e + m_p) + ceil(x / floor(log(q, base=2))) <= k
+    x * m_p <= k
 
     '''
     x = 0
     while True:
-        if x * (e + m_p) + math.ceil(x / math.floor(math.log(q, 2))) <= k:
+        if x * m_p <= k:
             x += 1
         else:
             break
@@ -70,11 +70,11 @@ def compute_blksize(q, e, m_p, k):
 def compute_blksize2(q, e, m_p, k):
     '''
     the maximum float x, such that
-    x * (e + m_p) + ceil(x / floor(log(q, base=2))) <= k
+    x * m_p <= k
 
     '''
     assert q == 2
-    return k / (e + m_p + 1)
+    return k / m_p
 
 def select_blksize(candidates, n_max, e, m_p, q_binary):
     res = []
@@ -245,11 +245,9 @@ def tool():
     # (0, 0, 3, 9, 127, 42, 53, 6.137498140690585e-14, 126, 4.007949948411594) <= 128 blksize
     # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
     overhead_bin = 1e20
-    for q, mp_ma in dynamic_result.items():
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
-        m_p, m_a = mp_ma
-        e = 0
-        overhead = 1 + (e + m_p) * iter + m_a
+        overhead = m_p * iter + m_a
         if overhead < overhead_bin:
             overhead_bin = overhead
             res = (q, e, m_p, m_a, overhead)
@@ -380,40 +378,14 @@ def mprec():
     print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
 
-def m32():
-    res = ()
-    optimal = 1e20
-    for q_iter in [2, 4, 8, 16]:
-        q = 2
-        iter = math.log(q_iter, q)
-        m_p, m_a = 23, 0
-        e = 8
-        cand = tuning_algorithm(1e10, 1e-13, q_iter, e, m_p, m_a, 512*512*3, verbose=False, ours=True, q_binary=True)
-        if cand != () and cand != None:
-            q, n, k, d, uber, blksize, overhead = cand
-            overhead = overhead / iter
-            if overhead < optimal:
-                optimal = overhead
-                res = (e, m_p, m_a, q_iter, n, k, d, uber, blksize, overhead)
-    print("====m32======")
-    print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
-    print(res)
-    # (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333372781657)
-    print("if assuming 2 reliable: overhead=", 32)
-
 if __name__ == "__main__":
     load_db()
-    # m32()
     # mprec()
     # rprec()
-    # tool()
+    tool()
     # tool_binary()
     # tool_any_blksize()
     '''
-    ====m32======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333351135254)
-    if assuming 2 reliable: overhead= 32
     ====mprec======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
     (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
