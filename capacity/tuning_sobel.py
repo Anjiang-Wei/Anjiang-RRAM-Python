@@ -305,11 +305,15 @@ def tool_any_blksize():
             res = (q, e, m_p, m_a, overhead)
     print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
-def rprec():
+def our_precise_bin():
+    '''
+    All precise data
+    '''
     res = ()
     optimal = 1e20
-    for q, mp_ma in dynamic_result.items():
-        m_p, m_a = mp_ma
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
+        if q not in [2, 4, 8, 16]:
+            continue
         m_p += m_a
         m_a = 0
         e = 0
@@ -319,54 +323,50 @@ def rprec():
             if overhead < optimal:
                 optimal = overhead
                 res = (e, m_p, m_a, *cand)
-    print("====rprec======")
+    print("====our_precise_bin======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    ## (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
     overhead_bin = 1e20
-    for q, mp_ma in dynamic_result.items():
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
+        if q not in [2, 4, 8, 16]:
+            continue
         iter = math.ceil(math.log(q, 2))
-        m_p, m_a = mp_ma
         m_p += m_a
         m_a = 0
-        e = 0
-        overhead = 1 + (e + m_p) * iter + m_a
+        overhead = m_p * iter + m_a
         if overhead < overhead_bin:
             overhead_bin = overhead
             res = (q, e, m_p, m_a, overhead)
     print("if assuming 2 reliable, {q, e, m_p, m_a, overhead}=", res)
 
-def mprec():
+def sba_precise_bin():
     res = ()
     optimal = 1e20
-    for q, mp_ma in dynamic_result.items():
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result2.items():
         if q not in [2, 4, 8, 16]:
             continue
-        m_p, m_a = mp_ma
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=False)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
                 optimal = overhead
                 res = (e, m_p, m_a, *cand)
-    print("====mprec======")
+    print("====sba_precise_bin======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
 
-    # (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
     overhead_bin = 1e20
-    for q, mp_ma in dynamic_result.items():
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result2.items():
         if q not in [2, 4, 8, 16]:
             continue
         iter = math.log(q, 2)
-        m_p, m_a = mp_ma
         m_p += m_a
         m_a = 0
         e = 0
-        overhead = 1 + (e + m_p) * iter + m_a
+        overhead = m_p * iter + m_a
         if overhead < overhead_bin:
             overhead_bin = overhead
             res = (q, e, m_p, m_a, overhead)
@@ -375,30 +375,22 @@ def mprec():
 
 if __name__ == "__main__":
     load_db()
-    # mprec()
-    # rprec()
+    sba_precise_bin()
+    our_precise_bin()
     # tool()
-    tool_binary()
-    tool_any_blksize()
+    # tool_binary()
+    # tool_any_blksize()
     '''
-    ====mprec======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 4, 0, 9.0)
-    ====rprec======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 4, 0, 9)
     ====tool======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
     (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
     if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2)
     ====tool_binary======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 0, 3, 8, 129, 41, 53, 9.774053558937065e-14, 123, 4.048873139192021)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (8, 0, 0, 3, 4.0)
+    (0, 1, 1, 8, 129, 41, 53, 9.774053558937065e-14, 41, 4.146461486816406)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2.0)
     ====tool_any_blksize======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (7, 0, 0, 3, 4)
+    (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2)
     '''
