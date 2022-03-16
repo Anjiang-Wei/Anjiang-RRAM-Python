@@ -226,11 +226,6 @@ def tool():
     print("====tool======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    '''
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2)
-    '''
     overhead_bin = 1e20
     for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
@@ -378,14 +373,14 @@ if __name__ == "__main__":
     if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 2, 0, 4)
     ====tool======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
+    (0, 0, 2, 4, 13, 1, 13, 8.772897443720296e-15, -1, 2.0)
     if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2)
     ====tool_binary======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 1, 1, 8, 129, 41, 53, 9.774053558937065e-14, 41, 4.146461486816406)
+    (0, 0, 2, 4, 13, 1, 13, 8.772897443720296e-15, -1, 2.0)
     if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2.0)
     ====tool_any_blksize======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
+    (0, 0, 2, 4, 13, 1, 13, 8.772897443720296e-15, -1, 2.0)
     if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2)
     '''
