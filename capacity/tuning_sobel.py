@@ -61,33 +61,22 @@ def compute_blksize(q, e, m_p, k):
     '''
     return math.floor(k / m_p)
 
-def compute_blksize2(q, e, m_p, k):
-    '''
-    the maximum float x, such that
-    x * m_p <= k
 
-    '''
-    assert q == 2
-    return k / m_p
-
-def select_blksize(candidates, n_max, e, m_p, q_binary):
+def select_blksize(candidates, n_max, e, m_p):
     res = []
     for cand_uber in candidates:
         cand, uber = cand_uber
         q, n, k, d = cand
         assert e == 0 # Rnum / Rint does not need e
         if m_p > 0:
-            if q_binary:
-                blksize = compute_blksize2(q, e, m_p, k)
-            else:
-                blksize = compute_blksize(q, e, m_p, k)
+            blksize = compute_blksize(q, e, m_p, k)
         else:
             blksize = -1 # if m_p = 0, Rnum / Rint does not need notion of blksize
         if blksize <= n_max:
             res.append((q, n, k, d, uber, blksize))
     return res
 
-def minimum_overhead(candidates, total_floats, m_a, q_binary):
+def minimum_overhead(candidates, total_floats, m_a):
     '''
     if blksize != -1:
         ceil((#total num) / blksize ) ∗ n + # total num * m_a
@@ -100,10 +89,7 @@ def minimum_overhead(candidates, total_floats, m_a, q_binary):
         q, n, k, d, uber, blksize = param
         if blksize == 0:
             continue
-        if q_binary:
-            overhead = math.ceil(total_floats / blksize * n) + total_floats * m_a
-        else:
-            overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
+        overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
         if blksize == -1:
             overhead = total_floats * m_a
         overhead = overhead / total_floats
@@ -152,7 +138,7 @@ def get_all_q_uber(ours):
 
 
 
-def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary):
+def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats):
     '''
     n_max (maximum of block size)
     fail_prob <= p_rel
@@ -165,14 +151,14 @@ def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary):
     # print("after q", len(res), flush=True)
     res = select_ratio(res, p_rel, rber) # compute_uber
     # print("after ratio", len(res), flush=True)
-    res = select_blksize(res, n_max, e, m_p, q_binary) # compute_blksize
+    res = select_blksize(res, n_max, e, m_p) # compute_blksize
     # print("after blksize", len(res), flush=True)
     # (q, n, k, d, uber, blksize)
-    res = minimum_overhead(res, total_floats, m_a, q_binary)
+    res = minimum_overhead(res, total_floats, m_a)
 
     return res
 
-def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours, q_binary=False):
+def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours):
     '''
     Arg list:
     n_max: # maximum fp values for batched read
@@ -189,11 +175,7 @@ def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours, 
     for q_, rber in get_all_q_uber(ours):
         if q_ != q:
             continue
-        if q_binary:
-            if verbose:
-                print(f'q_original = {q}')
-            q = 2
-        cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary)
+        cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats)
         if verbose:
             print(f'q = {q}, e = {e}, m_p = {m_p}, m_a = {m_a}, rber=  {rber}, cand = {cand}', flush=True)
         return cand
@@ -322,7 +304,7 @@ def our_precise_bin():
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True, q_binary=True)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -353,7 +335,7 @@ def sba_precise_bin():
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=False, q_binary=True)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=False)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -382,9 +364,9 @@ if __name__ == "__main__":
     load_db()
     sba_precise_bin()
     our_precise_bin()
-    # tool()
-    # tool_binary()
-    # tool_any_blksize()
+    tool()
+    tool_binary()
+    tool_any_blksize()
     '''
     ====sba_precise_bin======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
