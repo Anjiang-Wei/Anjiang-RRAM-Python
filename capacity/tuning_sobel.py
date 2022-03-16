@@ -59,13 +59,7 @@ def compute_blksize(q, e, m_p, k):
     x * m_p <= k
 
     '''
-    x = 0
-    while True:
-        if x * m_p <= k:
-            x += 1
-        else:
-            break
-    return x - 1
+    return math.floor(k / m_p)
 
 def compute_blksize2(q, e, m_p, k):
     '''
@@ -81,10 +75,14 @@ def select_blksize(candidates, n_max, e, m_p, q_binary):
     for cand_uber in candidates:
         cand, uber = cand_uber
         q, n, k, d = cand
-        if q_binary:
-            blksize = compute_blksize2(q, e, m_p, k)
+        assert e == 0 # Rnum / Rint does not need e
+        if m_p > 0:
+            if q_binary:
+                blksize = compute_blksize2(q, e, m_p, k)
+            else:
+                blksize = compute_blksize(q, e, m_p, k)
         else:
-            blksize = compute_blksize(q, e, m_p, k)
+            blksize = 0 # if m_p = 0, Rnum / Rint does not need notion of blksize
         if blksize <= n_max:
             res.append((q, n, k, d, uber, blksize))
     return res
@@ -241,9 +239,11 @@ def tool():
     print("====tool======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714) # <= 100 blksize
-    # (0, 0, 3, 9, 127, 42, 53, 6.137498140690585e-14, 126, 4.007949948411594) <= 128 blksize
-    # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
+    '''
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2)
+    '''
     overhead_bin = 1e20
     for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
@@ -396,8 +396,8 @@ if __name__ == "__main__":
     if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 4, 0, 9)
     ====tool======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 0, 3, 9, 127, 42, 53, 6.137498140690585e-14, 126, 4.007949948411594)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (7, 0, 0, 3, 4)
+    (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 0, 2, 2)
     ====tool_binary======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
     (0, 0, 3, 8, 129, 41, 53, 9.774053558937065e-14, 123, 4.048873139192021)
