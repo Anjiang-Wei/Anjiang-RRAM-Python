@@ -256,10 +256,9 @@ def tool():
 def tool_binary():
     res = ()
     optimal = 1e20
-    for q, mp_ma in dynamic_result.items():
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         if q not in [2, 4, 8, 16]:
             continue
-        m_p, m_a = mp_ma
         e = 0
         cand = tuning_algorithm(128, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
@@ -271,13 +270,13 @@ def tool_binary():
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
     overhead_bin = 1e20
-    for q, mp_ma in dynamic_result.items():
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         if q not in [2, 4, 8, 16]:
             continue
         iter = math.log(q, 2)
         m_p, m_a = mp_ma
         e = 0
-        overhead = 1 + (e + m_p) * iter + m_a
+        overhead = m_p * iter + m_a
         if overhead < overhead_bin:
             overhead_bin = overhead
             res = (q, e, m_p, m_a, overhead)
@@ -286,8 +285,7 @@ def tool_binary():
 def tool_any_blksize():
     res = ()
     optimal = 1e20
-    for q, mp_ma in dynamic_result.items():
-        m_p, m_a = mp_ma
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         e = 0
         cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
         if cand != ():
@@ -298,13 +296,11 @@ def tool_any_blksize():
     print("====tool_any_blksize======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
     overhead_bin = 1e20
-    for q, mp_ma in dynamic_result.items():
+    for q, (rber, scaling_factor, m_p, m_a) in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
-        m_p, m_a = mp_ma
         e = 0
-        overhead = 1 + (e + m_p) * iter + m_a
+        overhead = m_p * iter + m_a
         if overhead < overhead_bin:
             overhead_bin = overhead
             res = (q, e, m_p, m_a, overhead)
@@ -382,9 +378,9 @@ if __name__ == "__main__":
     load_db()
     # mprec()
     # rprec()
-    tool()
-    # tool_binary()
-    # tool_any_blksize()
+    # tool()
+    tool_binary()
+    tool_any_blksize()
     '''
     ====mprec======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
