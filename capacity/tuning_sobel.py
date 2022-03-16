@@ -274,7 +274,6 @@ def tool_binary():
         if q not in [2, 4, 8, 16]:
             continue
         iter = math.log(q, 2)
-        m_p, m_a = mp_ma
         e = 0
         overhead = m_p * iter + m_a
         if overhead < overhead_bin:
