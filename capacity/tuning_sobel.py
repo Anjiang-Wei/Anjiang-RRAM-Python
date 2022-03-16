@@ -82,14 +82,17 @@ def select_blksize(candidates, n_max, e, m_p, q_binary):
             else:
                 blksize = compute_blksize(q, e, m_p, k)
         else:
-            blksize = 0 # if m_p = 0, Rnum / Rint does not need notion of blksize
+            blksize = -1 # if m_p = 0, Rnum / Rint does not need notion of blksize
         if blksize <= n_max:
             res.append((q, n, k, d, uber, blksize))
     return res
 
 def minimum_overhead(candidates, total_floats, m_a, q_binary):
     '''
-    ceil((#total floats) / blksize ) ∗ n + # total floats * m_a
+    if blksize != -1:
+        ceil((#total num) / blksize ) ∗ n + # total num * m_a
+    else:
+        # total num * m_a
     '''
     res = ()
     cur_best = 1e20
@@ -101,6 +104,8 @@ def minimum_overhead(candidates, total_floats, m_a, q_binary):
             overhead = math.ceil(total_floats / blksize * n) + total_floats * m_a
         else:
             overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
+        if blksize == -1:
+            overhead = total_floats * m_a
         overhead = overhead / total_floats
         if overhead < cur_best:
            res = (q, n, k, d, uber, blksize, overhead)
@@ -317,7 +322,7 @@ def our_precise_bin():
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=True, q_binary=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -348,7 +353,7 @@ def sba_precise_bin():
         m_p += m_a
         m_a = 0
         e = 0
-        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=False)
+        cand = tuning_algorithm(1e10, 1e-13, q, e, m_p, m_a, 512*512*3, verbose=False, ours=False, q_binary=True)
         if cand != ():
             q, n, k, d, uber, blksize, overhead = cand
             if overhead < optimal:
@@ -381,6 +386,14 @@ if __name__ == "__main__":
     # tool_binary()
     # tool_any_blksize()
     '''
+    ====sba_precise_bin======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 2, 0, 4, 253, 22, 145, 8.632076970817778e-14, 11, 23.00005849202474)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 2, 0, 4.0)
+    ====our_precise_bin======
+    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
+    (0, 2, 0, 4, 254, 184, 25, 7.332052762489173e-14, 92, 2.7611363728841147)
+    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 2, 0, 4)
     ====tool======
     e, m_p, m_a, q, n, k, d, uber, blksize, overhead
     (0, 1, 2, 5, 130, 74, 25, 1.7130293974600777e-14, 74, 3.7568461100260415)
