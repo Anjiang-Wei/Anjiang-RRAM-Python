@@ -26,6 +26,39 @@ def load_db():
     with open('database.json', 'rb') as fin:
         db = pickle.load(fin)
 
+def generate_RS():
+    '''
+    <n, k, n-k+1>_[p^m]: n = p^m - 1, p is a prime; p^m <= 256
+    '''
+    res = {}
+    for p in [2, 3, 4, 5, 7, 8, 9, 11, 13, 16]: # prime or prime power
+        for m in range(1, 10):
+            if p ** m > 256:
+                continue
+            n = (p ** m) - 1
+            for k in range(1, n):
+                d = n - k + 1
+                new_key = (p, n, k)
+                if new_key not in res.keys():
+                    res[new_key] = d
+                else:
+                    if res[new_key] < d:
+                        res[new_key] = d
+    # print(res)
+    return res
+
+def generate_hamming():
+    '''
+    <2^r - 1, 2^r - r - 1, 3> (r >= 2)
+    '''
+    pass
+
+def generate_BCH():
+    '''
+    https://pt.slideshare.net/AakankshaR/bch-codes-44032678/12
+    d = 2t + 1
+    '''
+
 
 def get_all_candidates(intended_q=None):
     res = []
@@ -447,15 +480,16 @@ def m32():
     print("if assuming 2 reliable: overhead=", 32)
 
 if __name__ == "__main__":
-    load_db()
+    generate_RS()
+    # load_db()
     # compute_rber_e((-0.5, 0.5), False)
     # sota()
     # m32()
     # mprec()
     # rprec()
     # tool()
-    tool_binary()
-    tool_any_blksize()
+    # tool_binary()
+    # tool_any_blksize()
     '''
 
     ====sota======
