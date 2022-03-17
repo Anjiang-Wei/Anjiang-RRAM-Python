@@ -51,15 +51,25 @@ def generate_hamming():
     '''
     <2^r - 1, 2^r - r - 1, 3> (r >= 2)
     '''
-    pass
+    res = {}
+    for p in [2, 4, 8, 16]:
+        for r in range(2, 10):
+            n = (2 ** r) - 1
+            k = (2 ** r) - r - 1
+            d = 3
+            new_key = (p, n, k)
+            res[new_key] = d
+    # print(res)
+    return res
 
 def generate_BCH():
     '''
     https://pt.slideshare.net/AakankshaR/bch-codes-44032678/12
+    https://web.ntpu.edu.tw/~yshan/BCH_code.pdf --> good
     d = 2t + 1
     '''
 
-
+ 
 def get_all_candidates(intended_q=None):
     res = []
     for key in db.keys():
@@ -480,7 +490,6 @@ def m32():
     print("if assuming 2 reliable: overhead=", 32)
 
 if __name__ == "__main__":
-    generate_RS()
     # load_db()
     # compute_rber_e((-0.5, 0.5), False)
     # sota()
