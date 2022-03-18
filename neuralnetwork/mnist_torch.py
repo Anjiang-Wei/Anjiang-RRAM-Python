@@ -252,12 +252,13 @@ algo_res2 = {4: (0.125, 0),
  15: (0.38749999999999996, 0),
  16: (0.33875, 0)}
 
-def normal():
+def normal(ours):
     '''
     algo_res or algo_res2
     '''
+    to_test = algo_res if ours else algo_res2
     res = {}
-    for q, rber_e in algo_res2.items():
+    for q, rber_e in to_test.items():
         rber, e = rber_e
         print(f"-----------drop bits for R={q}, raw_ber={rber}, E={e}------", flush=True)
         min_M = drop_bits(R=q, E=e, spec_ber=1e-13, raw_ber=rber, start_M=4, minimum_accuracy=0.98)
@@ -290,5 +291,6 @@ if __name__ == '__main__':
     # fault_inject()
 
     # dump_float()
-    # normal()
-    rdrop()
+    normal(ours=True)
+    # normal(ours=False)
+    # rdrop()
