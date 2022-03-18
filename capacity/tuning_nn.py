@@ -42,7 +42,7 @@ def generate_RS():
                 if new_key not in res.keys():
                     res[new_key] = d
                 else:
-                    if res[new_key] < d:
+                    if res[new_key] < d: # select max
                         res[new_key] = d
     # print(res)
     return res
@@ -78,6 +78,25 @@ def generate_BCH():
                 res[new_key] = d
     # print(res)
     return res
+
+def merge(dict1, dict2):
+    # merge two dicts and reserve max
+    res = dict2.copy()
+    for key in dict1.keys():
+        if key not in res.keys():
+            res[key] = dict1[key]
+        else:
+            res[key] = max(dict1[key], dict2[key])
+    return res
+
+def load_efficient():
+    global db
+    res1 = generate_RS()
+    res2 = generate_hamming()
+    res3 = generate_BCH()
+    res01 = merge(db, res1)
+    res23 = merge(res2, res3)
+    db = merge(res01, res23)
 
 def get_all_candidates(intended_q=None):
     res = []
@@ -500,6 +519,8 @@ def m32():
 
 if __name__ == "__main__":
     # load_db()
+    load_efficient()
+    # print(len(db))
     # compute_rber_e((-0.5, 0.5), False)
     # sota()
     # m32()
