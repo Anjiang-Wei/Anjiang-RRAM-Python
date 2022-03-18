@@ -172,7 +172,7 @@ float Rfloat::from_Rfloat() {
     float val = (float) leadingM;
     float weight = R;
     for (int i = 0; i < M; i++) {
-        val += ((float) mant[i]) / weight;        
+        val += ((float) mant[i]) / weight;
         weight = weight * R;
         // cout << "weight:" << weight << endl;
     }
@@ -186,7 +186,7 @@ float Rfloat::from_Rfloat() {
     #ifdef DEBUG
     cout << "exp_val:" << exp_val << endl;
     cout << "bias:" << bias << endl;
-    #endif 
+    #endif
     exp_val -= bias;
     val = val * pow(R, exp_val);
     if (sign) {
