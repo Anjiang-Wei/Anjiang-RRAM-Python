@@ -98,17 +98,14 @@ def load_efficient():
     res23 = merge(res2, res3)
     db = merge(res01, res23)
 
-def get_all_candidates(intended_q=None):
+def get_all_candidates(intended_q):
     res = []
     for key in db.keys():
         q, n, k = key
         d = db[key]
         assert d <= n - k + 1
-        if intended_q == None:
+        if q in intended_q:
             res.append((q, n, k, d))
-        else:
-            if q == intended_q:
-                res.append((q, n, k, d))
     return res
 
 def select_ratio(candidates, intended_uber, RBER):
@@ -138,29 +135,19 @@ def compute_blksize(q, e, m_p, k):
             break
     return x - 1
 
-def compute_blksize2(q, e, m_p, k):
-    '''
-    the maximum float x, such that
-    x * (e + m_p) + ceil(x / floor(log(q, base=2))) <= k
-
-    '''
-    assert q == 2
-    return k / (e + m_p + 1)
-
-def select_blksize(candidates, n_max, e, m_p, q_binary):
+def select_blksize(candidates, n_max, e, m_p):
     res = []
     for cand_uber in candidates:
         cand, uber = cand_uber
         q, n, k, d = cand
-        if q_binary:
-            blksize = compute_blksize2(q, e, m_p, k)
-        else:
-            blksize = compute_blksize(q, e, m_p, k)
+        blksize = compute_blksize(q, e, m_p, k)
+        if blksize < 1:
+            continue
         if blksize <= n_max:
             res.append((q, n, k, d, uber, blksize))
     return res
 
-def minimum_overhead(candidates, total_floats, m_a, q_binary):
+def minimum_overhead(candidates, total_floats, m_a):
     '''
     ceil((#total floats) / blksize ) ∗ n + # total floats * m_a
     '''
@@ -168,12 +155,9 @@ def minimum_overhead(candidates, total_floats, m_a, q_binary):
     cur_best = 1e20
     for param in candidates:
         q, n, k, d, uber, blksize = param
-        if blksize == 0:
+        if blksize < 1:
             continue
-        if q_binary:
-            overhead = math.ceil(total_floats / blksize * n) + total_floats * m_a
-        else:
-            overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
+        overhead = math.ceil(total_floats / blksize) * n + total_floats * m_a
         overhead = overhead / total_floats
         if overhead < cur_best:
            res = (q, n, k, d, uber, blksize, overhead)
@@ -253,14 +237,17 @@ def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary):
     m_p: # precise mantissa
     rber: prob of level drift
     '''
-    res = get_all_candidates(intended_q=q)
+    if q_binary:
+        res = get_all_candidates(intended_q={2,q})
+    else:
+        res = get_all_candidates(intended_q=q)
     # print("after q", len(res), flush=True)
     res = select_ratio(res, p_rel, rber) # compute_uber
     # print("after ratio", len(res), flush=True)
-    res = select_blksize(res, n_max, e, m_p, q_binary) # compute_blksize
+    res = select_blksize(res, n_max, e, m_p) # compute_blksize
     # print("after blksize", len(res), flush=True)
     # (q, n, k, d, uber, blksize)
-    res = minimum_overhead(res, total_floats, m_a, q_binary)
+    res = minimum_overhead(res, total_floats, m_a)
 
     return res
 
@@ -281,10 +268,6 @@ def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours, 
     for q_, rber in get_all_q_uber(ours):
         if q_ != q:
             continue
-        if q_binary:
-            if verbose:
-                print(f'q_original = {q}')
-            q = 2
         cand = pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary)
         if verbose:
             print(f'q = {q}, e = {e}, m_p = {m_p}, m_a = {m_a}, rber=  {rber}, cand = {cand}', flush=True)
@@ -337,9 +320,6 @@ def tool():
     print("====tool======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (0, 0, 3, 9, 107, 33, 49, 5.010031254909131e-14, 99, 4.080895454719714) # <= 100 blksize
-    # (0, 0, 3, 9, 127, 42, 53, 6.137498140690585e-14, 126, 4.007949948411594) <= 128 blksize
-    # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
     overhead_bin = 1e20
     for q, mp_ma in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
@@ -396,7 +376,6 @@ def tool_any_blksize():
     print("====tool_any_blksize======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873) # best
     overhead_bin = 1e20
     for q, mp_ma in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
@@ -425,7 +404,6 @@ def rprec():
     print("====rprec======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    ## (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
     overhead_bin = 1e20
     for q, mp_ma in dynamic_result.items():
         iter = math.ceil(math.log(q, 2))
@@ -458,7 +436,6 @@ def mprec():
     print("====mprec======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
     overhead_bin = 1e20
     for q, mp_ma in dynamic_result.items():
         if q not in [2, 4, 8, 16]:
@@ -493,7 +470,6 @@ def sota():
     print("====sota======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (8, 23, 0, 4, 65, 1, 65, 9.15947789395613e-14, 0.03125, 1040.0)
     print("if assuming 2 reliable: overhead=", 32)
 
 def m32():
@@ -514,11 +490,10 @@ def m32():
     print("====m32======")
     print("e, m_p, m_a, q, n, k, d, uber, blksize, overhead")
     print(res)
-    # (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333372781657)
     print("if assuming 2 reliable: overhead=", 32)
 
 if __name__ == "__main__":
-    # load_db()
+    load_db()
     load_efficient()
     # print(len(db))
     # compute_rber_e((-0.5, 0.5), False)
