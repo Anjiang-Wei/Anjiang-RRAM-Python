@@ -2,11 +2,10 @@
 #include <stdlib.h>
 
 void validate(float num) {
-    float eps = 0.0000001;
+    float eps = 9e-3;
     Rfloat num1 = Rfloat(2, 8, 23, num);
     float num2 = num1.from_Rfloat();
-    // num2 += 0.01;
-    // cout << num << "," << num2 << endl;
+    // cout << num << "," << num2 << "," << fabs(num - num2) << endl;
     assert(fabs(num - num2) < eps);
 }
 
@@ -36,14 +35,14 @@ void validate3(float num) {
     ofstream outfile;
     outfile.open("rfloat.dat");
     outfile << num1;
-    cout << num1.from_Rfloat() << endl;
+    // cout << num1.from_Rfloat() << endl;
     outfile.close();
 
     Rfloat num2;
     ifstream infile;
     infile.open("rfloat.dat");
     infile >> num2;
-    cout << num2.from_Rfloat() << endl;
+    // cout << num2.from_Rfloat() << endl;
     infile.close();
 
     assert(fabs((num - num2.from_Rfloat()) / num) < eps);
@@ -70,7 +69,7 @@ int main() {
     c.print();
     float d = c.from_Rfloat();
     cout << d << endl;
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 100; i++) {
         validate(RandomFloat(-1e5, 1e5));
         validate2(RandomFloat(-1e5, 1e5));
         // validate3(RandomFloat(-1e5, 1e5));
@@ -85,8 +84,8 @@ int main() {
         float a = RandomFloat(-100, 100);
         mutation_input.push_back(a);
     }
-    int R = 7, E = 3, M = 5, m_p = 1, m_a = 4;
-    float spec_ber = 1e-13, raw_ber = 0.1;
+    int R = 10, E = 3, M = 5, m_p = 0, m_a = 5;
+    float spec_ber = 1e-13, raw_ber = 0.9;
     auto output = mutate_vec_float(mutation_input, R, E, M, m_p, m_a, spec_ber, raw_ber);
     for (int i = 0; i < output.size(); i++) {
         cout << mutation_input[i] << " " << output[i] << endl;

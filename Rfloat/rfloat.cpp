@@ -115,8 +115,7 @@ Rfloat::Rfloat(uint8_t R_, uint8_t E_, uint8_t M_, float val) {
 }
 
 ofstream& operator<<(ofstream& output, const Rfloat& D) {
-    output << (int) D.R << " " << (int) D.E << " " << (int) D.M <<  " " << (int) D.sign 
-        << " " << (int) D.bias << endl;
+    output << (int) D.R << " " << (int) D.E << " " << (int) D.M <<  " " << (int) D.sign << endl;
     for (int i = 0; i < D.E; i++) {
         output << (int) D.exp[i] << " ";
     }
