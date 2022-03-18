@@ -64,12 +64,21 @@ def generate_hamming():
 
 def generate_BCH():
     '''
-    https://pt.slideshare.net/AakankshaR/bch-codes-44032678/12
-    https://web.ntpu.edu.tw/~yshan/BCH_code.pdf --> good
+    https://web.ntpu.edu.tw/~yshan/BCH_code.pdf --> BCH.txt
     d = 2t + 1
     '''
+    res = {}
+    with open("BCH.txt", "r") as fin:
+        lines = fin.readlines()[1:]
+        for line in lines:
+            n, k, t = map(int, line.split(","))
+            d = 2 * t + 1
+            for p in [2, 4, 8, 16]:
+                new_key = (p, n, k)
+                res[new_key] = d
+    # print(res)
+    return res
 
- 
 def get_all_candidates(intended_q=None):
     res = []
     for key in db.keys():
