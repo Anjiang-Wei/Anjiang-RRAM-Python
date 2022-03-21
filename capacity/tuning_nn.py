@@ -240,7 +240,7 @@ def pick_nkd(n_max, p_rel, q, e, m_p, m_a, rber, total_floats, q_binary):
     if q_binary:
         res = get_all_candidates(intended_q={2,q})
     else:
-        res = get_all_candidates(intended_q=q)
+        res = get_all_candidates(intended_q={q})
     # print("after q", len(res), flush=True)
     res = select_ratio(res, p_rel, rber) # compute_uber
     # print("after ratio", len(res), flush=True)
@@ -498,7 +498,6 @@ if __name__ == "__main__":
     # print(len(db))
     # compute_rber_e((-0.5, 0.5), False)
     sota()
-    sota_trunc()
     m32()
     mprec()
     rprec()
