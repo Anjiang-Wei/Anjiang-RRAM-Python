@@ -1,0 +1,23 @@
+Dead cell initialization finished: 780 are dead
+Failure rate for 6: 2 / 600 = 0.0033333333333333335
+Failure rate for 7: 10 / 700 = 0.014285714285714285
+Failure rate for 8: 26 / 800 = 0.0325
+Failure rate for 9: 24 / 900 = 0.02666666666666667
+Failure rate for 10: 41 / 1000 = 0.041
+Failure rate for 11: 61 / 1100 = 0.05545454545454546
+Failure rate for 12: 92 / 1200 = 0.07666666666666666
+Failure rate for 13: 105 / 1300 = 0.08076923076923077
+Failure rate for 14: 139 / 1400 = 0.09928571428571428
+Failure rate for 15: 183 / 1500 = 0.122
+Failure rate for 16: 207 / 1600 = 0.129375
+../scheme/generated_raw/C13_6_6_0.0009765625_1.json: 0.0008472786781397179
+../scheme/generated_raw/C13_7_7_0.00390625_1.json: 0.0034211195738377276
+../scheme/generated_raw/C13_8_8_0.009765625_1.json: 0.008754023536713507
+../scheme/generated_raw/C13_9_9_0.01171875_1.json: 0.010591131292200018
+../scheme/generated_raw/C13_10_10_0.021375_1.json: 0.019600549768097775
+../scheme/generated_raw/C13_11_11_0.0244140625_1.json: 0.022505405835494097
+../scheme/generated_raw/C13_12_12_0.041015625_1.json: 0.03808309618161476
+../scheme/generated_raw/C13_13_13_0.0478515625_1.json: 0.044687018104524245
+../scheme/generated_raw/C13_14_14_0.06640625_1.json: 0.062294268866745384
+../scheme/generated_raw/C13_15_15_0.08203125_1.json: 0.0773812572257957
+../scheme/generated_raw/C13_16_16_0.0947265625_1.json: 0.08961110508898229
