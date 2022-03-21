@@ -276,34 +276,33 @@ def tuning_algorithm(n_max, p_rel, q, e, m_p, m_a, total_floats, verbose, ours, 
 
 # q --> (m_p, m_a)
 # our result
-dynamic_result = {4: (0, 4),
-                  5: (0, 4),
-                  6: (2, 1),
-                  7: (0, 3),
-                  8: (0, 3),
-                  9: (0, 3),
-                  10: (0, 3),
-                  11: (0, 3),
-                  12: (1, 2),
-                  13: (0, 3),
-                  14: (0, 3),
-                  15: (0, 3),
-                  16: (0, 3)}
-
-# q --> (m_p, m_a)
-dynamic_result2 = {4: (2, 2),
-                  5: (2, 2),
+dynamic_result = {4: (1, 3),
+                  5: (1, 3),
                   6: (2, 1),
                   7: (1, 2),
-                  8: (2, 1),
+                  8: (1, 2),
                   9: (1, 2),
-                  10: (2, 1),
-                  11: (2, 1),
-                  12: (2, 1),
-                  13: (2, 1),
-                  14: (0, 3),
-                  15: (0, 3),
+                  10: (1, 2),
+                  11: (1, 2),
+                  12: (1, 2),
+                  13: (1, 2),
+                  14: (1, 2),
+                  15: (1, 2),
                   16: (1, 2)}
+
+dynamic_result2 = {4: (2, 2),
+                   5: (2, 2),
+                   6: (2, 1),
+                   7: (2, 1),
+                   8: (2, 1),
+                   9: (2, 1),
+                   10: (1, 2),
+                   11: (1, 2),
+                   12: (1, 2),
+                   13: (1, 2),
+                   14: (1, 2),
+                   15: (1, 2),
+                   16: (1, 2)}
 
 def tool():
     res = ()
@@ -472,6 +471,7 @@ def sota():
     print(res)
     print("if assuming 2 reliable: overhead=", 32)
 
+
 def m32():
     res = ()
     optimal = 1e20
@@ -497,13 +497,14 @@ if __name__ == "__main__":
     load_efficient()
     # print(len(db))
     # compute_rber_e((-0.5, 0.5), False)
-    # sota()
-    # m32()
-    # mprec()
-    # rprec()
-    # tool()
-    # tool_binary()
-    # tool_any_blksize()
+    sota()
+    sota_trunc()
+    m32()
+    mprec()
+    rprec()
+    tool()
+    tool_binary()
+    tool_any_blksize()
     '''
 
     ====sota======
