@@ -493,7 +493,7 @@ def m32():
     print("if assuming 2 reliable: overhead=", 32)
 
 if __name__ == "__main__":
-    load_db()
+    # load_db()
     load_efficient()
     # print(len(db))
     # compute_rber_e((-0.5, 0.5), False)
