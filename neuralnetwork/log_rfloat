@@ -1,0 +1,1160 @@
+-----------drop bits for R=4, raw_ber=0.003750000000000031, E=0------
+R=4, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.003750000000000031
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 4 0 4 4 0 1e-13 0.00375
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 4 0 3 3 0 1e-13 0.00375
+finished!!
+Load finished
+Test set: Average loss: 1.9346, Accuracy: 8597/10000 (86%)
+-----------drop precise bits for R=4, raw_ber=0.003750000000000031, E=0, min_M=4------
+R=4, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.003750000000000031
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 4 0 4 4 0 1e-13 0.00375
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=3, m_a=1
+Float_mutate configutation float float0 4 0 4 3 1 1e-13 0.00375
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=2, m_a=2
+Float_mutate configutation float float0 4 0 4 2 2 1e-13 0.00375
+finished!!
+Load finished
+Test set: Average loss: 0.0782, Accuracy: 9840/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=1, m_a=3
+Float_mutate configutation float float0 4 0 4 1 3 1e-13 0.00375
+finished!!
+Load finished
+Test set: Average loss: 0.0728, Accuracy: 9843/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=0, m_a=4
+Float_mutate configutation float float0 4 0 4 0 4 1e-13 0.00375
+finished!!
+Load finished
+Test set: Average loss: 0.2381, Accuracy: 9178/10000 (92%)
+Config found: R=4, raw_ber=0.003750000000000031, E=0, min_M=4, min_m_p=1
+-----------drop bits for R=5, raw_ber=0.006249999999999978, E=0------
+R=5, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.006249999999999978
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 5 0 4 4 0 1e-13 0.00625
+finished!!
+Load finished
+Test set: Average loss: 0.0544, Accuracy: 9846/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 5 0 3 3 0 1e-13 0.00625
+finished!!
+Load finished
+Test set: Average loss: 0.7718, Accuracy: 9709/10000 (97%)
+-----------drop precise bits for R=5, raw_ber=0.006249999999999978, E=0, min_M=4------
+R=5, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.006249999999999978
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 5 0 4 4 0 1e-13 0.00625
+finished!!
+Load finished
+Test set: Average loss: 0.0544, Accuracy: 9846/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=3, m_a=1
+Float_mutate configutation float float0 5 0 4 3 1 1e-13 0.00625
+finished!!
+Load finished
+Test set: Average loss: 0.0544, Accuracy: 9845/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=2, m_a=2
+Float_mutate configutation float float0 5 0 4 2 2 1e-13 0.00625
+finished!!
+Load finished
+Test set: Average loss: 0.0542, Accuracy: 9846/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=1, m_a=3
+Float_mutate configutation float float0 5 0 4 1 3 1e-13 0.00625
+finished!!
+Load finished
+Test set: Average loss: 0.0505, Accuracy: 9845/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=0, m_a=4
+Float_mutate configutation float float0 5 0 4 0 4 1e-13 0.00625
+finished!!
+Load finished
+Test set: Average loss: 0.1955, Accuracy: 9421/10000 (94%)
+Config found: R=5, raw_ber=0.006249999999999978, E=0, min_M=4, min_m_p=1
+-----------drop bits for R=6, raw_ber=0.012499999999999956, E=0------
+R=6, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.012499999999999956
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 6 0 4 4 0 1e-13 0.0125
+finished!!
+Load finished
+Test set: Average loss: 0.0492, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 6 0 3 3 0 1e-13 0.0125
+finished!!
+Load finished
+Test set: Average loss: 0.2315, Accuracy: 9819/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 6 0 2 2 0 1e-13 0.0125
+finished!!
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 980/10000 (10%)
+-----------drop precise bits for R=6, raw_ber=0.012499999999999956, E=0, min_M=3------
+R=6, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.012499999999999956
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 6 0 3 3 0 1e-13 0.0125
+finished!!
+Load finished
+Test set: Average loss: 0.2315, Accuracy: 9819/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 6 0 3 2 1 1e-13 0.0125
+finished!!
+Load finished
+Test set: Average loss: 0.2241, Accuracy: 9824/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 6 0 3 1 2 1e-13 0.0125
+finished!!
+Load finished
+Test set: Average loss: 0.1754, Accuracy: 9784/10000 (98%)
+Config found: R=6, raw_ber=0.012499999999999956, E=0, min_M=3, min_m_p=2
+-----------drop bits for R=7, raw_ber=0.02749999999999997, E=0------
+R=7, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.02749999999999997
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 7 0 4 4 0 1e-13 0.0275
+finished!!
+Load finished
+Test set: Average loss: 0.0476, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 7 0 3 3 0 1e-13 0.0275
+finished!!
+Load finished
+Test set: Average loss: 0.1201, Accuracy: 9841/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 7 0 2 2 0 1e-13 0.0275
+finished!!
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 980/10000 (10%)
+-----------drop precise bits for R=7, raw_ber=0.02749999999999997, E=0, min_M=3------
+R=7, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.02749999999999997
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 7 0 3 3 0 1e-13 0.0275
+finished!!
+Load finished
+Test set: Average loss: 0.1201, Accuracy: 9841/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 7 0 3 2 1 1e-13 0.0275
+finished!!
+Load finished
+Test set: Average loss: 0.1172, Accuracy: 9837/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 7 0 3 1 2 1e-13 0.0275
+finished!!
+Load finished
+Test set: Average loss: 0.0819, Accuracy: 9825/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 7 0 3 0 3 1e-13 0.0275
+finished!!
+Load finished
+Test set: Average loss: 11.9039, Accuracy: 5940/10000 (59%)
+Config found: R=7, raw_ber=0.02749999999999997, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=8, raw_ber=0.043749999999999956, E=0------
+R=8, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.043749999999999956
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 8 0 4 4 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0469, Accuracy: 9846/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 8 0 3 3 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 8 0 2 2 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 980/10000 (10%)
+-----------drop precise bits for R=8, raw_ber=0.043749999999999956, E=0, min_M=3------
+R=8, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.043749999999999956
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 8 0 3 3 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 8 0 3 2 1 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0783, Accuracy: 9841/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 8 0 3 1 2 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0604, Accuracy: 9819/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 8 0 3 0 3 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 26.9720, Accuracy: 4404/10000 (44%)
+Config found: R=8, raw_ber=0.043749999999999956, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=9, raw_ber=0.043749999999999956, E=0------
+R=9, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.043749999999999956
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 9 0 4 4 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0465, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 9 0 3 3 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0657, Accuracy: 9846/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 9 0 2 2 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 2.3025, Accuracy: 1259/10000 (13%)
+-----------drop precise bits for R=9, raw_ber=0.043749999999999956, E=0, min_M=3------
+R=9, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.043749999999999956
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 9 0 3 3 0 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0657, Accuracy: 9846/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 9 0 3 2 1 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0649, Accuracy: 9848/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 9 0 3 1 2 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 0.0610, Accuracy: 9814/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 9 0 3 0 3 1e-13 0.04375
+finished!!
+Load finished
+Test set: Average loss: 83.8012, Accuracy: 2899/10000 (29%)
+Config found: R=9, raw_ber=0.043749999999999956, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=10, raw_ber=0.09999999999999998, E=0------
+R=10, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.09999999999999998
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 10 0 4 4 0 1e-13 0.1
+finished!!
+Load finished
+Test set: Average loss: 0.0463, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 10 0 3 3 0 1e-13 0.1
+finished!!
+Load finished
+Test set: Average loss: 0.0597, Accuracy: 9844/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 10 0 2 2 0 1e-13 0.1
+finished!!
+Load finished
+Test set: Average loss: 2.2966, Accuracy: 3552/10000 (36%)
+-----------drop precise bits for R=10, raw_ber=0.09999999999999998, E=0, min_M=3------
+R=10, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.09999999999999998
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 10 0 3 3 0 1e-13 0.1
+finished!!
+Load finished
+Test set: Average loss: 0.0597, Accuracy: 9844/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 10 0 3 2 1 1e-13 0.1
+finished!!
+Load finished
+Test set: Average loss: 0.0606, Accuracy: 9839/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 10 0 3 1 2 1e-13 0.1
+finished!!
+Load finished
+Test set: Average loss: 0.0510, Accuracy: 9832/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 10 0 3 0 3 1e-13 0.1
+finished!!
+Load finished
+Test set: Average loss: 154.3674, Accuracy: 3014/10000 (30%)
+Config found: R=10, raw_ber=0.09999999999999998, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=11, raw_ber=0.15749999999999997, E=0------
+R=11, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.15749999999999997
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 11 0 4 4 0 1e-13 0.1575
+finished!!
+Load finished
+Test set: Average loss: 0.0462, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 11 0 3 3 0 1e-13 0.1575
+finished!!
+Load finished
+Test set: Average loss: 0.0549, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 11 0 2 2 0 1e-13 0.1575
+finished!!
+Load finished
+Test set: Average loss: 2.2807, Accuracy: 4461/10000 (45%)
+-----------drop precise bits for R=11, raw_ber=0.15749999999999997, E=0, min_M=3------
+R=11, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.15749999999999997
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 11 0 3 3 0 1e-13 0.1575
+finished!!
+Load finished
+Test set: Average loss: 0.0549, Accuracy: 9848/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 11 0 3 2 1 1e-13 0.1575
+finished!!
+Load finished
+Test set: Average loss: 0.0548, Accuracy: 9843/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 11 0 3 1 2 1e-13 0.1575
+finished!!
+Load finished
+Test set: Average loss: 0.0534, Accuracy: 9846/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 11 0 3 0 3 1e-13 0.1575
+finished!!
+Load finished
+Test set: Average loss: 351.0700, Accuracy: 3650/10000 (36%)
+Config found: R=11, raw_ber=0.15749999999999997, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=12, raw_ber=0.21250000000000002, E=0------
+R=12, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.21250000000000002
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 12 0 4 4 0 1e-13 0.2125
+finished!!
+Load finished
+Test set: Average loss: 0.0461, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 12 0 3 3 0 1e-13 0.2125
+finished!!
+Load finished
+Test set: Average loss: 0.0527, Accuracy: 9845/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 12 0 2 2 0 1e-13 0.2125
+finished!!
+Load finished
+Test set: Average loss: 2.2600, Accuracy: 3043/10000 (30%)
+-----------drop precise bits for R=12, raw_ber=0.21250000000000002, E=0, min_M=3------
+R=12, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.21250000000000002
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 12 0 3 3 0 1e-13 0.2125
+finished!!
+Load finished
+Test set: Average loss: 0.0527, Accuracy: 9845/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 12 0 3 2 1 1e-13 0.2125
+finished!!
+Load finished
+Test set: Average loss: 0.0522, Accuracy: 9843/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 12 0 3 1 2 1e-13 0.2125
+finished!!
+Load finished
+Test set: Average loss: 0.0595, Accuracy: 9820/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 12 0 3 0 3 1e-13 0.2125
+finished!!
+Load finished
+Test set: Average loss: 644.3396, Accuracy: 3889/10000 (39%)
+Config found: R=12, raw_ber=0.21250000000000002, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=13, raw_ber=0.16749999999999998, E=0------
+R=13, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.16749999999999998
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 13 0 4 4 0 1e-13 0.1675
+finished!!
+Load finished
+Test set: Average loss: 0.0460, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 13 0 3 3 0 1e-13 0.1675
+finished!!
+Load finished
+Test set: Average loss: 0.0512, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 13 0 2 2 0 1e-13 0.1675
+finished!!
+Load finished
+Test set: Average loss: 2.2193, Accuracy: 4543/10000 (45%)
+-----------drop precise bits for R=13, raw_ber=0.16749999999999998, E=0, min_M=3------
+R=13, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.16749999999999998
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 13 0 3 3 0 1e-13 0.1675
+finished!!
+Load finished
+Test set: Average loss: 0.0512, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 13 0 3 2 1 1e-13 0.1675
+finished!!
+Load finished
+Test set: Average loss: 0.0514, Accuracy: 9850/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 13 0 3 1 2 1e-13 0.1675
+finished!!
+Load finished
+Test set: Average loss: 0.0496, Accuracy: 9854/10000 (99%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 13 0 3 0 3 1e-13 0.1675
+finished!!
+Load finished
+Test set: Average loss: 526.0290, Accuracy: 4451/10000 (45%)
+Config found: R=13, raw_ber=0.16749999999999998, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=14, raw_ber=0.15874999999999995, E=0------
+R=14, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.15874999999999995
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 14 0 4 4 0 1e-13 0.15875
+finished!!
+Load finished
+Test set: Average loss: 0.0460, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 14 0 3 3 0 1e-13 0.15875
+finished!!
+Load finished
+Test set: Average loss: 0.0499, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 14 0 2 2 0 1e-13 0.15875
+finished!!
+Load finished
+Test set: Average loss: 2.1427, Accuracy: 6444/10000 (64%)
+-----------drop precise bits for R=14, raw_ber=0.15874999999999995, E=0, min_M=3------
+R=14, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.15874999999999995
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 14 0 3 3 0 1e-13 0.15875
+finished!!
+Load finished
+Test set: Average loss: 0.0499, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 14 0 3 2 1 1e-13 0.15875
+finished!!
+Load finished
+Test set: Average loss: 0.0497, Accuracy: 9849/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 14 0 3 1 2 1e-13 0.15875
+finished!!
+Load finished
+Test set: Average loss: 0.0515, Accuracy: 9836/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 14 0 3 0 3 1e-13 0.15875
+finished!!
+Load finished
+Test set: Average loss: 254.3777, Accuracy: 6537/10000 (65%)
+Config found: R=14, raw_ber=0.15874999999999995, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=15, raw_ber=0.23375, E=0------
+R=15, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.23375
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 15 0 4 4 0 1e-13 0.23375
+finished!!
+Load finished
+Test set: Average loss: 0.0460, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 15 0 3 3 0 1e-13 0.23375
+finished!!
+Load finished
+Test set: Average loss: 0.0493, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 15 0 2 2 0 1e-13 0.23375
+finished!!
+Load finished
+Test set: Average loss: 2.0572, Accuracy: 7743/10000 (77%)
+-----------drop precise bits for R=15, raw_ber=0.23375, E=0, min_M=3------
+R=15, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.23375
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 15 0 3 3 0 1e-13 0.23375
+finished!!
+Load finished
+Test set: Average loss: 0.0493, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 15 0 3 2 1 1e-13 0.23375
+finished!!
+Load finished
+Test set: Average loss: 0.0492, Accuracy: 9848/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 15 0 3 1 2 1e-13 0.23375
+finished!!
+Load finished
+Test set: Average loss: 0.0653, Accuracy: 9806/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 15 0 3 0 3 1e-13 0.23375
+finished!!
+Load finished
+Test set: Average loss: 328.8574, Accuracy: 7176/10000 (72%)
+Config found: R=15, raw_ber=0.23375, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=16, raw_ber=0.25125, E=0------
+R=16, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.25125
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 16 0 4 4 0 1e-13 0.25125
+finished!!
+Load finished
+Test set: Average loss: 0.0459, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 16 0 3 3 0 1e-13 0.25125
+finished!!
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 16 0 2 2 0 1e-13 0.25125
+finished!!
+Load finished
+Test set: Average loss: 1.9346, Accuracy: 8597/10000 (86%)
+-----------drop precise bits for R=16, raw_ber=0.25125, E=0, min_M=3------
+R=16, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.25125
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 16 0 3 3 0 1e-13 0.25125
+finished!!
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 16 0 3 2 1 1e-13 0.25125
+finished!!
+Load finished
+Test set: Average loss: 0.0484, Accuracy: 9849/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 16 0 3 1 2 1e-13 0.25125
+finished!!
+Load finished
+Test set: Average loss: 0.0623, Accuracy: 9818/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 16 0 3 0 3 1e-13 0.25125
+finished!!
+Load finished
+Test set: Average loss: 315.1375, Accuracy: 7365/10000 (74%)
+Config found: R=16, raw_ber=0.25125, E=0, min_M=3, min_m_p=1
+/pool0/anjiang/.local/lib/python3.6/site-packages/torchvision/datasets/mnist.py:498: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at  ../torch/csrc/utils/tensor_numpy.cpp:180.)
+  return torch.from_numpy(parsed.astype(m[2], copy=False)).view(*s)
+q --> (m_p, m_a)
+{4: (1, 3),
+ 5: (1, 3),
+ 6: (2, 1),
+ 7: (1, 2),
+ 8: (1, 2),
+ 9: (1, 2),
+ 10: (1, 2),
+ 11: (1, 2),
+ 12: (1, 2),
+ 13: (1, 2),
+ 14: (1, 2),
+ 15: (1, 2),
+ 16: (1, 2)}
+-----------drop bits for R=4, raw_ber=0.125, E=0------
+R=4, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.125
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 4 0 4 4 0 1e-13 0.125
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 4 0 3 3 0 1e-13 0.125
+finished!!
+Load finished
+Test set: Average loss: 1.9346, Accuracy: 8597/10000 (86%)
+-----------drop precise bits for R=4, raw_ber=0.125, E=0, min_M=4------
+R=4, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.125
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 4 0 4 4 0 1e-13 0.125
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=3, m_a=1
+Float_mutate configutation float float0 4 0 4 3 1 1e-13 0.125
+finished!!
+Load finished
+Test set: Average loss: 0.0768, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=2, m_a=2
+Float_mutate configutation float float0 4 0 4 2 2 1e-13 0.125
+finished!!
+Load finished
+Test set: Average loss: 0.0592, Accuracy: 9844/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=1, m_a=3
+Float_mutate configutation float float0 4 0 4 1 3 1e-13 0.125
+finished!!
+Load finished
+Test set: Average loss: 0.2037, Accuracy: 9660/10000 (97%)
+Config found: R=4, raw_ber=0.125, E=0, min_M=4, min_m_p=2
+-----------drop bits for R=5, raw_ber=0.16500000000000004, E=0------
+R=5, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.16500000000000004
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 5 0 4 4 0 1e-13 0.165
+finished!!
+Load finished
+Test set: Average loss: 0.0544, Accuracy: 9846/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 5 0 3 3 0 1e-13 0.165
+finished!!
+Load finished
+Test set: Average loss: 0.7718, Accuracy: 9709/10000 (97%)
+-----------drop precise bits for R=5, raw_ber=0.16500000000000004, E=0, min_M=4------
+R=5, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.16500000000000004
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 5 0 4 4 0 1e-13 0.165
+finished!!
+Load finished
+Test set: Average loss: 0.0544, Accuracy: 9846/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=3, m_a=1
+Float_mutate configutation float float0 5 0 4 3 1 1e-13 0.165
+finished!!
+Load finished
+Test set: Average loss: 0.0547, Accuracy: 9849/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=2, m_a=2
+Float_mutate configutation float float0 5 0 4 2 2 1e-13 0.165
+finished!!
+Load finished
+Test set: Average loss: 0.0495, Accuracy: 9850/10000 (98%)
+--------
+Current configuration: E=0, M=4, m_p=1, m_a=3
+Float_mutate configutation float float0 5 0 4 1 3 1e-13 0.165
+finished!!
+Load finished
+Test set: Average loss: 0.3108, Accuracy: 9557/10000 (96%)
+Config found: R=5, raw_ber=0.16500000000000004, E=0, min_M=4, min_m_p=2
+-----------drop bits for R=6, raw_ber=0.13249999999999995, E=0------
+R=6, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.13249999999999995
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 6 0 4 4 0 1e-13 0.1325
+finished!!
+Load finished
+Test set: Average loss: 0.0492, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 6 0 3 3 0 1e-13 0.1325
+finished!!
+Load finished
+Test set: Average loss: 0.2315, Accuracy: 9819/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 6 0 2 2 0 1e-13 0.1325
+finished!!
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 980/10000 (10%)
+-----------drop precise bits for R=6, raw_ber=0.13249999999999995, E=0, min_M=3------
+R=6, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.13249999999999995
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 6 0 3 3 0 1e-13 0.1325
+finished!!
+Load finished
+Test set: Average loss: 0.2315, Accuracy: 9819/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 6 0 3 2 1 1e-13 0.1325
+finished!!
+Load finished
+Test set: Average loss: 0.1964, Accuracy: 9833/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 6 0 3 1 2 1e-13 0.1325
+finished!!
+Load finished
+Test set: Average loss: 0.0901, Accuracy: 9727/10000 (97%)
+Config found: R=6, raw_ber=0.13249999999999995, E=0, min_M=3, min_m_p=2
+-----------drop bits for R=7, raw_ber=0.14, E=0------
+R=7, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.14
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 7 0 4 4 0 1e-13 0.14
+finished!!
+Load finished
+Test set: Average loss: 0.0476, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 7 0 3 3 0 1e-13 0.14
+finished!!
+Load finished
+Test set: Average loss: 0.1201, Accuracy: 9841/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 7 0 2 2 0 1e-13 0.14
+finished!!
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 980/10000 (10%)
+-----------drop precise bits for R=7, raw_ber=0.14, E=0, min_M=3------
+R=7, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.14
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 7 0 3 3 0 1e-13 0.14
+finished!!
+Load finished
+Test set: Average loss: 0.1201, Accuracy: 9841/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 7 0 3 2 1 1e-13 0.14
+finished!!
+Load finished
+Test set: Average loss: 0.1128, Accuracy: 9840/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 7 0 3 1 2 1e-13 0.14
+finished!!
+Load finished
+Test set: Average loss: 0.0936, Accuracy: 9713/10000 (97%)
+Config found: R=7, raw_ber=0.14, E=0, min_M=3, min_m_p=2
+-----------drop bits for R=8, raw_ber=0.2234848484848485, E=0------
+R=8, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.2234848484848485
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 8 0 4 4 0 1e-13 0.223485
+finished!!
+Load finished
+Test set: Average loss: 0.0469, Accuracy: 9846/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 8 0 3 3 0 1e-13 0.223485
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 8 0 2 2 0 1e-13 0.223485
+finished!!
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 980/10000 (10%)
+-----------drop precise bits for R=8, raw_ber=0.2234848484848485, E=0, min_M=3------
+R=8, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.2234848484848485
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 8 0 3 3 0 1e-13 0.223485
+finished!!
+Load finished
+Test set: Average loss: 0.0801, Accuracy: 9840/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 8 0 3 2 1 1e-13 0.223485
+finished!!
+Load finished
+Test set: Average loss: 0.0784, Accuracy: 9848/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 8 0 3 1 2 1e-13 0.223485
+finished!!
+Load finished
+Test set: Average loss: 0.1045, Accuracy: 9761/10000 (98%)
+Config found: R=8, raw_ber=0.2234848484848485, E=0, min_M=3, min_m_p=2
+-----------drop bits for R=9, raw_ber=0.25, E=0------
+R=9, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.25
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 9 0 4 4 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0465, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 9 0 3 3 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0657, Accuracy: 9846/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 9 0 2 2 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 2.3025, Accuracy: 1259/10000 (13%)
+-----------drop precise bits for R=9, raw_ber=0.25, E=0, min_M=3------
+R=9, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.25
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 9 0 3 3 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0657, Accuracy: 9846/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 9 0 3 2 1 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0655, Accuracy: 9842/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 9 0 3 1 2 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0964, Accuracy: 9775/10000 (98%)
+Config found: R=9, raw_ber=0.25, E=0, min_M=3, min_m_p=2
+-----------drop bits for R=10, raw_ber=0.16625, E=0------
+R=10, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.16625
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 10 0 4 4 0 1e-13 0.16625
+finished!!
+Load finished
+Test set: Average loss: 0.0463, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 10 0 3 3 0 1e-13 0.16625
+finished!!
+Load finished
+Test set: Average loss: 0.0597, Accuracy: 9844/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 10 0 2 2 0 1e-13 0.16625
+finished!!
+Load finished
+Test set: Average loss: 2.2966, Accuracy: 3552/10000 (36%)
+-----------drop precise bits for R=10, raw_ber=0.16625, E=0, min_M=3------
+R=10, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.16625
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 10 0 3 3 0 1e-13 0.16625
+finished!!
+Load finished
+Test set: Average loss: 0.0597, Accuracy: 9844/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 10 0 3 2 1 1e-13 0.16625
+finished!!
+Load finished
+Test set: Average loss: 0.0598, Accuracy: 9850/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 10 0 3 1 2 1e-13 0.16625
+finished!!
+Load finished
+Test set: Average loss: 0.0622, Accuracy: 9821/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 10 0 3 0 3 1e-13 0.16625
+finished!!
+Load finished
+Test set: Average loss: 190.6532, Accuracy: 6406/10000 (64%)
+Config found: R=10, raw_ber=0.16625, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=11, raw_ber=0.21375, E=0------
+R=11, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.21375
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 11 0 4 4 0 1e-13 0.21375
+finished!!
+Load finished
+Test set: Average loss: 0.0462, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 11 0 3 3 0 1e-13 0.21375
+finished!!
+Load finished
+Test set: Average loss: 0.0549, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 11 0 2 2 0 1e-13 0.21375
+finished!!
+Load finished
+Test set: Average loss: 2.2807, Accuracy: 4461/10000 (45%)
+-----------drop precise bits for R=11, raw_ber=0.21375, E=0, min_M=3------
+R=11, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.21375
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 11 0 3 3 0 1e-13 0.21375
+finished!!
+Load finished
+Test set: Average loss: 0.0549, Accuracy: 9848/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 11 0 3 2 1 1e-13 0.21375
+finished!!
+Load finished
+Test set: Average loss: 0.0556, Accuracy: 9846/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 11 0 3 1 2 1e-13 0.21375
+finished!!
+Load finished
+Test set: Average loss: 0.0673, Accuracy: 9820/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 11 0 3 0 3 1e-13 0.21375
+finished!!
+Load finished
+Test set: Average loss: 506.9758, Accuracy: 4978/10000 (50%)
+Config found: R=11, raw_ber=0.21375, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=12, raw_ber=0.24624999999999997, E=0------
+R=12, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.24624999999999997
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 12 0 4 4 0 1e-13 0.24625
+finished!!
+Load finished
+Test set: Average loss: 0.0461, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 12 0 3 3 0 1e-13 0.24625
+finished!!
+Load finished
+Test set: Average loss: 0.0527, Accuracy: 9845/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 12 0 2 2 0 1e-13 0.24625
+finished!!
+Load finished
+Test set: Average loss: 2.2600, Accuracy: 3043/10000 (30%)
+-----------drop precise bits for R=12, raw_ber=0.24624999999999997, E=0, min_M=3------
+R=12, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.24624999999999997
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 12 0 3 3 0 1e-13 0.24625
+finished!!
+Load finished
+Test set: Average loss: 0.0527, Accuracy: 9845/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 12 0 3 2 1 1e-13 0.24625
+finished!!
+Load finished
+Test set: Average loss: 0.0530, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 12 0 3 1 2 1e-13 0.24625
+finished!!
+Load finished
+Test set: Average loss: 0.0671, Accuracy: 9825/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 12 0 3 0 3 1e-13 0.24625
+finished!!
+Load finished
+Test set: Average loss: 645.7396, Accuracy: 5291/10000 (53%)
+Config found: R=12, raw_ber=0.24624999999999997, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=13, raw_ber=0.25, E=0------
+R=13, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.25
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 13 0 4 4 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0460, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 13 0 3 3 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0512, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 13 0 2 2 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 2.2193, Accuracy: 4543/10000 (45%)
+-----------drop precise bits for R=13, raw_ber=0.25, E=0, min_M=3------
+R=13, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.25
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 13 0 3 3 0 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0512, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 13 0 3 2 1 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0514, Accuracy: 9845/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 13 0 3 1 2 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 0.0696, Accuracy: 9826/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 13 0 3 0 3 1e-13 0.25
+finished!!
+Load finished
+Test set: Average loss: 425.8081, Accuracy: 6348/10000 (63%)
+Config found: R=13, raw_ber=0.25, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=14, raw_ber=0.26875000000000004, E=0------
+R=14, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.26875000000000004
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 14 0 4 4 0 1e-13 0.26875
+finished!!
+Load finished
+Test set: Average loss: 0.0460, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 14 0 3 3 0 1e-13 0.26875
+finished!!
+Load finished
+Test set: Average loss: 0.0499, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 14 0 2 2 0 1e-13 0.26875
+finished!!
+Load finished
+Test set: Average loss: 2.1427, Accuracy: 6444/10000 (64%)
+-----------drop precise bits for R=14, raw_ber=0.26875000000000004, E=0, min_M=3------
+R=14, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.26875000000000004
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 14 0 3 3 0 1e-13 0.26875
+finished!!
+Load finished
+Test set: Average loss: 0.0499, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 14 0 3 2 1 1e-13 0.26875
+finished!!
+Load finished
+Test set: Average loss: 0.0500, Accuracy: 9850/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 14 0 3 1 2 1e-13 0.26875
+finished!!
+Load finished
+Test set: Average loss: 0.0606, Accuracy: 9833/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 14 0 3 0 3 1e-13 0.26875
+finished!!
+Load finished
+Test set: Average loss: 526.0689, Accuracy: 7401/10000 (74%)
+Config found: R=14, raw_ber=0.26875000000000004, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=15, raw_ber=0.38749999999999996, E=0------
+R=15, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.38749999999999996
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 15 0 4 4 0 1e-13 0.3875
+finished!!
+Load finished
+Test set: Average loss: 0.0460, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 15 0 3 3 0 1e-13 0.3875
+finished!!
+Load finished
+Test set: Average loss: 0.0493, Accuracy: 9847/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 15 0 2 2 0 1e-13 0.3875
+finished!!
+Load finished
+Test set: Average loss: 2.0572, Accuracy: 7743/10000 (77%)
+-----------drop precise bits for R=15, raw_ber=0.38749999999999996, E=0, min_M=3------
+R=15, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.38749999999999996
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 15 0 3 3 0 1e-13 0.3875
+finished!!
+Load finished
+Test set: Average loss: 0.0493, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 15 0 3 2 1 1e-13 0.3875
+finished!!
+Load finished
+Test set: Average loss: 0.0494, Accuracy: 9845/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 15 0 3 1 2 1e-13 0.3875
+finished!!
+Load finished
+Test set: Average loss: 0.0798, Accuracy: 9817/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 15 0 3 0 3 1e-13 0.3875
+finished!!
+Load finished
+Test set: Average loss: 454.2945, Accuracy: 7993/10000 (80%)
+Config found: R=15, raw_ber=0.38749999999999996, E=0, min_M=3, min_m_p=1
+-----------drop bits for R=16, raw_ber=0.33875, E=0------
+R=16, E=0, M=4, m_p_start=4, m_a=0, spec_ber=1e-13, raw_ber=0.33875
+Current configuration: E=0, M=4, m_p=4, m_a=0
+Float_mutate configutation float float0 16 0 4 4 0 1e-13 0.33875
+finished!!
+Load finished
+Test set: Average loss: 0.0459, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 16 0 3 3 0 1e-13 0.33875
+finished!!
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+------
+Current configuration: E=0, M=2, m_p=2, m_a=0
+Float_mutate configutation float float0 16 0 2 2 0 1e-13 0.33875
+finished!!
+Load finished
+Test set: Average loss: 1.9346, Accuracy: 8597/10000 (86%)
+-----------drop precise bits for R=16, raw_ber=0.33875, E=0, min_M=3------
+R=16, E=0, M=3, m_p_start=3, m_a=0, spec_ber=1e-13, raw_ber=0.33875
+Current configuration: E=0, M=3, m_p=3, m_a=0
+Float_mutate configutation float float0 16 0 3 3 0 1e-13 0.33875
+finished!!
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=2, m_a=1
+Float_mutate configutation float float0 16 0 3 2 1 1e-13 0.33875
+finished!!
+Load finished
+Test set: Average loss: 0.0487, Accuracy: 9847/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=1, m_a=2
+Float_mutate configutation float float0 16 0 3 1 2 1e-13 0.33875
+finished!!
+Load finished
+Test set: Average loss: 0.0614, Accuracy: 9825/10000 (98%)
+--------
+Current configuration: E=0, M=3, m_p=0, m_a=3
+Float_mutate configutation float float0 16 0 3 0 3 1e-13 0.33875
+finished!!
+Load finished
+Test set: Average loss: 363.8284, Accuracy: 8208/10000 (82%)
+Config found: R=16, raw_ber=0.33875, E=0, min_M=3, min_m_p=1
+/pool0/anjiang/.local/lib/python3.6/site-packages/torchvision/datasets/mnist.py:498: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at  ../torch/csrc/utils/tensor_numpy.cpp:180.)
+  return torch.from_numpy(parsed.astype(m[2], copy=False)).view(*s)
+q --> (m_p, m_a)
+{4: (2, 2),
+ 5: (2, 2),
+ 6: (2, 1),
+ 7: (2, 1),
+ 8: (2, 1),
+ 9: (2, 1),
+ 10: (1, 2),
+ 11: (1, 2),
+ 12: (1, 2),
+ 13: (1, 2),
+ 14: (1, 2),
+ 15: (1, 2),
+ 16: (1, 2)}
