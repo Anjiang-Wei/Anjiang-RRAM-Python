@@ -504,34 +504,3 @@ if __name__ == "__main__":
     tool()
     tool_binary()
     tool_any_blksize()
-    '''
-
-    ====sota======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (8, 23, 0, 4, 65, 1, 65, 9.15947789395613e-14, 0.03125, 1040.0)
-    if assuming 2 reliable: overhead= 32
-    ====m32======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (8, 23, 0, 4, 242, 150, 25, 9.84006560104058e-14, 4.6875, 25.81333372781657)
-    if assuming 2 reliable: overhead= 32
-    ====mprec======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 4, 0, 9.0)
-    ====rprec======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 4, 0, 4, 255, 185, 25, 7.657525649238025e-14, 41, 6.219636597598764)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (4, 0, 4, 0, 9)
-    ====tool======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 0, 3, 9, 127, 42, 53, 6.137498140690585e-14, 126, 4.007949948411594)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (7, 0, 0, 3, 4)
-    ====tool_binary======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 0, 3, 8, 129, 41, 53, 9.774053558937065e-14, 123, 4.048873139192021)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (8, 0, 0, 3, 4.0)
-    ====tool_any_blksize======
-    e, m_p, m_a, q, n, k, d, uber, blksize, overhead
-    (0, 0, 3, 9, 128, 43, 53, 7.278905817081082e-14, 129, 3.992310910572873)
-    if assuming 2 reliable, {q, e, m_p, m_a, overhead}= (7, 0, 0, 3, 4)
-    '''
