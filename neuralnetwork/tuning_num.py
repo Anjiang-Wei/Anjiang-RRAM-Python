@@ -35,32 +35,25 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-def find_start_scale():
-    return 1
+def find_start_scale(R):
+    return R ** 6
 
 def find_start_M(R):
-    # data range = [0, 255]
-    log_res = math.ceil(math.log(255, R))
-    if R ** log_res == 255:
-        log_res += 1
-    return log_res
+    # data range = [-0.5, 0.5]
+    return 7
 
-def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
+def run(R, M, m_p, m_a, scale, spec_ber, raw_ber):
     subprocess.run(["./bin_fix_mutate", f1s[i], f2s[i], str(R), str(M),
                     str(m_p), str(m_a), str(scale), str(spec_ber), str(raw_ber)])
-    # subprocess.run(["./sobel", f2s[i], fout[i]])
-    
-    if res < 0.1 * 255:
-        return True
-    else:
-        return False
+
+
 
 def find_s_mp_ma(start_scale, R, start_M, spec_ber, raw_ber):
     original_M = start_M
     M = start_M
     while M >= 1:
         M -= 1
-        scale = R ** (M - original_M)
+        scale = (R ** (M - original_M)) * find_start_scale(R)
         if run(R, M, M, 0, scale, spec_ber, raw_ber, True):
             start_M = M
             start_scale = scale
@@ -89,7 +82,7 @@ if __name__ == "__main__":
     spec_ber = 1e-13
     res = {}
     for R, rber in q_rber.items():
-        start_scale = find_start_scale()
+        start_scale = find_start_scale(R)
         start_M = find_start_M(R)
         scale, m_p, m_a = find_s_mp_ma(start_scale, R, start_M, spec_ber, rber)
         res[R] = [rber, scale, m_p, m_a]
