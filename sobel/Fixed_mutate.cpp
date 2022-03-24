@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
          << spec_ber  << " " << raw_ber << " "
          << scale << std::endl;
     #endif
-    auto output = mutate_vec_ll(all_fixed, R, M, m_p, m_a, spec_ber, raw_ber);
+    auto output = mutate_vec_ll(all_fixed, R, base, p, a0, f, spec_ber, raw_ber);
 
     for (auto item: output) {
       float scale_back = ((float) item) / scale;
