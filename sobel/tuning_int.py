@@ -45,7 +45,14 @@ def find_start_M(R):
         log_res += 1
     return log_res
 
-def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
+def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
+    subprocess.run(["./bin_fix_mutate", fin, fout,
+                    str(R), str(base),
+                    str(p), str(a0), str(f),
+                    str(spec_ber), str(raw_ber),
+                    str(scale)])
+
+def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
     # f1s: intermediate/1.rgb, f2s: mutated/1.rgb, fout: mutated/1.out
     f1s, f2s = compute_diff.all_files("rgb")
     _, fout = compute_diff.all_files("out")
@@ -53,8 +60,7 @@ def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
         f1s, f2s = f1s[:3], f2s[:3]
         fout = fout[:3]
     for i in range(len(f1s)):
-        subprocess.run(["./bin_fix_mutate", f1s[i], f2s[i], str(R), str(M),
-                        str(m_p), str(m_a), str(scale), str(spec_ber), str(raw_ber)])
+        run(f1s[i], f2s[i], R, base, p, a0, f, spec_ber, raw_ber, scale)
         subprocess.run(["python3", "reverse_intermediate.py", f2s[i]])
     for i in range(len(f2s)):
         subprocess.run(["./sobel", f2s[i], fout[i]])
@@ -66,42 +72,19 @@ def run(R, M, m_p, m_a, scale, spec_ber, raw_ber, only3):
     else:
         return False
 
-def find_s_mp_ma(start_scale, R, start_M, spec_ber, raw_ber):
-    original_M = start_M
-    M = start_M
-    while M >= 1:
-        M -= 1
-        scale = R ** (M - original_M)
-        if run(R, M, M, 0, scale, spec_ber, raw_ber, True):
-            start_M = M
-            start_scale = scale
-        else:
-            break
-    print("R = ", R, "; M = ", start_M, "; scale = ", start_scale, flush=True)
-    m_p_start = start_M
-    m_p = m_p_start
-    m_a = 0
-    while m_p >= 0:
-        m_p -= 1
-        m_a += 1
-        assert(m_p + m_a == start_M)
-        if m_p < 0:
-            continue
-        if run(R, start_M, m_p, m_a, start_scale, spec_ber, raw_ber, True):
-            m_p_start = m_p
-    print("m_p = ", m_p_start, "; m_a = ", start_M - m_p_start, flush=True)
-    return start_scale, m_p_start, start_M - m_p_start
+def tune(R, base, mini, spec_ber, raw_ber):
+    
 
-
+def autotune(q_rber, mini, spec_ber):
+    res = {}
+    for R, rber in q_rber.items():
+        base = math.floor(math.log(R, 2))
+        p, a0, f, bscale = tune(R, base, mini, spec_ber, rber)
+        res[R] = [base, rber, p, a0, f, bscale]
+    
 
 
 if __name__ == "__main__":
     q_rber = ours if use_ours else sba
     spec_ber = 1e-13
-    res = {}
-    for R, rber in q_rber.items():
-        start_scale = find_start_scale()
-        start_M = find_start_M(R)
-        scale, m_p, m_a = find_s_mp_ma(start_scale, R, start_M, spec_ber, rber)
-        res[R] = [rber, scale, m_p, m_a]
-    pprint.pprint(res)
+    
