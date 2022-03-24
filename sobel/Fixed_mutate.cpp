@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
     infile.close();
     outfile.close();
     #ifdef VERB
-    cout << "finished!!" << endl;
+    // cout << "finished!!" << endl;
     #endif
     return 0;
 }
