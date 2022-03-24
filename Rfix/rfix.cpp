@@ -24,49 +24,20 @@ inline bool random_bool(float ber) {
   return TrueFalse;
 }
 
-inline uint8_t mutate_uint8(uint8_t original, uint8_t R) {
-    // srand(time(0));
-    if (original == 0)
-        return original + 1;
-    if (original == R - 1) {
-        return original - 1;
-    }
-    if (random_bool(0.5)) {
-        return original + 1;
-    } else {
-        return original - 1;
-    }
+inline int mutate(int original, int R) {
+  assert(original >= 0 && original < R);
+  if (original == 0)
+    return original + 1;
+  if (original == R - 1) {
+    return original - 1;
+  }
+  if (random_bool(0.5)) {
+    return original + 1;
+  } else {
+    return original - 1;
+  }
 }
 
-void print_uint8(uint8_t array[], int num) {
-    cout << "-----" << endl;
-    for (int i = 0; i < num; i++) {
-        cout << (int) array[i] << " ";
-    }
-    cout << endl << "-------" << endl;
-}
-
-void Rfix::mutate(int m_p, int m_a, float spec_ber, float raw_ber) {
-    #ifdef DEBUG
-    cout << "Prior" << endl;
-    print_uint8(content, M);
-    #endif
-    for (int i = 0; i < m_a; i++) {
-      if (random_bool(raw_ber)) {
-        content[i] = mutate_uint8(content[i], R);
-      }
-    }
-    for (int i = m_a; i < m_a + m_p; i++) {
-      if (random_bool(spec_ber)) {
-        content[i] = mutate_uint8(content[i], R);
-      }
-    }
-    #ifdef DEBUG
-    cout << "After" << endl;
-    print_uint8(content, M);
-    cout << "==============" << endl;
-#endif
-}
 
 inline bool is_1_at(long long num, int k) { // k starting from 0
   if ((num >> k) & 1) {
@@ -78,7 +49,9 @@ inline bool is_1_at(long long num, int k) { // k starting from 0
 
 int extract_val(long long input, int start, int end) {
   int result = 0;
-  for (int j = start; j < end; j++) {
+  assert(end >= 1);
+  assert(end > start);
+  for (int j = end - 1; j >= start; j--) {
     if (is_1_at(input, j)) {
       result = (result << 1) + 1;
     } else {
@@ -88,13 +61,20 @@ int extract_val(long long input, int start, int end) {
   return result;
 }
 
+long long write_val(long long input, int start, int end, int val) {
+  
+}
+
 long long mutate(long long input, int R, int base, int p, int a0, int f, float spec_ber, float raw_ber)
 {
   input = (input >> f);
   input = (input << f);
   for (int i = 0; i < a0; i++) {
     int val = extract_val(input, f + i * base, f + (i + 1) * base);
-    
+    if (random_bool(raw_ber)) {
+      val = mutate(val, R);
+    }
+    input = write_val(input, f + i * base, f + (i + 1) * base, val);
   }
 }
 
