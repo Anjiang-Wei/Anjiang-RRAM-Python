@@ -89,7 +89,13 @@ def tune_result():
     print(res2, flush=True)
 
 # R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
+tune_ours = {4: [2, 0.003750000000000031, 0, 4, 0, 8],
+             8: [3, 0.043749999999999956, 1, 2, 1, 8],
+             16: [4, 0.25125, 0, 2, 0, 8]}
 
+tune_sba = {4: [2, 0.125, 2, 2, 2, 8],
+            8: [3, 0.2234848484848485, 1, 2, 1, 8],
+            16: [4, 0.33875, 0, 2, 0, 8]}
 
 if __name__ == "__main__":
     tune_result()

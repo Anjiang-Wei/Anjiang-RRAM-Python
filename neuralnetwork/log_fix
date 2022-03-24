@@ -1,0 +1,75 @@
+2022-03-24 22:34:54.966268
+Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0492, Accuracy: 9837/10000 (98%)
+Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0477, Accuracy: 9847/10000 (98%)
+Fixed_mutate configutation float float0 4 2 0 3 2 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.8813, Accuracy: 9694/10000 (97%)
+Fixed_mutate configutation float float0 8 3 0 3 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.1398, Accuracy: 9673/10000 (97%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0710, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0718, Accuracy: 9850/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 1 4 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.3027, Accuracy: 1006/10000 (10%)
+Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0787, Accuracy: 9801/10000 (98%)
+Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0906, Accuracy: 9800/10000 (98%)
+Fixed_mutate configutation float float0 16 4 0 1 4 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 2.2854, Accuracy: 1734/10000 (17%)
+Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.4947, Accuracy: 9678/10000 (97%)
+Fixed_mutate configutation float float0 4 2 1 3 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0816, Accuracy: 9795/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0543, Accuracy: 9832/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0633, Accuracy: 9816/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 2 2 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.2561, Accuracy: 9800/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 1 4 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.2990, Accuracy: 1657/10000 (17%)
+Fixed_mutate configutation float float0 8 3 0 3 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.8032, Accuracy: 9185/10000 (92%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0535, Accuracy: 9835/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0603, Accuracy: 9809/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 1 4 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.2916, Accuracy: 2502/10000 (25%)
+Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0912, Accuracy: 9809/10000 (98%)
+Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0916, Accuracy: 9818/10000 (98%)
+Fixed_mutate configutation float float0 16 4 0 1 4 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 2.2613, Accuracy: 3445/10000 (34%)
+2022-03-24 22:37:57.575453
+{4: [2, 0.003750000000000031, 0, 4, 0, 8], 8: [3, 0.043749999999999956, 1, 2, 1, 8], 16: [4, 0.25125, 0, 2, 0, 8]}
+{4: [2, 0.125, 2, 2, 2, 8], 8: [3, 0.2234848484848485, 1, 2, 1, 8], 16: [4, 0.33875, 0, 2, 0, 8]}
+/pool0/anjiang/.local/lib/python3.6/site-packages/torchvision/datasets/mnist.py:498: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at  ../torch/csrc/utils/tensor_numpy.cpp:180.)
+  return torch.from_numpy(parsed.astype(m[2], copy=False)).view(*s)
