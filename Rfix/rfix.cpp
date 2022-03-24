@@ -17,103 +17,6 @@ random_device rd;  // Will be used to obtain a seed for the random number engine
 std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
 std::uniform_real_distribution<> dis(0.0, 1e15);
 
-class Rfix {
-public:
-  uint8_t R; // radix
-  uint8_t M; // number of bits in content
-  bool sign; // if true (1), then negative; if false (0), then positive
-  uint8_t content[maxM]; // each element should be within [0, radix-1]
-
-  Rfix();
-  Rfix(uint8_t R_, uint8_t M_, bool sign_, uint8_t content_[maxM]);
-  Rfix(uint8_t R_, uint8_t M_, long long val);
-
-  friend ofstream& operator<<(ofstream &output, const Rfix &D);
-  friend ifstream& operator>>(ifstream &input, const Rfix &D);
-
-  void print();
-  long long from_Rfix();
-  void mutate(int m_p, int m_a, float spec_ber, float raw_ber);
-  static vector<Rfix> mutate_vec_Rfix(vector<Rfix> input,
-                                      int m_p, int m_a, float spec_ber, float raw_ber);
-  static vector<long long> mutate_vec_ll(vector<long long> input, int R, int M,
-                                      int m_p, int m_a, float spec_ber, float raw_ber);
-};
-
-Rfix::Rfix() {
-  return;
-}
-
-Rfix::Rfix(uint8_t R_, uint8_t M_, bool sign_, uint8_t content_[maxM]) {
-  R = R_; M = M_; sign = sign_;
-  for (int i = 0; i < M; i++) {
-    content[i] = content_[i];
-  }
-}
-
-Rfix::Rfix(uint8_t R_, uint8_t M_, long long val) {
-    R = R_; M = M_;
-    if (val < 0) {
-      sign = true;
-      val = -val;
-    } else {
-      sign = false;
-    }
-    for (int i = 0; i < M; i++) {
-      content[i] = (uint8_t) (val % (long long) R);
-      val = val / (long long) R;
-    }
-}
-
-ofstream& operator<<(ofstream& output, const Rfix& D) {
-  output << (int) D.R << " "  << (int) D.M <<  " " << (int) D.sign << " " << endl;
-  for (int i = 0; i < D.M; i++) {
-    output << (int) D.content[i] << " ";
-  }
-  output << endl;
-  return output;
-}
-
-inline uint8_t get_uint8(ifstream &input) {
-  int x;
-  input >> x;
-  return (uint8_t) x;
-}
-
-ifstream& operator>>(ifstream &input, Rfix &D){
-  D.R = get_uint8(input);
-  D.M = get_uint8(input);
-  D.sign = (bool) get_uint8(input);
-  for (int i = 0; i < D.M; i++) {
-    D.content[i] = get_uint8(input);
-  }
-  return input;
-}
-
-void Rfix::print() {
-  cout << "Radix: " << (int) R << endl;
-  cout << "M: " << (int) M << ": " << endl;
-  cout << "Sign : " << sign << endl;
-  for (int i = 0; i < M; i++) {
-    cout << (int) content[i];
-  }
-  cout << endl;
-}
-
-
-long long Rfix::from_Rfix() {
-  long long val = 0;
-  long long base = 1;
-  for (int i = 0; i < M; i++) {
-    val += base * content[i];
-    base = base * R;
-  }
-  if (sign) { // negative
-    val = -val;
-  }
-  return val;
-}
-
 inline bool random_bool(float ber) {
   // srand(time(0));
   float rand_gen = dis(gen);
@@ -165,30 +68,44 @@ void Rfix::mutate(int m_p, int m_a, float spec_ber, float raw_ber) {
 #endif
 }
 
-static vector<Rfix> mutate_vec_Rfix(vector<Rfix> input,
-                                    int m_p, int m_a, float spec_ber, float raw_ber) {
-  int size = input.size();
-  for (int i = 0; i < size; i++) {
-    input[i].mutate(m_p, m_a, spec_ber, raw_ber);
+inline bool is_1_at(long long num, int k) { // k starting from 0
+  if ((num >> k) & 1) {
+    return true;
+  } else {
+    return false;
   }
-  return input;
 }
 
+int extract_val(long long input, int start, int end) {
+  int result = 0;
+  for (int j = start; j < end; j++) {
+    if (is_1_at(input, j)) {
+      result = (result << 1) + 1;
+    } else {
+      result = (result << 1);
+    }
+  }
+  return result;
+}
 
-static vector<long long> mutate_vec_ll(vector<long long> input, int R, int M,
-                                  int m_p, int m_a, float spec_ber, float raw_ber)
+long long mutate(long long input, int R, int base, int p, int a0, int f, float spec_ber, float raw_ber)
 {
-  assert(m_p + m_a == M);
+  input = (input >> f);
+  input = (input << f);
+  for (int i = 0; i < a0; i++) {
+    int val = extract_val(input, f + i * base, f + (i + 1) * base);
+    
+  }
+}
+
+vector<long long> mutate_vec_ll(vector<long long> input, int R, int base,
+                                int p, int a0, int f, float spec_ber, float raw_ber)
+{
   int size = input.size();
-  uint8_t R_ = (uint8_t) R;
-  uint8_t M_ = (uint8_t) M;
   for (int i = 0; i < size; i++) {
-    long long val = input[i];
-    Rfix a = Rfix(R_, M_, val);
-    a.mutate(m_p, m_a, spec_ber, raw_ber);
-    input[i] = a.from_Rfix();
+    input[i] = mutate(input[i], R, base, p, a0, f, spec_ber, raw_ber);
 #ifdef DEBUG
-    cout << val << " " << input[i] << endl;
+    cout << input[i] << endl;
 #endif
   }
   return input;
