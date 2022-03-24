@@ -10,7 +10,6 @@
 #include <random>
 using namespace std;
 
-#define maxM 64
 // #define DEBUG
 
 random_device rd;  // Will be used to obtain a seed for the random number engine
@@ -24,7 +23,7 @@ inline bool random_bool(float ber) {
   return TrueFalse;
 }
 
-inline int mutate(int original, int R) {
+inline int mutate_single(int original, int R) {
   assert(original >= 0 && original < R);
   if (original == 0)
     return original + 1;
@@ -39,13 +38,7 @@ inline int mutate(int original, int R) {
 }
 
 
-inline bool is_1_at(long long num, int k) { // k starting from 0
-  if ((num >> k) & 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
+#define is_1_at(x,y) (((x) >> (y))&1)
 
 int extract_val(long long input, int start, int end) {
   int result = 0;
@@ -61,8 +54,22 @@ int extract_val(long long input, int start, int end) {
   return result;
 }
 
+#define set1(x,y) (x|=(1<<(y)))
+#define set0(x,y) (x&=~(1<<(y)))
+
+#define reversebit(x,y) (x^=(1<<(y)))
+
 long long write_val(long long input, int start, int end, int val) {
-  
+  assert(end >= 1);
+  assert(end > start);
+  for (int j = start; j < end; j++) {
+    if (is_1_at(val, j-start)) {
+      set1(input, j);
+    } else {
+      set0(input, j);
+    }
+  }
+  return input;
 }
 
 long long mutate(long long input, int R, int base, int p, int a0, int f, float spec_ber, float raw_ber)
@@ -72,10 +79,22 @@ long long mutate(long long input, int R, int base, int p, int a0, int f, float s
   for (int i = 0; i < a0; i++) {
     int val = extract_val(input, f + i * base, f + (i + 1) * base);
     if (random_bool(raw_ber)) {
-      val = mutate(val, R);
+#ifdef DEBUG
+      cout << i << " " << f + i * base << " " << f + (i + 1) * base << " flip1" << endl;
+#endif
+      val = mutate_single(val, R);
     }
     input = write_val(input, f + i * base, f + (i + 1) * base, val);
   }
+  for (int i = 0; i < p; i++) {
+    if (random_bool(spec_ber)) {
+#ifdef DEBUG
+      cout << "flip2" << endl;
+#endif
+      reversebit(input, f + a0 * base + i);
+    }
+  }
+  return input;
 }
 
 vector<long long> mutate_vec_ll(vector<long long> input, int R, int base,
@@ -85,7 +104,7 @@ vector<long long> mutate_vec_ll(vector<long long> input, int R, int base,
   for (int i = 0; i < size; i++) {
     input[i] = mutate(input[i], R, base, p, a0, f, spec_ber, raw_ber);
 #ifdef DEBUG
-    cout << input[i] << endl;
+    // cout << input[i] << endl;
 #endif
   }
   return input;
