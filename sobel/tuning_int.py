@@ -1,3 +1,4 @@
+import datetime
 import subprocess
 import pprint
 import math
@@ -78,17 +79,25 @@ def tune(R, base, mini, spec_ber, raw_ber):
         best_f = mini - best_p - best_a0 * base
     return res
 
-def autotune(q_rber, mini, spec_ber):
+def autotune(q_rber, mini, spec_ber, binary):
     res = {}
     for R, raw_ber in q_rber.items():
         base = math.floor(math.log(R, 2)) # R levels can at most store 'base' bits
+        if binary and 2 ** base != R:
+            continue
         p, a0, f, pre_scale = tune(R, base, mini, spec_ber, raw_ber)
         res[R] = [base, raw_ber, p, a0, f, pre_scale]
     return res
 
+def tune_result():
+    print(datetime.datetime.now())
+    res1 = autotune(ours, 8, 1e-13, True)
+    res2 = autotune(sba, 8, 1e-13, True)
+    print(datetime.datetime.now())
+    print(res1, flush=True)
+    print(res2, flush=True)
+
 
 if __name__ == "__main__":
-    for to_try in [ours, sba]:
-        res = autotune(to_try, 8, 1e-13)
-        print("Tuning Result:", flush=True)
-        print(res, flush=True)
+    tune_result()
+
