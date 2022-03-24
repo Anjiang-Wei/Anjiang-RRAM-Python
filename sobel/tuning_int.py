@@ -82,8 +82,8 @@ def autotune(q_rber, mini, spec_ber):
     res = {}
     for R, raw_ber in q_rber.items():
         base = math.floor(math.log(R, 2)) # R levels can at most store 'base' bits
-        p, a0, f, bscale = tune(R, base, mini, spec_ber, raw_ber)
-        res[R] = [base, rber, p, a0, f, bscale]
+        p, a0, f, pre_scale = tune(R, base, mini, spec_ber, raw_ber)
+        res[R] = [base, raw_ber, p, a0, f, pre_scale]
     return res
 
 
