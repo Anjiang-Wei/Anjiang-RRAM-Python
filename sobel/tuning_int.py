@@ -4,7 +4,6 @@ import math
 import compute_diff
 
 # q: rber
-use_ours = True
 ours = {4: 0.003750000000000031,
  5: 0.006249999999999978,
  6: 0.012499999999999956,
@@ -35,16 +34,6 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-def find_start_scale():
-    return 1
-
-def find_start_M(R):
-    # data range = [0, 255]
-    log_res = math.ceil(math.log(255, R))
-    if R ** log_res == 255:
-        log_res += 1
-    return log_res
-
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
                     str(R), str(base),
@@ -73,18 +62,33 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
         return False
 
 def tune(R, base, mini, spec_ber, raw_ber):
-    
+    a0 = math.ceil(mini / base)
+    best_p, best_a0, best_f = 0, a0, 0
+    res = []
+    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1, True) == False:
+        # first identify the minimum best_p
+        best_p += 1
+        best_a0 = math.floor((mini - best_p) / base)
+        best_f = mini - best_p - best_a0 * base
+    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1, True) == True:
+        res = [best_p, best_a0, best_f, 1]
+        if best_a0 == 0:
+            break
+        best_a0 -= 1
+        best_f = mini - best_p - best_a0 * base
+    return res
 
 def autotune(q_rber, mini, spec_ber):
     res = {}
-    for R, rber in q_rber.items():
-        base = math.floor(math.log(R, 2))
-        p, a0, f, bscale = tune(R, base, mini, spec_ber, rber)
+    for R, raw_ber in q_rber.items():
+        base = math.floor(math.log(R, 2)) # R levels can at most store 'base' bits
+        p, a0, f, bscale = tune(R, base, mini, spec_ber, raw_ber)
         res[R] = [base, rber, p, a0, f, bscale]
-    
+    return res
 
 
 if __name__ == "__main__":
-    q_rber = ours if use_ours else sba
-    spec_ber = 1e-13
-    
+    for to_try in [ours, sba]:
+        res = autotune(to_try, 8, 1e-13)
+        print("Tuning Result:", flush=True)
+        print(res, flush=True)
