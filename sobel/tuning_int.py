@@ -90,14 +90,22 @@ def autotune(q_rber, mini, spec_ber, binary):
     return res
 
 def tune_result():
-    print(datetime.datetime.now())
+    print(datetime.datetime.now(), flush=True)
     res1 = autotune(ours, 8, 1e-13, True)
     res2 = autotune(sba, 8, 1e-13, True)
-    print(datetime.datetime.now())
+    print(datetime.datetime.now(), flush=True)
     print(res1, flush=True)
     print(res2, flush=True)
+
+# R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
+tune_ours = {4: [2, 0.003750000000000031, 0, 2, 4, 1],
+             8: [3, 0.043749999999999956, 1, 1, 4, 1],
+             16: [4, 0.25125, 1, 1, 3, 1]}
+
+tune_sba = {4: [2, 0.125, 2, 1, 4, 1],
+            8: [3, 0.2234848484848485, 2, 1, 3, 1],
+            16: [4, 0.33875, 1, 1, 3, 1]}
 
 
 if __name__ == "__main__":
     tune_result()
-

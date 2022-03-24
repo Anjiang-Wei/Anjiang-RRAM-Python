@@ -1,0 +1,128 @@
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 0 4 0 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 0 4 0 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 0 4 0 1e-13 0.00375 1
+2022-03-24 21:21:50.893521
+image diff: 14.500075178913107
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 0 4 0 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 0 4 0 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 0 4 0 1e-13 0.00375 1
+image diff: 14.529259942970606
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 0 3 2 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 0 3 2 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 0 3 2 1e-13 0.00375 1
+image diff: 14.721490162384697
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 0 2 4 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 0 2 4 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 0 2 4 1e-13 0.00375 1
+image diff: 21.090379192909516
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 0 1 6 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 0 1 6 1e-13 0.00375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 0 1 6 1e-13 0.00375 1
+image diff: 58.285683051235644
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 0 3 0 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 0 3 0 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 0 3 0 1e-13 0.04375 1
+image diff: 48.89394707417768
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 1 2 1 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 1 2 1 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 1 2 1 1e-13 0.04375 1
+image diff: 11.173373293912178
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 1 2 1 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 1 2 1 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 1 2 1 1e-13 0.04375 1
+image diff: 11.183018772592328
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 1 1 4 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 1 1 4 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 1 1 4 1e-13 0.04375 1
+image diff: 18.476617457322458
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 1 0 7 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 1 0 7 1e-13 0.04375 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 1 0 7 1e-13 0.04375 1
+image diff: 74.7905800802433
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 0 2 0 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 0 2 0 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 0 2 0 1e-13 0.25125 1
+image diff: 27.017107189278146
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 1 1 3 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 1 1 3 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 1 1 3 1e-13 0.25125 1
+image diff: 15.028583353456492
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 1 1 3 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 1 1 3 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 1 1 3 1e-13 0.25125 1
+image diff: 15.037192966922825
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 1 0 7 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 1 0 7 1e-13 0.25125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 1 0 7 1e-13 0.25125 1
+image diff: 74.7905800802433
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 0 4 0 1e-13 0.125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 0 4 0 1e-13 0.125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 0 4 0 1e-13 0.125 1
+image diff: 83.00149584366102
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 1 3 1 1e-13 0.125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 1 3 1 1e-13 0.125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 1 3 1 1e-13 0.125 1
+image diff: 40.44882068443456
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 2 3 0 1e-13 0.125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 2 3 0 1e-13 0.125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 2 3 0 1e-13 0.125 1
+image diff: 19.46303125884052
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 2 3 0 1e-13 0.125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 2 3 0 1e-13 0.125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 2 3 0 1e-13 0.125 1
+image diff: 19.50389362039432
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 2 2 2 1e-13 0.125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 2 2 2 1e-13 0.125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 2 2 2 1e-13 0.125 1
+image diff: 19.795248874399864
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 2 1 4 1e-13 0.125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 2 1 4 1e-13 0.125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 2 1 4 1e-13 0.125 1
+image diff: 23.627868396188006
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 4 2 2 0 6 1e-13 0.125 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 4 2 2 0 6 1e-13 0.125 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 4 2 2 0 6 1e-13 0.125 1
+image diff: 57.340945802781455
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 0 3 0 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 0 3 0 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 0 3 0 1e-13 0.223485 1
+image diff: 110.22526514995859
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 1 2 1 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 1 2 1 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 1 2 1 1e-13 0.223485 1
+image diff: 25.59591018209078
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 2 2 0 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 2 2 0 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 2 2 0 1e-13 0.223485 1
+image diff: 12.351817098075443
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 2 2 0 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 2 2 0 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 2 2 0 1e-13 0.223485 1
+image diff: 12.35262988928954
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 2 1 3 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 2 1 3 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 2 1 3 1e-13 0.223485 1
+image diff: 14.413393640723669
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 8 3 2 0 6 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 8 3 2 0 6 1e-13 0.223485 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 8 3 2 0 6 1e-13 0.223485 1
+image diff: 57.340945802781455
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 0 2 0 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 0 2 0 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 0 2 0 1e-13 0.33875 1
+image diff: 31.429636629955667
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 1 1 3 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 1 1 3 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 1 1 3 1e-13 0.33875 1
+image diff: 16.911686153083313
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 1 1 3 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 1 1 3 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 1 1 3 1e-13 0.33875 1
+image diff: 16.91928504759456
+Fixed_mutate configutation intermediate/1.rgb mutated/1.rgb 16 4 1 0 7 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/2.rgb mutated/2.rgb 16 4 1 0 7 1e-13 0.33875 1
+Fixed_mutate configutation intermediate/3.rgb mutated/3.rgb 16 4 1 0 7 1e-13 0.33875 1
+image diff: 74.7905800802433
+2022-03-24 21:30:23.087271
+{4: [2, 0.003750000000000031, 0, 2, 4, 1], 8: [3, 0.043749999999999956, 1, 1, 4, 1], 16: [4, 0.25125, 1, 1, 3, 1]}
+{4: [2, 0.125, 2, 1, 4, 1], 8: [3, 0.2234848484848485, 2, 1, 3, 1], 16: [4, 0.33875, 1, 1, 3, 1]}
