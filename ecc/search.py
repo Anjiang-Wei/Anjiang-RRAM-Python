@@ -3,6 +3,7 @@ import pickle
 import math
 import numpy as np
 import pprint
+import os
 
 db = {}
 # (base, n, k) --> [d, "tag"]
@@ -58,7 +59,10 @@ def BCH():
     d = 2t + 1
     '''
     res = {}
-    with open("BCH.txt", "r") as fin:
+    filename = "BCH.txt"
+    if "ecc" not in os.getcwd():
+        filename = "../ecc/BCH.txt"
+    with open(filename, "r") as fin:
         lines = fin.readlines()[1:]
         for line in lines:
             n, k, t = map(int, line.split(","))
@@ -94,7 +98,7 @@ def allcode():
 
 
 def bestcode(codes, spec_ber, raw_ber, maxk, maxn):
-    best_overhead = 1e10
+    best_overhead = 10
     best_config = None
     for codekey in codes.keys():
         base, n, k = codekey
