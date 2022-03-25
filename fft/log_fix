@@ -1,0 +1,440 @@
+2022-03-25 21:29:20.060055
+Fixed_mutate configutation input input0 4 2 0 6 0 1e-13 0.00375 1
+diff =  5.486321903857711
+Fixed_mutate configutation input input0 4 2 1 5 1 1e-13 0.00375 1
+diff =  1.9441229957982622
+Fixed_mutate configutation input input0 4 2 2 5 0 1e-13 0.00375 1
+diff =  1.3614772005225826
+Fixed_mutate configutation input input0 4 2 3 4 1 1e-13 0.00375 1
+diff =  0.7488594180209684
+Fixed_mutate configutation input input0 4 2 4 4 0 1e-13 0.00375 1
+diff =  0.284193670262892
+Fixed_mutate configutation input input0 4 2 5 3 1 1e-13 0.00375 1
+diff =  0.1486805558028511
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.07730234319714824
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.0884799145323168
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.086193299304982
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.08439162726514662
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.0778926296887726
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.07761919204408459
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.05927204337879986
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.0815104499768059
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.07033554790265169
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.08728094410941495
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.07722427722964542
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.08213075624481721
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.05518812717260193
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.00375 1
+diff =  0.1027221988536183
+Fixed_mutate configutation input input0 8 3 0 4 0 1e-13 0.04375 1
+diff =  8.967261009135846
+Fixed_mutate configutation input input0 8 3 1 3 2 1e-13 0.04375 1
+diff =  4.472563527282113
+Fixed_mutate configutation input input0 8 3 2 3 1 1e-13 0.04375 1
+diff =  1.9825135101063227
+Fixed_mutate configutation input input0 8 3 3 3 0 1e-13 0.04375 1
+diff =  1.0756092381097815
+Fixed_mutate configutation input input0 8 3 4 2 2 1e-13 0.04375 1
+diff =  0.5712345817395257
+Fixed_mutate configutation input input0 8 3 5 2 1 1e-13 0.04375 1
+diff =  0.2671199041270971
+Fixed_mutate configutation input input0 8 3 6 2 0 1e-13 0.04375 1
+diff =  0.13500033277767515
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.056740910075589915
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.07234530978772127
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06104188674969999
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06688112991882506
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06427197350581895
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06406347267323621
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.0699834180761255
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06828769199488918
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06177585995338679
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.057168451717879626
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06620232022276334
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06769040179756666
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06427840067132014
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06685670020986137
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.07369557876433769
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.07021425539493699
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06016767367066928
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.059468457753400435
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06453819862197173
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.04375 1
+diff =  0.06089548749541538
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 8 3 7 0 5 1e-13 0.04375 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 0 3 0 1e-13 0.25125 1
+diff =  9.574663739122546
+Fixed_mutate configutation input input0 16 4 1 2 3 1e-13 0.25125 1
+diff =  5.182748080244142
+Fixed_mutate configutation input input0 16 4 2 2 2 1e-13 0.25125 1
+diff =  2.8126387184574835
+Fixed_mutate configutation input input0 16 4 3 2 1 1e-13 0.25125 1
+diff =  1.2877129759742838
+Fixed_mutate configutation input input0 16 4 4 2 0 1e-13 0.25125 1
+diff =  0.7154183561980418
+Fixed_mutate configutation input input0 16 4 5 1 3 1e-13 0.25125 1
+diff =  0.3287930154651455
+Fixed_mutate configutation input input0 16 4 6 1 2 1e-13 0.25125 1
+diff =  0.14049256861458503
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.08407852686786435
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.08140860613999625
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.08163054462553117
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07970977209967585
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.06743426366356009
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07900394242789593
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.08041240572609878
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.0784817106568912
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07262318688871738
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.09237755330131507
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07917986486359449
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07315170451285773
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07433657453955264
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.08243353426072489
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07022437480848674
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07950632897920112
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.08205741883020441
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.09155725634378606
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07697410676336934
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.25125 1
+diff =  0.07316017719507892
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 16 4 7 0 5 1e-13 0.25125 1
+diff =  0.007447213330361082
+Fixed_mutate configutation input input0 4 2 0 6 0 1e-13 0.125 1
+diff =  27.974710199600754
+Fixed_mutate configutation input input0 4 2 1 5 1 1e-13 0.125 1
+diff =  14.41027539433097
+Fixed_mutate configutation input input0 4 2 2 5 0 1e-13 0.125 1
+diff =  7.926443212754231
+Fixed_mutate configutation input input0 4 2 3 4 1 1e-13 0.125 1
+diff =  3.5496683744874273
+Fixed_mutate configutation input input0 4 2 4 4 0 1e-13 0.125 1
+diff =  1.8638403110698833
+Fixed_mutate configutation input input0 4 2 5 3 1 1e-13 0.125 1
+diff =  0.9025904391828461
+Fixed_mutate configutation input input0 4 2 6 3 0 1e-13 0.125 1
+diff =  0.4289087910427237
+Fixed_mutate configutation input input0 4 2 7 2 1 1e-13 0.125 1
+diff =  0.21708023470909613
+Fixed_mutate configutation input input0 4 2 8 2 0 1e-13 0.125 1
+diff =  0.09847611553844744
+Fixed_mutate configutation input input0 4 2 8 2 0 1e-13 0.125 1
+diff =  0.11765889972102873
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.057892811744521516
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05239836771922435
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05905326588912508
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05867421623575217
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.060507428922954166
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05536495488544975
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05143291811051436
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05378862301573638
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05289152432862014
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.051776928367512895
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.057717082336408265
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.055098449060904595
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.06003286235256512
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05663441542265267
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.051599516787530955
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.0530328712342271
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05428142574806144
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.05586649916999792
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.054607491518890335
+Fixed_mutate configutation input input0 4 2 9 1 1 1e-13 0.125 1
+diff =  0.06522052567786185
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 4 2 9 0 3 1e-13 0.125 1
+diff =  0.0015871236602511744
+Fixed_mutate configutation input input0 8 3 0 4 0 1e-13 0.223485 1
+diff =  18.857165224542264
+Fixed_mutate configutation input input0 8 3 1 3 2 1e-13 0.223485 1
+diff =  9.42684984141524
+Fixed_mutate configutation input input0 8 3 2 3 1 1e-13 0.223485 1
+diff =  4.329602005733037
+Fixed_mutate configutation input input0 8 3 3 3 0 1e-13 0.223485 1
+diff =  2.4206811194405717
+Fixed_mutate configutation input input0 8 3 4 2 2 1e-13 0.223485 1
+diff =  1.0461104512390682
+Fixed_mutate configutation input input0 8 3 5 2 1 1e-13 0.223485 1
+diff =  0.62450250320198
+Fixed_mutate configutation input input0 8 3 6 2 0 1e-13 0.223485 1
+diff =  0.3043814526433635
+Fixed_mutate configutation input input0 8 3 7 1 2 1e-13 0.223485 1
+diff =  0.1559465855619627
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.0711408706492474
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.07292331731930306
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.06517928931843721
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.0758056984374265
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.0835064177523242
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.06513681037720188
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.07280318245869515
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.07799713049794167
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.08211496883827782
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.058275816025615074
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.06650217654583851
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.0776532996092589
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.08299101606125243
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.06531636394896338
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.08134698982965083
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.06986131966754518
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.06765561252736832
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.07822392364465335
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.07825864938348409
+Fixed_mutate configutation input input0 8 3 8 1 1 1e-13 0.223485 1
+diff =  0.07013502945920273
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 8 3 8 0 4 1e-13 0.223485 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 0 3 0 1e-13 0.33875 1
+diff =  11.357651157607613
+Fixed_mutate configutation input input0 16 4 1 2 3 1e-13 0.33875 1
+diff =  5.707724100358111
+Fixed_mutate configutation input input0 16 4 2 2 2 1e-13 0.33875 1
+diff =  2.8476762328192256
+Fixed_mutate configutation input input0 16 4 3 2 1 1e-13 0.33875 1
+diff =  1.34190609353518
+Fixed_mutate configutation input input0 16 4 4 2 0 1e-13 0.33875 1
+diff =  0.7024326341354451
+Fixed_mutate configutation input input0 16 4 5 1 3 1e-13 0.33875 1
+diff =  0.39679035925013384
+Fixed_mutate configutation input input0 16 4 6 1 2 1e-13 0.33875 1
+diff =  0.1655324266391828
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.08717633104701036
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.09376533575514291
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.0953363273414972
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.08711944368133881
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.08050366130043442
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.09931283733128835
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.08353489831299968
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.09748563876948545
+Fixed_mutate configutation input input0 16 4 7 1 1 1e-13 0.33875 1
+diff =  0.10533356184050516
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04568958109828148
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.042479258989403225
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.049980449604892244
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04768350967082185
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.0433626251648826
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04446491621491083
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04362601238087373
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.043378030321511725
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04544234808554959
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04523634495662526
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04322763528224894
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.044289073827265275
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04499837879954805
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.046391118817913024
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04398142668943508
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04253270608446439
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04889015229175725
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.052088817254450775
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.05104576820866127
+Fixed_mutate configutation input input0 16 4 8 1 0 1e-13 0.33875 1
+diff =  0.04567104074000126
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+Fixed_mutate configutation input input0 16 4 8 0 4 1e-13 0.33875 1
+diff =  0.0035404873688011235
+2022-03-25 21:29:46.980852
+{4: [2, 0.003750000000000031, 6, 3, 0, 1], 8: [3, 0.043749999999999956, 7, 0, 5, 1], 16: [4, 0.25125, 7, 0, 5, 1]}
+{4: [2, 0.125, 9, 0, 3, 1], 8: [3, 0.2234848484848485, 8, 0, 4, 1], 16: [4, 0.33875, 8, 0, 4, 1]}

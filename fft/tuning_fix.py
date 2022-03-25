@@ -53,7 +53,7 @@ def fft():
 def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
     run("input", "input0", R, base, p, a0, f, spec_ber, raw_ber, scale)
     res = fft()
-    print(R, base, p, a0, f, spec_ber, raw_ber, scale, "result = ", res)
+    print("diff = ", res, flush=True)
     if res <= 0.1:
         return True
     else:
@@ -102,9 +102,13 @@ def tune_result():
     print(res2, flush=True)
 
 # R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
+tune_ours = {4: [2, 0.003750000000000031, 6, 3, 0, 1],
+             8: [3, 0.043749999999999956, 7, 0, 5, 1],
+             16: [4, 0.25125, 7, 0, 5, 1]}
 
-tune_ours = {}
-tune_sba = {}
+tune_sba = {4: [2, 0.125, 9, 0, 3, 1],
+            8: [3, 0.2234848484848485, 8, 0, 4, 1],
+            16: [4, 0.33875, 8, 0, 4, 1]}
 
 def best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_cell * base)

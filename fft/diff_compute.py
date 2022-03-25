@@ -8,7 +8,6 @@ def relative_diff(golden, mutated):
         rel_err = abs(err / golden[i])
         all_error += rel_err
     all_error = all_error / len(golden)
-    assert all_error >= 0 and all_error <= 1
     return all_error
 
 def getnumbers(filename):
