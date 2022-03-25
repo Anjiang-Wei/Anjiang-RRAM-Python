@@ -8,7 +8,7 @@ db = {}
 # (base, n, k) --> d
 # overhead: n / k
 
-def P_cw(N, E, RBER):
+def P_cw(N, E, RBER, spec_ber):
     '''
     N: block length; the number of cells for output [length of codeword]
     E: the number of errors that can be corrected
@@ -18,6 +18,8 @@ def P_cw(N, E, RBER):
     res = 0
     for i in range(E+1, N+1):
         res += comb(N, i) * pow(RBER, i) * pow(1-RBER, N-i)
+        if res > spec_ber:
+            return 1
     return res
 
 
@@ -27,13 +29,13 @@ def RS():
     '''
     res = {}
     p = 2
-    for base in range(1, 12):
+    for base in range(1, 11):
         for n in range(2, (p**base) + 1):
             for k in range(1, n):
                 d = n - k + 1
                 new_key = (base, n, k)
                 res[new_key] = d
-    print(res)
+    # print(res)
     return res
 
 def Hamming():
@@ -41,13 +43,13 @@ def Hamming():
     <2^r - 1, 2^r - r - 1, 3> (r >= 2)
     '''
     res = {}
-    for r in range(2, 12):
+    for r in range(2, 11):
         n = (2 ** r) - 1
         k = (2 ** r) - r - 1
         d = 3
         new_key = (1, n, k)
         res[new_key] = d
-    print(res)
+    # pprint.pprint(res)
     return res
 
 def BCH():
@@ -63,7 +65,7 @@ def BCH():
             d = 2 * t + 1
             new_key = (1, n, k)
             res[new_key] = d
-    print(res)
+    # print(res)
     return res
 
 def merge(dict1, dict2):
@@ -87,19 +89,23 @@ def mergeall(dicts):
         res = merge(res, edict)
     return res
 
+def allcode():
+    return mergeall([RS(), Hamming(), BCH()])
 
-def select_ratio(candidates, intended_uber, RBER):
-    res = []
-    for cand in candidates:
-        q, n, k, d = cand
-        p_cw = P_cw(n, int((d-1)/2), RBER)
-        # User_Data_bits_per_CW = log(pow(q^m, k), base=2) = k / log(2, base=q^m)
-        bits_per_cw = k / math.log(2, q)
-        uber = p_cw / bits_per_cw
-        if uber <= intended_uber:
-            res.append((cand, uber))
-    return res
+
+def select_ratio(codes, spec_ber, raw_ber, maxk):
+    best_overhead = 1e10
+    best_config = None
+    for codekey in codes.keys():
+        base, n, k = codekey
+        d = codes[codekey]
+        if n / k < best_overhead and k * base <= maxk:
+            uber = P_cw(n, int((d-1)/2), raw_ber, spec_ber)
+            if uber <= spec_ber:
+                best_overhead = n / k
+                best_config = [base, n, k, d, uber]
+    return best_overhead, best_config
 
 
 if __name__ == "__main__":
-    RS()
+    print(select_ratio(allcode(), 1e-13, 0.05, 128))
