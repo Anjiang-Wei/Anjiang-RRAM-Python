@@ -21,29 +21,22 @@ def P_cw(N, E, RBER):
     return res
 
 
-def load_db():
-    global db
-    with open('database.json', 'rb') as fin:
-        db = pickle.load(fin)
-
 def generate_RS():
     '''
     <n, k, n-k+1>_[p^m]: n = p^m - 1, p is a prime; p^m <= 256
     '''
     res = {}
-    for p in [2, 3, 4, 5, 7, 8, 9, 11, 13, 16]: # prime or prime power
-        for m in range(1, 10):
-            if p ** m > 256:
-                continue
-            n = (p ** m) - 1
-            for k in range(1, n):
-                d = n - k + 1
-                new_key = (p, n, k)
-                if new_key not in res.keys():
+    p = 2
+    for m in range(1, 12):
+        n = (p ** m) - 1
+        for k in range(1, n):
+            d = n - k + 1
+            new_key = (p, n, k)
+            if new_key not in res.keys():
+                res[new_key] = d
+            else:
+                if res[new_key] < d: # select max
                     res[new_key] = d
-                else:
-                    if res[new_key] < d: # select max
-                        res[new_key] = d
     # print(res)
     return res
 
@@ -52,13 +45,12 @@ def generate_hamming():
     <2^r - 1, 2^r - r - 1, 3> (r >= 2)
     '''
     res = {}
-    for p in [2, 4, 8, 16]:
-        for r in range(2, 10):
-            n = (2 ** r) - 1
-            k = (2 ** r) - r - 1
-            d = 3
-            new_key = (p, n, k)
-            res[new_key] = d
+    for r in range(2, 12):
+        n = (2 ** r) - 1
+        k = (2 ** r) - r - 1
+        d = 3
+        new_key = (p, n, k)
+        res[new_key] = d
     # print(res)
     return res
 
