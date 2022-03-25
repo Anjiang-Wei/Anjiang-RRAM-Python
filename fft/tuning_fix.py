@@ -38,7 +38,7 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-repeated = 1
+repeated = 10
 
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
@@ -53,6 +53,7 @@ def fft():
 def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
     run("input", "input0", R, base, p, a0, f, spec_ber, raw_ber, scale)
     res = fft()
+    print(R, base, p, a0, f, spec_ber, raw_ber, scale, "result = ", res)
     if res <= 0.1:
         return True
     else:
