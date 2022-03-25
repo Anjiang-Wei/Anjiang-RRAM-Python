@@ -5,7 +5,7 @@ import numpy as np
 import pprint
 
 db = {}
-# (base, n, k) --> d
+# (base, n, k) --> [d, "tag"]
 # overhead: n / k
 
 def P_cw(N, E, RBER, spec_ber):
@@ -34,7 +34,7 @@ def RS():
             for k in range(1, n):
                 d = n - k + 1
                 new_key = (base, n, k)
-                res[new_key] = d
+                res[new_key] = [d, "RS"]
     # print(res)
     return res
 
@@ -48,7 +48,7 @@ def Hamming():
         k = (2 ** r) - r - 1
         d = 3
         new_key = (1, n, k)
-        res[new_key] = d
+        res[new_key] = [d, "Hamming"]
     # pprint.pprint(res)
     return res
 
@@ -64,7 +64,7 @@ def BCH():
             n, k, t = map(int, line.split(","))
             d = 2 * t + 1
             new_key = (1, n, k)
-            res[new_key] = d
+            res[new_key] = [d, "BCH"]
     # print(res)
     return res
 
@@ -93,19 +93,23 @@ def allcode():
     return mergeall([RS(), Hamming(), BCH()])
 
 
-def select_ratio(codes, spec_ber, raw_ber, maxk):
+def bestcode(codes, spec_ber, raw_ber, maxk, maxn):
     best_overhead = 1e10
     best_config = None
     for codekey in codes.keys():
         base, n, k = codekey
-        d = codes[codekey]
-        if n / k < best_overhead and k * base <= maxk:
+        d, tag = codes[codekey]
+        if n / k < best_overhead and (k * base <= maxk and n * base <= maxn):
             uber = P_cw(n, int((d-1)/2), raw_ber, spec_ber)
             if uber <= spec_ber:
                 best_overhead = n / k
-                best_config = [base, n, k, d, uber]
+                best_config = [tag, n, k, d, base, uber]
     return best_overhead, best_config
 
 
 if __name__ == "__main__":
-    print(select_ratio(allcode(), 1e-13, 0.05, 128))
+    print(bestcode(allcode(), 1e-13, 0.05, 1e10, 1e10))
+    print("Add Constraints")
+    for i in range(7, 14):
+        print("No bigger than", 2**i)
+        print(bestcode(allcode(), 1e-13, 0.05, 2**i, 2**i))
