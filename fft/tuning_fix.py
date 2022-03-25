@@ -114,6 +114,7 @@ def best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_cell * base)
 
 def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
+    print(datetime.datetime.now(), flush=True)
     best_overhead = 1e3
     best_config = []
     for R in tuning_result.keys():
@@ -129,10 +130,12 @@ def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
         if total_overhead < best_overhead:
             best_overhead = total_overhead
             best_config = total_config
-    print(best_config)
+    print(datetime.datetime.now(), flush=True)
+    print(best_config, flush=True)
+
 
 if __name__ == "__main__":
-    tune_result()
-    # print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
-    # ecc_search(tune_ours, 1e-13, 1e10, 1e10)
-    # ecc_search(tune_sba, 1e-13, 1e10, 1e10)
+    # tune_result()
+    print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
+    ecc_search(tune_ours, 1e-13, 1e10, 1e10)
+    ecc_search(tune_sba, 1e-13, 1e10, 1e10)
