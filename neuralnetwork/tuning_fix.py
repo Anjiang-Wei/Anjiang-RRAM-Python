@@ -56,7 +56,7 @@ def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
 
 def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
     for i in range(repeated):
-        if testonce() == False:
+        if testonce(R, base, p, a0, f, spec_ber, raw_ber, scale) == False:
             return False
     return True
 
@@ -97,13 +97,15 @@ def tune_result():
     print(res2, flush=True)
 
 # R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
+
 tune_ours = {4: [2, 0.003750000000000031, 0, 4, 0, 8],
              8: [3, 0.043749999999999956, 1, 2, 1, 8],
-             16: [4, 0.25125, 0, 2, 0, 8]}
+             16: [4, 0.25125, 3, 1, 1, 8]}
 
 tune_sba = {4: [2, 0.125, 2, 3, 0, 8],
             8: [3, 0.2234848484848485, 1, 2, 1, 8],
             16: [4, 0.33875, 3, 1, 1, 8]}
+
 
 if __name__ == "__main__":
     tune_result()
