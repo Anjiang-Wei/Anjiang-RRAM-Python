@@ -38,7 +38,7 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-repeated = 10
+repeated = 100
 
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
@@ -121,9 +121,9 @@ def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
         base, raw_ber, pbits, acells, _, __ = tuning_result[R]
         if pbits > 0:
             config = best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell)
-            tag, ecc_overhead, n, k, d, base, uber = config
+            tag, ecc_overhead, n, k, d, base_ecc, uber = config
             total_overhead = (ecc_overhead * pbits) / base + acells
-            total_config = [R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber]
+            total_config = [R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base_ecc, raw_ber, uber]
         else:
             total_overhead = acells
             total_config = [R, total_overhead, pbits, acells, raw_ber]
