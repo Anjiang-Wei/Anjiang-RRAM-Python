@@ -34,6 +34,8 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
+repeated = 10
+
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
                     str(R), str(base),
@@ -44,13 +46,19 @@ def inference():
     tuning_float.load_float()
     return tuning_float.test_net()
 
-def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
+def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
     run("float", "float0", R, base, p, a0, f, spec_ber, raw_ber, scale)
     res = inference()
     if res >= 0.98:
         return True
     else:
         return False
+
+def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
+    for i in range(repeated):
+        if testonce() == False:
+            return False
+    return True
 
 def tune(R, base, mini, spec_ber, raw_ber):
     best_a0 = math.floor(mini / base)
@@ -93,9 +101,9 @@ tune_ours = {4: [2, 0.003750000000000031, 0, 4, 0, 8],
              8: [3, 0.043749999999999956, 1, 2, 1, 8],
              16: [4, 0.25125, 0, 2, 0, 8]}
 
-tune_sba = {4: [2, 0.125, 2, 2, 2, 8],
+tune_sba = {4: [2, 0.125, 2, 3, 0, 8],
             8: [3, 0.2234848484848485, 1, 2, 1, 8],
-            16: [4, 0.33875, 0, 2, 0, 8]}
+            16: [4, 0.33875, 3, 1, 1, 8]}
 
 if __name__ == "__main__":
     tune_result()
