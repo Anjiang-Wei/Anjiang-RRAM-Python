@@ -35,6 +35,8 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
+repeated = 10
+
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
                     str(R), str(base),
@@ -42,7 +44,7 @@ def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
                     str(spec_ber), str(raw_ber),
                     str(scale)])
 
-def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
+def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
     # f1s: intermediate/1.rgb, f2s: mutated/1.rgb, fout: mutated/1.out
     f1s, f2s = compute_diff.all_files("rgb")
     _, fout = compute_diff.all_files("out")
@@ -61,6 +63,12 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
         return True
     else:
         return False
+
+def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
+    for i in range(repeated):
+        if testonce(R, base, p, a0, f, spec_ber, raw_ber, scale, only3) == False:
+            return False
+    return True
 
 def tune(R, base, mini, spec_ber, raw_ber):
     best_a0 = math.floor(mini / base)
