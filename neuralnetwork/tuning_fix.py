@@ -2,6 +2,10 @@ import datetime
 import subprocess
 import math
 import tuning_float
+import sys
+sys.path.append("../ecc")
+import search
+
 
 # q: rber
 ours = {4: 0.003750000000000031,
@@ -106,6 +110,29 @@ tune_sba = {4: [2, 0.125, 2, 3, 0, 8],
             8: [3, 0.2234848484848485, 1, 2, 1, 8],
             16: [4, 0.33875, 3, 1, 1, 8]}
 
+def best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell):
+    return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_cell * base)
+
+def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
+    best_overhead = 1e3
+    best_config = []
+    for R in tuning_result.keys():
+        base, raw_ber, pbits, acells, _, __ = tuning_result[R]
+        if pbits > 0:
+            config = best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell)
+            tag, ecc_overhead, n, k, d, base, uber = config
+            total_overhead = (ecc_overhead * pbits) / base + acells
+            total_config = [total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber]
+        else:
+            total_overhead = acells
+            total_config = [total_overhead, pbits, acells, raw_ber]
+        if total_overhead < best_overhead:
+            best_overhead = total_overhead
+            best_config = total_config
+    print(best_config)
 
 if __name__ == "__main__":
-    tune_result()
+    # tune_result()
+    print("total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
+    ecc_search(tune_ours, 1e-13, 1e10, 1e10)
+    ecc_search(tune_sba, 1e-13, 1e10, 1e10)

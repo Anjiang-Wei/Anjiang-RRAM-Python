@@ -103,8 +103,8 @@ def bestcode(codes, spec_ber, raw_ber, maxk, maxn):
             uber = P_cw(n, int((d-1)/2), raw_ber, spec_ber)
             if uber <= spec_ber:
                 best_overhead = n / k
-                best_config = [tag, n, k, d, base, uber]
-    return best_overhead, best_config
+                best_config = [tag, best_overhead, n, k, d, base, uber]
+    return best_config
 
 
 if __name__ == "__main__":
