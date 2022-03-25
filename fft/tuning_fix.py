@@ -5,6 +5,7 @@ import tuning_float
 import sys
 sys.path.append("../ecc")
 import search
+import diff_compute
 
 
 # q: rber
@@ -38,7 +39,7 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-repeated = 10
+repeated = 1
 
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
@@ -46,14 +47,14 @@ def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
                     str(p), str(a0), str(f),
                     str(spec_ber), str(raw_ber),
                     str(scale)])
-def inference():
-    tuning_float.load_float()
-    return tuning_float.test_net()
+def fft():
+    subprocess.run(["./bin_fft", 4096, "output0"])
+    return diff_compute.diff()
 
 def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
-    run("float", "float0", R, base, p, a0, f, spec_ber, raw_ber, scale)
-    res = inference()
-    if res >= 0.98:
+    run("input", "input0", R, base, p, a0, f, spec_ber, raw_ber, scale)
+    res = fft()
+    if res <= 0.1:
         return True
     else:
         return False
@@ -67,14 +68,14 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
 def tune(R, base, mini, spec_ber, raw_ber):
     best_a0 = math.floor(mini / base)
     best_p, best_f = 0, mini - best_a0 * base
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 2 ** 8) == False:
+    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1) == False:
         # first identify the minimum best_p
         best_p += 1
         best_a0 = math.floor((mini - best_p) / base)
         best_f = mini - best_p - best_a0 * base
-    res = [best_p, best_a0, best_f, 8]
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 2 ** 8) == True:
-        res = [best_p, best_a0, best_f, 8]
+    res = [best_p, best_a0, best_f, 1]
+    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1) == True:
+        res = [best_p, best_a0, best_f, 1]
         if best_a0 == 0:
             break
         best_a0 -= 1
@@ -93,22 +94,17 @@ def autotune(q_rber, mini, spec_ber, binary):
 
 def tune_result():
     print(datetime.datetime.now(), flush=True)
-    # data range (-0.5, 0.5) * pre_scale (2**8) --> (-2**7, 2**7), need at least 8 bits
-    res1 = autotune(ours, 8, 1e-13, True)
-    res2 = autotune(sba, 8, 1e-13, True)
+    # data range (0, 4095) * pre_scale (1) --> 2**12, need at most 12 bits
+    res1 = autotune(ours, 12, 1e-13, True)
+    res2 = autotune(sba, 12, 1e-13, True)
     print(datetime.datetime.now(), flush=True)
     print(res1, flush=True)
     print(res2, flush=True)
 
 # R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
 
-tune_ours = {4: [2, 0.003750000000000031, 0, 4, 0, 8],
-             8: [3, 0.043749999999999956, 1, 2, 1, 8],
-             16: [4, 0.25125, 3, 1, 1, 8]}
-
-tune_sba = {4: [2, 0.125, 2, 3, 0, 8],
-            8: [3, 0.2234848484848485, 1, 2, 1, 8],
-            16: [4, 0.33875, 3, 1, 1, 8]}
+tune_ours = {}
+tune_sba = {}
 
 def best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_cell * base)
@@ -132,7 +128,7 @@ def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
     print(best_config)
 
 if __name__ == "__main__":
-    # tune_result()
-    print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
-    ecc_search(tune_ours, 1e-13, 1e10, 1e10)
-    ecc_search(tune_sba, 1e-13, 1e10, 1e10)
+    tune_result()
+    # print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
+    # ecc_search(tune_ours, 1e-13, 1e10, 1e10)
+    # ecc_search(tune_sba, 1e-13, 1e10, 1e10)
