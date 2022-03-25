@@ -1,7 +1,6 @@
 import datetime
 import subprocess
 import math
-import tuning_float
 import sys
 sys.path.append("../ecc")
 import search
@@ -48,7 +47,7 @@ def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
                     str(spec_ber), str(raw_ber),
                     str(scale)])
 def fft():
-    subprocess.run(["./bin_fft", 4096, "output0"])
+    subprocess.run(["./bin_fft", "4096", "output0"])
     return diff_compute.diff()
 
 def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
