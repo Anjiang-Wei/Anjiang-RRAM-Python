@@ -53,8 +53,8 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
         return False
 
 def tune(R, base, mini, spec_ber, raw_ber):
-    a0 = math.ceil(mini / base)
-    best_p, best_a0, best_f = 0, a0, 0
+    best_a0 = math.floor(mini / base)
+    best_p, best_f = 0, mini - best_a0 * base
     while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 2 ** 8) == False:
         # first identify the minimum best_p
         best_p += 1

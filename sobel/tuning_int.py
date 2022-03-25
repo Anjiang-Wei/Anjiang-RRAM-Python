@@ -63,14 +63,14 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
         return False
 
 def tune(R, base, mini, spec_ber, raw_ber):
-    a0 = math.ceil(mini / base)
-    best_p, best_a0, best_f = 0, a0, 0
-    res = []
+    best_a0 = math.floor(mini / base)
+    best_p, best_f = 0, mini - best_a0 * base
     while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1, True) == False:
         # first identify the minimum best_p
         best_p += 1
         best_a0 = math.floor((mini - best_p) / base)
         best_f = mini - best_p - best_a0 * base
+    res = [best_p, best_a0, best_f, 1]
     while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1, True) == True:
         res = [best_p, best_a0, best_f, 1]
         if best_a0 == 0:
