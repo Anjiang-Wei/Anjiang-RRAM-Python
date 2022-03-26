@@ -190,10 +190,10 @@ def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
 
 def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
     pre_time = time.time()
-    best_overhead = 1e10
-    best_config = []
-    best_detail = []
     for R in tuning_result.keys():
+        best_overhead = 1e10
+        best_config = []
+        best_detail = []
         raw_ber = ber_dict[R]
         ecc_config = best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit)
         tag, ecc_overhead, n, k, d, alpha_base, uber = ecc_config
@@ -207,10 +207,10 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
                 best_overhead = total_overhead
                 best_config = total_config
                 best_detail = detail_config
-        print(best_config)
-        print(best_detail)
+        print(best_config, flush=True)
+        print(best_detail, flush=True)
     post_time = time.time()
-    print("Runtime overhead = ", post_time - pre_time)
+    print("Runtime overhead = ", post_time - pre_time, flush=True)
 
 if __name__ == "__main__":
     # tune_result()
