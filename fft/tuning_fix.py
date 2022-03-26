@@ -185,32 +185,35 @@ tune_sba = {4: [(4, 0, 8),
       (11, 0, 1),
       (12, 0, 0)]}
 
-def best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell):
-    return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_cell * base)
+def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
+    return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_bit)
 
-def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
-    print(datetime.datetime.now(), flush=True)
-    best_overhead = 1e3
+def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
+    pre_time = time.time()
+    best_overhead = 1e10
     best_config = []
+    best_detail = []
     for R in tuning_result.keys():
-        base, raw_ber, pbits, acells, _, __ = tuning_result[R]
-        if pbits > 0:
-            config = best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell)
-            tag, ecc_overhead, n, k, d, base_ecc, uber = config
+        raw_ber = ber_dict[R]
+        ecc_config = best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit)
+        tag, ecc_overhead, n, k, d, alpha_base, uber = ecc_config
+        base = math.log(R, 2)
+        for item in tuning_result[R]:
+            pbits, acells, f = item
             total_overhead = (ecc_overhead * pbits) / base + acells
-            total_config = [R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base_ecc, raw_ber, uber]
-        else:
-            total_overhead = acells
-            total_config = [R, total_overhead, pbits, acells, raw_ber]
-        if total_overhead < best_overhead:
-            best_overhead = total_overhead
-            best_config = total_config
-    print(datetime.datetime.now(), flush=True)
-    print(best_config, flush=True)
-
+            total_config = [R, base, "Rfix", pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_overhead]
+            detail_config = [R, base, raw_ber, uber, tag, n, k, d, 2**alpha_base]
+            if total_overhead < best_overhead:
+                best_overhead = total_overhead
+                best_config = total_config
+                best_detail = detail_config
+        print(best_config)
+        print(best_detail)
+    post_time = time.time()
+    print("Runtime overhead = ", post_time - pre_time)
 
 if __name__ == "__main__":
-    tune_result()
-    # print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
-    # ecc_search(tune_ours, 1e-13, 1e10, 1e10)
-    # ecc_search(tune_sba, 1e-13, 1e10, 1e10)
+    # tune_result()
+    print("R, base, category, pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_cells")
+    ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
+    ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
