@@ -65,7 +65,7 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
             return False
     return True
 
-def reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, scale):
+def reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, scale, mini):
     # we assume p is fixed
     assert(a0 >= 0)
     if a0 == 0:
@@ -78,7 +78,9 @@ def reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, scale):
         if a0 < 0:
             break
         f = mini - p - a0 * base
-    return a0 + 1
+    a0 = a0 + 1
+    f = mini - p - a0 * base
+    return a0, f
 
 def get_a0_f(base, mini, p):
     a0 = math.floor((mini - p) / base)
@@ -86,10 +88,6 @@ def get_a0_f(base, mini, p):
     assert a0 >= 0
     assert f >= 0
     return a0, f
-
-def get_f(base, mini, p, a0):
-    f = mini - p - a0 * base
-    return f
 
 def tune(R, base, mini, spec_ber, raw_ber):
     res = set() # return as set of candidates
@@ -99,15 +97,13 @@ def tune(R, base, mini, spec_ber, raw_ber):
         # first identify the minimum p
         p += 1
         a0, f = get_a0_f(base, mini, p)
-    a0 = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, 1)
-    f = get_f(base, mini, p, a0)
+    a0, f = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, 1, mini)
     res.add((base, raw_ber, p, a0, f, 0))
     best_a0 = a0
     while p < mini and a0 > 0:
         p += 1
         a0, f = get_a0_f(base, mini, p)
-        a0 = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, scale)
-        f = get_f(base, mini, p, a0)
+        a0, f = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, 1, mini)
         if a0 < best_a0:
             best_a0 = a0
             res.add((base, raw_ber, p, a0, f, 0))
