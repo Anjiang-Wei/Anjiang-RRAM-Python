@@ -1,3 +1,4 @@
+import pprint
 import time
 import subprocess
 import math
@@ -77,13 +78,13 @@ def get_f(base, mini, p, a0):
     return f
 
 def tune(R, base, mini, spec_ber, raw_ber):
-    res = set() # return as set of candidates
+    res = []
     for p in range(0, mini + 1):
         a0max = get_a0_max(base, mini, p)
         for a0 in range(0, a0max + 1):
             f = get_f(base, mini, p, a0)
             if test(R, base, p, a0, f, spec_ber, raw_ber, 1) == True:
-                res.add((base, raw_ber, p, a0, f, 0))
+                res.append((p, a0, f))
     return res
 
 def autotune(q_rber, mini, spec_ber, binary):
@@ -104,17 +105,85 @@ def tune_result():
     res2 = autotune(sba, 12, 1e-13, True)
     post_time = time.time()
     print("Overhead", post_time - pre_time, flush=True)
-    print(res1, flush=True)
-    print(res2, flush=True)
+    print("tune_ours = ", end='')
+    pprint.pprint(res1)
+    print("tune_sba = ", end='')
+    pprint.pprint(res2)
 
-# R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale_bit]
-tune_ours = {4: [2, 0.003750000000000031, 6, 3, 0, 1],
-             8: [3, 0.043749999999999956, 7, 0, 5, 1],
-             16: [4, 0.25125, 7, 0, 5, 1]}
-
-tune_sba = {4: [2, 0.125, 9, 0, 3, 1],
-            8: [3, 0.2234848484848485, 8, 0, 4, 1],
-            16: [4, 0.33875, 8, 0, 4, 1]}
+# R: [p_bits, a_cells, f(neglect_bits)]
+tune_ours = {4: [(4, 0, 8),
+     (5, 0, 7),
+     (6, 0, 6),
+     (6, 2, 2),
+     (6, 3, 0),
+     (7, 0, 5),
+     (7, 1, 3),
+     (7, 2, 1),
+     (8, 0, 4),
+     (8, 1, 2),
+     (8, 2, 0),
+     (9, 0, 3),
+     (9, 1, 1),
+     (10, 0, 2),
+     (10, 1, 0),
+     (11, 0, 1),
+     (12, 0, 0)],
+ 8: [(4, 0, 8),
+     (5, 0, 7),
+     (6, 0, 6),
+     (7, 0, 5),
+     (7, 1, 2),
+     (8, 0, 4),
+     (8, 1, 1),
+     (9, 0, 3),
+     (9, 1, 0),
+     (10, 0, 2),
+     (11, 0, 1),
+     (12, 0, 0)],
+ 16: [(4, 0, 8),
+      (5, 0, 7),
+      (6, 0, 6),
+      (7, 0, 5),
+      (7, 1, 1),
+      (8, 0, 4),
+      (8, 1, 0),
+      (9, 0, 3),
+      (10, 0, 2),
+      (11, 0, 1),
+      (12, 0, 0)]}
+tune_sba = {4: [(4, 0, 8),
+     (5, 0, 7),
+     (6, 0, 6),
+     (7, 0, 5),
+     (8, 0, 4),
+     (9, 0, 3),
+     (9, 1, 1),
+     (10, 0, 2),
+     (10, 1, 0),
+     (11, 0, 1),
+     (12, 0, 0)],
+ 8: [(4, 0, 8),
+     (5, 0, 7),
+     (6, 0, 6),
+     (7, 0, 5),
+     (8, 0, 4),
+     (8, 1, 1),
+     (9, 0, 3),
+     (9, 1, 0),
+     (10, 0, 2),
+     (11, 0, 1),
+     (12, 0, 0)],
+ 16: [(4, 0, 8),
+      (5, 0, 7),
+      (6, 0, 6),
+      (7, 0, 5),
+      (7, 1, 1),
+      (8, 0, 4),
+      (8, 1, 0),
+      (9, 0, 3),
+      (10, 0, 2),
+      (11, 0, 1),
+      (12, 0, 0)]}
 
 def best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_cell * base)
