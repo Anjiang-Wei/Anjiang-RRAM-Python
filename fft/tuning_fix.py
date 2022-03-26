@@ -89,26 +89,31 @@ def tune(R, base, mini, spec_ber, raw_ber):
 
 def autotune(q_rber, mini, spec_ber, binary):
     res = {}
+    time_overhead = {}
     for R, raw_ber in q_rber.items():
         base = math.floor(math.log(R, 2)) # R levels can at most store 'base' bits
         if binary and 2 ** base != R:
             continue
+        pre_time = time.time()
         candidate = tune(R, base, mini, spec_ber, raw_ber)
         print(candidate, flush=True)
         res[R] = candidate
-    return res
+        post_time = time.time()
+        time_overhead[R] = post_time - pre_time
+    return res, time_overhead
 
 def tune_result():
-    pre_time = time.time()
     # data range (0, 4095) * pre_scale (1) --> 2**12, need at most 12 bits
-    res1 = autotune(ours, 12, 1e-13, True)
-    res2 = autotune(sba, 12, 1e-13, True)
-    post_time = time.time()
-    print("Overhead", post_time - pre_time, flush=True)
+    res1, time1 = autotune(ours, 12, 1e-13, True)
+    res2, time2 = autotune(sba, 12, 1e-13, True)
     print("tune_ours = ", end='')
     pprint.pprint(res1)
     print("tune_sba = ", end='')
     pprint.pprint(res2)
+    print("time_ours = ", end='')
+    pprint.pprint(time1)
+    print("time_sba = ", end='')
+    pprint.pprint(time2)
 
 # R: [p_bits, a_cells, f(neglect_bits)]
 tune_ours = {4: [(4, 0, 8),
@@ -189,8 +194,8 @@ def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_bit)
 
 def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
-    pre_time = time.time()
     for R in tuning_result.keys():
+        pre_time = time.time()
         best_overhead = 1e10
         best_config = []
         best_detail = []
@@ -209,11 +214,11 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
                 best_detail = detail_config
         print(best_config, flush=True)
         print(best_detail, flush=True)
-    post_time = time.time()
-    print("Runtime overhead = ", post_time - pre_time, flush=True)
+        post_time = time.time()
+        print("Runtime = ", post_time - pre_time, flush=True)
 
 if __name__ == "__main__":
-    # tune_result()
-    print("R, base, category, pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_cells")
-    ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
-    ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
+    tune_result()
+    # print("R, base, category, pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_cells")
+    # ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
+    # ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
