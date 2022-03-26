@@ -66,6 +66,7 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
     return True
 
 def tune(R, base, mini, spec_ber, raw_ber):
+    res = set() # return as set of candidates
     best_a0 = math.floor(mini / base)
     best_p, best_f = 0, mini - best_a0 * base
     while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1) == False:
@@ -73,9 +74,9 @@ def tune(R, base, mini, spec_ber, raw_ber):
         best_p += 1
         best_a0 = math.floor((mini - best_p) / base)
         best_f = mini - best_p - best_a0 * base
-    res = [best_p, best_a0, best_f, 1]
+    res.add((base, raw_ber, best_p, best_a0, best_f, 0))
     while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1) == True:
-        res = [best_p, best_a0, best_f, 1]
+        res.add((base, raw_ber, best_p, best_a0, best_f, 0))
         if best_a0 == 0:
             break
         best_a0 -= 1
@@ -88,8 +89,9 @@ def autotune(q_rber, mini, spec_ber, binary):
         base = math.floor(math.log(R, 2)) # R levels can at most store 'base' bits
         if binary and 2 ** base != R:
             continue
-        p, a0, f, pre_scale = tune(R, base, mini, spec_ber, raw_ber)
-        res[R] = [base, raw_ber, p, a0, f, pre_scale]
+        candidate = tune(R, base, mini, spec_ber, raw_ber)
+        print(candidate, flush=True)
+        res[R] = candidate
     return res
 
 def tune_result():
@@ -135,7 +137,7 @@ def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
 
 
 if __name__ == "__main__":
-    # tune_result()
-    print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
-    ecc_search(tune_ours, 1e-13, 1e10, 1e10)
-    ecc_search(tune_sba, 1e-13, 1e10, 1e10)
+    tune_result()
+    # print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
+    # ecc_search(tune_ours, 1e-13, 1e10, 1e10)
+    # ecc_search(tune_sba, 1e-13, 1e10, 1e10)
