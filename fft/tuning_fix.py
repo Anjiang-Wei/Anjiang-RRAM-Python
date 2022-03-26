@@ -38,7 +38,7 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-repeated = 100
+repeated = 10
 
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
@@ -65,22 +65,52 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
             return False
     return True
 
+def reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, scale):
+    # we assume p is fixed
+    assert(a0 >= 0)
+    if a0 == 0:
+        return a0
+    a0 -= 1
+    f = mini - p - a0 * base
+    assert f >= 0
+    while test(R, base, p, a0, f, spec_ber, raw_ber, scale) == True:
+        a0 -= 1
+        if a0 < 0:
+            break
+        f = mini - p - a0 * base
+    return a0 + 1
+
+def get_a0_f(base, mini, p):
+    a0 = math.floor((mini - p) / base)
+    f = mini - p - a0 * base
+    assert a0 >= 0
+    assert f >= 0
+    return a0, f
+
+def get_f(base, mini, p, a0):
+    f = mini - p - a0 * base
+    return f
+
 def tune(R, base, mini, spec_ber, raw_ber):
     res = set() # return as set of candidates
-    best_a0 = math.floor(mini / base)
-    best_p, best_f = 0, mini - best_a0 * base
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1) == False:
-        # first identify the minimum best_p
-        best_p += 1
-        best_a0 = math.floor((mini - best_p) / base)
-        best_f = mini - best_p - best_a0 * base
-    res.add((base, raw_ber, best_p, best_a0, best_f, 0))
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1) == True:
-        res.add((base, raw_ber, best_p, best_a0, best_f, 0))
-        if best_a0 == 0:
-            break
-        best_a0 -= 1
-        best_f = mini - best_p - best_a0 * base
+    p = 0
+    a0, f = get_a0_f(base, mini, p)
+    while test(R, base, p, a0, f, spec_ber, raw_ber, 1) == False:
+        # first identify the minimum p
+        p += 1
+        a0, f = get_a0_f(base, mini, p)
+    a0 = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, 1)
+    f = get_f(base, mini, p, a0)
+    res.add((base, raw_ber, p, a0, f, 0))
+    best_a0 = a0
+    while p < mini and a0 > 0:
+        p += 1
+        a0, f = get_a0_f(base, mini, p)
+        a0 = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, scale)
+        f = get_f(base, mini, p, a0)
+        if a0 < best_a0:
+            best_a0 = a0
+            res.add((base, raw_ber, p, a0, f, 0))
     return res
 
 def autotune(q_rber, mini, spec_ber, binary):
