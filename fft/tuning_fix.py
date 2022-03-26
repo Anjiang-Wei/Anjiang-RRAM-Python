@@ -1,4 +1,4 @@
-import datetime
+import time
 import subprocess
 import math
 import sys
@@ -98,11 +98,12 @@ def autotune(q_rber, mini, spec_ber, binary):
     return res
 
 def tune_result():
-    print(datetime.datetime.now(), flush=True)
+    pre_time = time.time()
     # data range (0, 4095) * pre_scale (1) --> 2**12, need at most 12 bits
     res1 = autotune(ours, 12, 1e-13, True)
     res2 = autotune(sba, 12, 1e-13, True)
-    print(datetime.datetime.now(), flush=True)
+    post_time = time.time()
+    print("Overhead", post_time - pre_time, flush=True)
     print(res1, flush=True)
     print(res2, flush=True)
 
