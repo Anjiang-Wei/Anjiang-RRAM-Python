@@ -65,48 +65,25 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
             return False
     return True
 
-def reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, scale, mini):
-    # we assume p is fixed
-    assert(a0 >= 0)
-    if a0 == 0:
-        return a0
-    a0 -= 1
-    f = mini - p - a0 * base
-    assert f >= 0
-    while test(R, base, p, a0, f, spec_ber, raw_ber, scale) == True:
-        a0 -= 1
-        if a0 < 0:
-            break
-        f = mini - p - a0 * base
-    a0 = a0 + 1
-    f = mini - p - a0 * base
-    return a0, f
 
-def get_a0_f(base, mini, p):
+def get_a0_max(base, mini, p):
     a0 = math.floor((mini - p) / base)
-    f = mini - p - a0 * base
     assert a0 >= 0
+    return a0
+
+def get_f(base, mini, p, a0):
+    f = mini - p - base * a0
     assert f >= 0
-    return a0, f
+    return f
 
 def tune(R, base, mini, spec_ber, raw_ber):
     res = set() # return as set of candidates
-    p = 0
-    a0, f = get_a0_f(base, mini, p)
-    while test(R, base, p, a0, f, spec_ber, raw_ber, 1) == False:
-        # first identify the minimum p
-        p += 1
-        a0, f = get_a0_f(base, mini, p)
-    a0, f = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, 1, mini)
-    res.add((base, raw_ber, p, a0, f, 0))
-    best_a0 = a0
-    while p < mini and a0 > 0:
-        p += 1
-        a0, f = get_a0_f(base, mini, p)
-        a0, f = reduce_a0(R, base, p, a0, f, spec_ber, raw_ber, 1, mini)
-        if a0 < best_a0:
-            best_a0 = a0
-            res.add((base, raw_ber, p, a0, f, 0))
+    for p in range(0, mini + 1):
+        a0max = get_a0_max(base, mini, p)
+        for a0 in range(0, a0max + 1):
+            f = get_f(base, mini, p, a0)
+            if test(R, base, p, a0, f, spec_ber, raw_ber, 1) == True:
+                res.add((base, raw_ber, p, a0, f, 0))
     return res
 
 def autotune(q_rber, mini, spec_ber, binary):
@@ -129,7 +106,7 @@ def tune_result():
     print(res1, flush=True)
     print(res2, flush=True)
 
-# R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
+# R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale_bit]
 tune_ours = {4: [2, 0.003750000000000031, 6, 3, 0, 1],
              8: [3, 0.043749999999999956, 7, 0, 5, 1],
              16: [4, 0.25125, 7, 0, 5, 1]}
