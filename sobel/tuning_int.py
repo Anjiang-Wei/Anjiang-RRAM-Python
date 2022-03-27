@@ -64,7 +64,7 @@ def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
     else:
         return False
 
-def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
+def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3=True):
     for i in range(repeated):
         if testonce(R, base, p, a0, f, spec_ber, raw_ber, scale, only3) == False:
             return False
