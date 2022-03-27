@@ -70,48 +70,53 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale, only3):
             return False
     return True
 
+def get_a0_max(base, mini, p):
+    a0 = math.floor((mini - p) / base)
+    assert a0 >= 0
+    return a0
+
+def get_f(base, mini, p, a0):
+    f = mini - p - base * a0
+    assert f >= 0
+    return f
+
 def tune(R, base, mini, spec_ber, raw_ber):
-    best_a0 = math.floor(mini / base)
-    best_p, best_f = 0, mini - best_a0 * base
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1, True) == False:
-        # first identify the minimum best_p
-        best_p += 1
-        best_a0 = math.floor((mini - best_p) / base)
-        best_f = mini - best_p - best_a0 * base
-    res = [best_p, best_a0, best_f, 1]
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 1, True) == True:
-        res = [best_p, best_a0, best_f, 1]
-        if best_a0 == 0:
-            break
-        best_a0 -= 1
-        best_f = mini - best_p - best_a0 * base
+    res = []
+    for p in range(0, mini + 1):
+        a0max = get_a0_max(base, mini, p)
+        for a0 in range(0, a0max + 1):
+            f = get_f(base, mini, p, a0)
+            if test(R, base, p, a0, f, spec_ber, raw_ber, 1) == True:
+                res.append((p, a0, f))
     return res
 
 def autotune(q_rber, mini, spec_ber, binary):
     res = {}
+    time_overhead = {}
     for R, raw_ber in q_rber.items():
         base = math.floor(math.log(R, 2)) # R levels can at most store 'base' bits
         if binary and 2 ** base != R:
             continue
-        p, a0, f, pre_scale = tune(R, base, mini, spec_ber, raw_ber)
-        res[R] = [base, raw_ber, p, a0, f, pre_scale]
-    return res
+        pre_time = time.time()
+        candidate = tune(R, base, mini, spec_ber, raw_ber)
+        print(candidate, flush=True)
+        res[R] = candidate
+        post_time = time.time()
+        time_overhead[R] = post_time - pre_time
+    return res, time_overhead
 
 def tune_result():
-    print(datetime.datetime.now(), flush=True)
-    res1 = autotune(ours, 8, 1e-13, True)
-    res2 = autotune(sba, 8, 1e-13, True)
-    print(datetime.datetime.now(), flush=True)
-    print(res1, flush=True)
-    print(res2, flush=True)
-
-# R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
-tune_ours = {4: [2, 0.003750000000000031, 0, 2, 4, 1],
-             8: [3, 0.043749999999999956, 0, 2, 2, 1],
-             16: [4, 0.25125, 1, 1, 3, 1]}
-tune_sba = {4: [2, 0.125, 2, 1, 4, 1],
-            8: [3, 0.2234848484848485, 2, 1, 3, 1],
-            16: [4, 0.33875, 1, 1, 3, 1]}
+    # data range (0, 255) * pre_scale (1) --> 2**8, need at most 8 bits
+    res1, time1 = autotune(ours, 8, 1e-13, True)
+    res2, time2 = autotune(sba, 8, 1e-13, True)
+    print("tune_ours = ", end='')
+    pprint.pprint(res1)
+    print("tune_sba = ", end='')
+    pprint.pprint(res2)
+    print("time_ours = ", end='')
+    pprint.pprint(time1)
+    print("time_sba = ", end='')
+    pprint.pprint(time2)
 
 
 if __name__ == "__main__":
