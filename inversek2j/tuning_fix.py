@@ -116,7 +116,11 @@ def tune_result():
     pprint.pprint(time2)
 
 # R: [p_bits, a_cells, f(scale)]
+tune_ours = {4: [(2, 2, -5), (4, 1, -5), (6, 0, -5)],
+ 8: [(3, 1, -5), (6, 0, -5)],
+ 16: [(6, 0, -5)]}
 
+tune_sba = {4: [(6, 0, -5)], 8: [(6, 0, -5)], 16: [(6, 0, -5)]}
 
 def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_bit)
@@ -157,6 +161,6 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
     print(R_runtime, flush=True)
 
 if __name__ == "__main__":
-    tune_result()
-    # ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
-    # ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
+    # tune_result()
+    ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
+    ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
