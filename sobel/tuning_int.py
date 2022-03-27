@@ -35,7 +35,7 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-repeated = 10
+repeated = 3
 
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
