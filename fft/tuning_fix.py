@@ -217,14 +217,14 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
         R_best_detail[R] = best_detail
         post_time = time.time()
         R_runtime[R] = post_time - pre_time
-    print("R, base, category, pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_cells")
-    print("R_best_config = ", end='')
-    pprint.pprint(R_best_config)
-    print("R, base, raw_ber, uber, tag, n, k, d, alpha_size")
-    print("R_best_detail = ", end='')
-    pprint.pprint(R_best_detail)
-    print("R_runtime = ", end='')
-    pprint.pprint(R_runtime)
+    print("R, base, category, pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_cells", flush=True)
+    print("R_best_config = ", end='', flush=True)
+    print(R_best_config, flush=True)
+    print("R, base, raw_ber, uber, tag, n, k, d, alpha_size", flush=True)
+    print("R_best_detail = ", end='', flush=True)
+    print(R_best_detail, flush=True)
+    print("R_runtime = ", end='', flush=True)
+    print(R_runtime, flush=True)
 
 if __name__ == "__main__":
     # tune_result()
