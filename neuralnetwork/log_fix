@@ -1,420 +1,610 @@
-2022-03-25 02:51:19.823143
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Fixed_mutate configutation float float0 4 2 0 0 8 1e-13 0.00375 256
 Load finished
-Test set: Average loss: 0.0478, Accuracy: 9844/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Test set: Average loss: 2.3967, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 0 1 6 1e-13 0.00375 256
 Load finished
-Test set: Average loss: 0.0508, Accuracy: 9833/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Test set: Average loss: 2.3064, Accuracy: 1141/10000 (11%)
+Fixed_mutate configutation float float0 4 2 0 2 4 1e-13 0.00375 256
 Load finished
-Test set: Average loss: 0.0467, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0466, Accuracy: 9855/10000 (99%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0469, Accuracy: 9847/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0489, Accuracy: 9833/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0484, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0497, Accuracy: 9834/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0504, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0478, Accuracy: 9855/10000 (99%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0500, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0467, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0496, Accuracy: 9838/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0497, Accuracy: 9849/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0479, Accuracy: 9834/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0491, Accuracy: 9840/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0476, Accuracy: 9848/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0531, Accuracy: 9817/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0497, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
-Load finished
-Test set: Average loss: 0.0582, Accuracy: 9813/10000 (98%)
+Test set: Average loss: 2.3015, Accuracy: 1579/10000 (16%)
 Fixed_mutate configutation float float0 4 2 0 3 2 1e-13 0.00375 256
 Load finished
-Test set: Average loss: 0.9311, Accuracy: 9626/10000 (96%)
+Test set: Average loss: 0.8504, Accuracy: 9695/10000 (97%)
+Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0478, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0479, Accuracy: 9843/10000 (98%)
+Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0479, Accuracy: 9840/10000 (98%)
+Fixed_mutate configutation float float0 4 2 1 0 7 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.3241, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 1 1 5 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 1 2 3 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.2549, Accuracy: 3225/10000 (32%)
+Fixed_mutate configutation float float0 4 2 1 3 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1004, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 4 2 1 3 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0994, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 4 2 1 3 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0984, Accuracy: 9846/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 0 6 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.3064, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 2 1 4 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1232/10000 (12%)
+Fixed_mutate configutation float float0 4 2 2 2 2 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 1.0221, Accuracy: 9656/10000 (97%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0481, Accuracy: 9843/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0480, Accuracy: 9849/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0482, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 4 2 3 0 5 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 3 1 3 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.2640, Accuracy: 2908/10000 (29%)
+Fixed_mutate configutation float float0 4 2 3 2 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1124, Accuracy: 9838/10000 (98%)
+Fixed_mutate configutation float float0 4 2 3 2 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1114, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 4 2 3 2 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1139, Accuracy: 9841/10000 (98%)
+Fixed_mutate configutation float float0 4 2 4 0 4 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1189/10000 (12%)
+Fixed_mutate configutation float float0 4 2 4 1 2 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 1.0493, Accuracy: 9627/10000 (96%)
+Fixed_mutate configutation float float0 4 2 4 2 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0484, Accuracy: 9850/10000 (98%)
+Fixed_mutate configutation float float0 4 2 4 2 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 4 2 4 2 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9849/10000 (98%)
+Fixed_mutate configutation float float0 4 2 5 0 3 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 2.2648, Accuracy: 2846/10000 (28%)
+Fixed_mutate configutation float float0 4 2 5 1 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1152, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 4 2 5 1 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1150, Accuracy: 9841/10000 (98%)
+Fixed_mutate configutation float float0 4 2 5 1 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1153, Accuracy: 9840/10000 (98%)
+Fixed_mutate configutation float float0 4 2 6 0 2 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 1.0556, Accuracy: 9625/10000 (96%)
+Fixed_mutate configutation float float0 4 2 6 1 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 6 1 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 6 1 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 7 0 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 4 2 7 0 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 4 2 7 0 1 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 4 2 8 0 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 8 0 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 8 0 0 1e-13 0.00375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+[(0, 4, -8), (1, 3, -7), (2, 3, -8), (3, 2, -7), (4, 2, -8), (5, 1, -7), (6, 1, -8), (7, 0, -7), (8, 0, -8)]
+Fixed_mutate configutation float float0 8 3 0 0 8 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.3967, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 8 3 0 1 5 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.3030, Accuracy: 1032/10000 (10%)
 Fixed_mutate configutation float float0 8 3 0 2 2 1e-13 0.04375 256
 Load finished
-Test set: Average loss: 0.3831, Accuracy: 9779/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
+Test set: Average loss: 0.3172, Accuracy: 9795/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 0 7 1e-13 0.04375 256
 Load finished
-Test set: Average loss: 0.0661, Accuracy: 9836/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0714, Accuracy: 9837/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0752, Accuracy: 9842/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0710, Accuracy: 9851/10000 (99%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0690, Accuracy: 9844/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0701, Accuracy: 9839/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0694, Accuracy: 9840/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0644, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0726, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0726, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0659, Accuracy: 9838/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0767, Accuracy: 9840/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0733, Accuracy: 9839/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0693, Accuracy: 9839/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0712, Accuracy: 9851/10000 (99%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0713, Accuracy: 9844/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0670, Accuracy: 9852/10000 (99%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0738, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0694, Accuracy: 9838/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
-Load finished
-Test set: Average loss: 0.0649, Accuracy: 9848/10000 (98%)
+Test set: Average loss: 2.3241, Accuracy: 1135/10000 (11%)
 Fixed_mutate configutation float float0 8 3 1 1 4 1e-13 0.04375 256
 Load finished
-Test set: Average loss: 2.2995, Accuracy: 1602/10000 (16%)
+Test set: Average loss: 2.3015, Accuracy: 1260/10000 (13%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0644, Accuracy: 9846/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0783, Accuracy: 9836/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0745, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 8 3 2 0 6 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.3064, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 8 3 2 1 3 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.2516, Accuracy: 3355/10000 (34%)
+Fixed_mutate configutation float float0 8 3 2 2 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0474, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 8 3 2 2 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0473, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 8 3 2 2 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0475, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 8 3 3 0 5 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 8 3 3 1 2 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 1.0272, Accuracy: 9638/10000 (96%)
+Fixed_mutate configutation float float0 8 3 4 0 4 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1189/10000 (12%)
+Fixed_mutate configutation float float0 8 3 4 1 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.1136, Accuracy: 9840/10000 (98%)
+Fixed_mutate configutation float float0 8 3 4 1 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.1143, Accuracy: 9841/10000 (98%)
+Fixed_mutate configutation float float0 8 3 4 1 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.1129, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 8 3 5 0 3 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 2.2648, Accuracy: 2846/10000 (28%)
+Fixed_mutate configutation float float0 8 3 5 1 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0484, Accuracy: 9847/10000 (98%)
+Fixed_mutate configutation float float0 8 3 5 1 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 8 3 5 1 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0485, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 8 3 6 0 2 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 1.0556, Accuracy: 9625/10000 (96%)
+Fixed_mutate configutation float float0 8 3 7 0 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 8 3 7 0 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 8 3 7 0 1 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 8 3 8 0 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 8 3 8 0 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 8 3 8 0 0 1e-13 0.04375 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+[(1, 2, -7), (2, 2, -8), (4, 1, -7), (5, 1, -8), (7, 0, -7), (8, 0, -8)]
+Fixed_mutate configutation float float0 16 4 0 0 8 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 2.3967, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 16 4 0 1 4 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 2.2716, Accuracy: 2433/10000 (24%)
 Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.25125 256
 Load finished
-Test set: Average loss: 0.0767, Accuracy: 9823/10000 (98%)
+Test set: Average loss: 0.0814, Accuracy: 9831/10000 (98%)
 Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.25125 256
 Load finished
-Test set: Average loss: 0.0989, Accuracy: 9770/10000 (98%)
+Test set: Average loss: 0.0849, Accuracy: 9800/10000 (98%)
+Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0840, Accuracy: 9806/10000 (98%)
+Fixed_mutate configutation float float0 16 4 1 0 7 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 2.3241, Accuracy: 1135/10000 (11%)
 Fixed_mutate configutation float float0 16 4 1 1 3 1e-13 0.25125 256
 Load finished
-Test set: Average loss: 2.1404, Accuracy: 5398/10000 (54%)
+Test set: Average loss: 2.1487, Accuracy: 5843/10000 (58%)
+Fixed_mutate configutation float float0 16 4 2 0 6 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 2.3064, Accuracy: 1135/10000 (11%)
 Fixed_mutate configutation float float0 16 4 2 1 2 1e-13 0.25125 256
 Load finished
-Test set: Average loss: 0.9012, Accuracy: 9710/10000 (97%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1038, Accuracy: 9842/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1009, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1018, Accuracy: 9838/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1008, Accuracy: 9846/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1032, Accuracy: 9842/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1051, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1052, Accuracy: 9844/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1017, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1046, Accuracy: 9840/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1057, Accuracy: 9846/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1027, Accuracy: 9838/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1026, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.0989, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1030, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1045, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1045, Accuracy: 9849/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1046, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1029, Accuracy: 9842/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1033, Accuracy: 9840/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
-Load finished
-Test set: Average loss: 0.1008, Accuracy: 9842/10000 (98%)
+Test set: Average loss: 0.8677, Accuracy: 9742/10000 (97%)
 Fixed_mutate configutation float float0 16 4 3 0 5 1e-13 0.25125 256
 Load finished
 Test set: Average loss: 2.3026, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.1037, Accuracy: 9840/10000 (98%)
+Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.1013, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.1026, Accuracy: 9843/10000 (98%)
+Fixed_mutate configutation float float0 16 4 4 0 4 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1189/10000 (12%)
+Fixed_mutate configutation float float0 16 4 4 1 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0479, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 16 4 4 1 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0488, Accuracy: 9844/10000 (98%)
+Fixed_mutate configutation float float0 16 4 4 1 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0482, Accuracy: 9849/10000 (98%)
+Fixed_mutate configutation float float0 16 4 5 0 3 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 2.2648, Accuracy: 2846/10000 (28%)
+Fixed_mutate configutation float float0 16 4 6 0 2 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 1.0556, Accuracy: 9625/10000 (96%)
+Fixed_mutate configutation float float0 16 4 7 0 1 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 16 4 7 0 1 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 16 4 7 0 1 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 16 4 8 0 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 16 4 8 0 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 16 4 8 0 0 1e-13 0.25125 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+[(0, 2, -8), (3, 1, -7), (4, 1, -8), (7, 0, -7), (8, 0, -8)]
+Fixed_mutate configutation float float0 4 2 0 0 8 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.3967, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 0 1 6 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.3122, Accuracy: 998/10000 (10%)
+Fixed_mutate configutation float float0 4 2 0 2 4 1e-13 0.125 256
+Load finished
+Test set: Average loss: 1.5055, Accuracy: 6424/10000 (64%)
+Fixed_mutate configutation float float0 4 2 0 3 2 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.5002, Accuracy: 9448/10000 (94%)
 Fixed_mutate configutation float float0 4 2 0 4 0 1e-13 0.125 256
 Load finished
-Test set: Average loss: 1.5122, Accuracy: 9181/10000 (92%)
+Test set: Average loss: 0.6193, Accuracy: 9656/10000 (97%)
+Fixed_mutate configutation float float0 4 2 1 0 7 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.3241, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 1 1 5 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.3019, Accuracy: 1320/10000 (13%)
+Fixed_mutate configutation float float0 4 2 1 2 3 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.9929, Accuracy: 9340/10000 (93%)
 Fixed_mutate configutation float float0 4 2 1 3 1 1e-13 0.125 256
 Load finished
-Test set: Average loss: 0.0939, Accuracy: 9780/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
+Test set: Average loss: 0.0889, Accuracy: 9791/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 0 6 1e-13 0.125 256
 Load finished
-Test set: Average loss: 0.0545, Accuracy: 9834/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
+Test set: Average loss: 2.3064, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 2 1 4 1e-13 0.125 256
 Load finished
-Test set: Average loss: 0.0591, Accuracy: 9830/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0623, Accuracy: 9801/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0569, Accuracy: 9837/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0544, Accuracy: 9834/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0624, Accuracy: 9819/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0571, Accuracy: 9829/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0579, Accuracy: 9825/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0577, Accuracy: 9830/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0595, Accuracy: 9827/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0615, Accuracy: 9830/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0534, Accuracy: 9833/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0573, Accuracy: 9826/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0537, Accuracy: 9838/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0575, Accuracy: 9829/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0530, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0555, Accuracy: 9836/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0514, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0576, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
-Load finished
-Test set: Average loss: 0.0538, Accuracy: 9842/10000 (98%)
+Test set: Average loss: 2.2983, Accuracy: 1679/10000 (17%)
 Fixed_mutate configutation float float0 4 2 2 2 2 1e-13 0.125 256
 Load finished
-Test set: Average loss: 0.2678, Accuracy: 9793/10000 (98%)
+Test set: Average loss: 0.2504, Accuracy: 9810/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 2 2 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.2378, Accuracy: 9818/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 2 2 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.2868, Accuracy: 9795/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0560, Accuracy: 9835/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0584, Accuracy: 9812/10000 (98%)
+Fixed_mutate configutation float float0 4 2 2 3 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0591, Accuracy: 9822/10000 (98%)
+Fixed_mutate configutation float float0 4 2 3 0 5 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 4 2 3 1 3 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.2237, Accuracy: 4084/10000 (41%)
+Fixed_mutate configutation float float0 4 2 3 2 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0724, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 3 2 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0760, Accuracy: 9836/10000 (98%)
+Fixed_mutate configutation float float0 4 2 3 2 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0711, Accuracy: 9849/10000 (98%)
+Fixed_mutate configutation float float0 4 2 4 0 4 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1189/10000 (12%)
+Fixed_mutate configutation float float0 4 2 4 1 2 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.9962, Accuracy: 9675/10000 (97%)
+Fixed_mutate configutation float float0 4 2 4 2 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0475, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 4 2 4 2 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0476, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 4 2 4 2 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0473, Accuracy: 9849/10000 (98%)
+Fixed_mutate configutation float float0 4 2 5 0 3 1e-13 0.125 256
+Load finished
+Test set: Average loss: 2.2648, Accuracy: 2846/10000 (28%)
+Fixed_mutate configutation float float0 4 2 5 1 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.1098, Accuracy: 9838/10000 (98%)
+Fixed_mutate configutation float float0 4 2 5 1 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.1129, Accuracy: 9845/10000 (98%)
+Fixed_mutate configutation float float0 4 2 5 1 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.1095, Accuracy: 9843/10000 (98%)
+Fixed_mutate configutation float float0 4 2 6 0 2 1e-13 0.125 256
+Load finished
+Test set: Average loss: 1.0556, Accuracy: 9625/10000 (96%)
+Fixed_mutate configutation float float0 4 2 6 1 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0483, Accuracy: 9847/10000 (98%)
+Fixed_mutate configutation float float0 4 2 6 1 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0484, Accuracy: 9850/10000 (98%)
+Fixed_mutate configutation float float0 4 2 6 1 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0481, Accuracy: 9847/10000 (98%)
+Fixed_mutate configutation float float0 4 2 7 0 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 4 2 7 0 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 4 2 7 0 1 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 4 2 8 0 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 8 0 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 4 2 8 0 0 1e-13 0.125 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+[(2, 3, -8), (3, 2, -7), (4, 2, -8), (5, 1, -7), (6, 1, -8), (7, 0, -7), (8, 0, -8)]
+Fixed_mutate configutation float float0 8 3 0 0 8 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.3967, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 8 3 0 1 5 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.3021, Accuracy: 1415/10000 (14%)
 Fixed_mutate configutation float float0 8 3 0 2 2 1e-13 0.223485 256
 Load finished
-Test set: Average loss: 0.0826, Accuracy: 9806/10000 (98%)
+Test set: Average loss: 0.0892, Accuracy: 9801/10000 (98%)
 Fixed_mutate configutation float float0 8 3 0 2 2 1e-13 0.223485 256
 Load finished
-Test set: Average loss: 0.1019, Accuracy: 9747/10000 (97%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
+Test set: Average loss: 0.0999, Accuracy: 9759/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 0 7 1e-13 0.223485 256
 Load finished
-Test set: Average loss: 0.0507, Accuracy: 9839/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0623, Accuracy: 9822/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0597, Accuracy: 9816/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0565, Accuracy: 9823/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0590, Accuracy: 9814/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0578, Accuracy: 9822/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0573, Accuracy: 9823/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0552, Accuracy: 9822/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0567, Accuracy: 9829/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0594, Accuracy: 9812/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0573, Accuracy: 9828/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0564, Accuracy: 9832/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0510, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0571, Accuracy: 9814/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0536, Accuracy: 9832/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0538, Accuracy: 9838/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0636, Accuracy: 9805/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0561, Accuracy: 9832/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0534, Accuracy: 9836/10000 (98%)
-Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
-Load finished
-Test set: Average loss: 0.0552, Accuracy: 9830/10000 (98%)
+Test set: Average loss: 2.3241, Accuracy: 1135/10000 (11%)
 Fixed_mutate configutation float float0 8 3 1 1 4 1e-13 0.223485 256
 Load finished
-Test set: Average loss: 2.2932, Accuracy: 2255/10000 (23%)
+Test set: Average loss: 2.2908, Accuracy: 2503/10000 (25%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0517, Accuracy: 9846/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0574, Accuracy: 9812/10000 (98%)
+Fixed_mutate configutation float float0 8 3 1 2 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0536, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 8 3 2 0 6 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.3064, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 8 3 2 1 3 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.1578, Accuracy: 5312/10000 (53%)
+Fixed_mutate configutation float float0 8 3 2 2 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0503, Accuracy: 9833/10000 (98%)
+Fixed_mutate configutation float float0 8 3 2 2 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0509, Accuracy: 9835/10000 (98%)
+Fixed_mutate configutation float float0 8 3 2 2 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0503, Accuracy: 9836/10000 (98%)
+Fixed_mutate configutation float float0 8 3 3 0 5 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 8 3 3 1 2 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.8912, Accuracy: 9714/10000 (97%)
+Fixed_mutate configutation float float0 8 3 4 0 4 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1189/10000 (12%)
+Fixed_mutate configutation float float0 8 3 4 1 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.1056, Accuracy: 9841/10000 (98%)
+Fixed_mutate configutation float float0 8 3 4 1 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.1043, Accuracy: 9842/10000 (98%)
+Fixed_mutate configutation float float0 8 3 4 1 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.1061, Accuracy: 9843/10000 (98%)
+Fixed_mutate configutation float float0 8 3 5 0 3 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 2.2648, Accuracy: 2846/10000 (28%)
+Fixed_mutate configutation float float0 8 3 5 1 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0481, Accuracy: 9849/10000 (98%)
+Fixed_mutate configutation float float0 8 3 5 1 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0483, Accuracy: 9847/10000 (98%)
+Fixed_mutate configutation float float0 8 3 5 1 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0481, Accuracy: 9849/10000 (98%)
+Fixed_mutate configutation float float0 8 3 6 0 2 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 1.0556, Accuracy: 9625/10000 (96%)
+Fixed_mutate configutation float float0 8 3 7 0 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 8 3 7 0 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 8 3 7 0 1 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 8 3 8 0 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 8 3 8 0 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 8 3 8 0 0 1e-13 0.223485 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+[(1, 2, -7), (2, 2, -8), (4, 1, -7), (5, 1, -8), (7, 0, -7), (8, 0, -8)]
+Fixed_mutate configutation float float0 16 4 0 0 8 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 2.3967, Accuracy: 1135/10000 (11%)
+Fixed_mutate configutation float float0 16 4 0 1 4 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 2.2566, Accuracy: 3459/10000 (35%)
 Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.33875 256
 Load finished
-Test set: Average loss: 0.1275, Accuracy: 9784/10000 (98%)
+Test set: Average loss: 0.1043, Accuracy: 9805/10000 (98%)
+Fixed_mutate configutation float float0 16 4 0 2 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0911, Accuracy: 9792/10000 (98%)
+Fixed_mutate configutation float float0 16 4 1 0 7 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 2.3241, Accuracy: 1135/10000 (11%)
 Fixed_mutate configutation float float0 16 4 1 1 3 1e-13 0.33875 256
 Load finished
-Test set: Average loss: 2.0619, Accuracy: 6448/10000 (64%)
+Test set: Average loss: 2.0789, Accuracy: 6354/10000 (64%)
+Fixed_mutate configutation float float0 16 4 2 0 6 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 2.3064, Accuracy: 1135/10000 (11%)
 Fixed_mutate configutation float float0 16 4 2 1 2 1e-13 0.33875 256
 Load finished
-Test set: Average loss: 0.7816, Accuracy: 9746/10000 (97%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1002, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0983, Accuracy: 9836/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0963, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1002, Accuracy: 9840/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0997, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1002, Accuracy: 9836/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1007, Accuracy: 9844/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1026, Accuracy: 9837/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0983, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0997, Accuracy: 9837/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0967, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1039, Accuracy: 9845/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0986, Accuracy: 9839/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1003, Accuracy: 9837/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.1033, Accuracy: 9837/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0981, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0984, Accuracy: 9842/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0965, Accuracy: 9841/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0974, Accuracy: 9843/10000 (98%)
-Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
-Load finished
-Test set: Average loss: 0.0970, Accuracy: 9843/10000 (98%)
+Test set: Average loss: 0.8210, Accuracy: 9729/10000 (97%)
 Fixed_mutate configutation float float0 16 4 3 0 5 1e-13 0.33875 256
 Load finished
 Test set: Average loss: 2.3026, Accuracy: 1135/10000 (11%)
-2022-03-25 03:09:59.629246
-{4: [2, 0.003750000000000031, 0, 4, 0, 8], 8: [3, 0.043749999999999956, 1, 2, 1, 8], 16: [4, 0.25125, 3, 1, 1, 8]}
-{4: [2, 0.125, 2, 3, 0, 8], 8: [3, 0.2234848484848485, 1, 2, 1, 8], 16: [4, 0.33875, 3, 1, 1, 8]}
-/pool0/anjiang/.local/lib/python3.6/site-packages/torchvision/datasets/mnist.py:498: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at  ../torch/csrc/utils/tensor_numpy.cpp:180.)
-  return torch.from_numpy(parsed.astype(m[2], copy=False)).view(*s)
+Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0991, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0985, Accuracy: 9841/10000 (98%)
+Fixed_mutate configutation float float0 16 4 3 1 1 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.1005, Accuracy: 9838/10000 (98%)
+Fixed_mutate configutation float float0 16 4 4 0 4 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 2.3026, Accuracy: 1189/10000 (12%)
+Fixed_mutate configutation float float0 16 4 4 1 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0479, Accuracy: 9847/10000 (98%)
+Fixed_mutate configutation float float0 16 4 4 1 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0482, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 16 4 4 1 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0482, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 16 4 5 0 3 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 2.2648, Accuracy: 2846/10000 (28%)
+Fixed_mutate configutation float float0 16 4 6 0 2 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 1.0556, Accuracy: 9625/10000 (96%)
+Fixed_mutate configutation float float0 16 4 7 0 1 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 16 4 7 0 1 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 16 4 7 0 1 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.1154, Accuracy: 9839/10000 (98%)
+Fixed_mutate configutation float float0 16 4 8 0 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 16 4 8 0 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+Fixed_mutate configutation float float0 16 4 8 0 0 1e-13 0.33875 256
+Load finished
+Test set: Average loss: 0.0486, Accuracy: 9848/10000 (98%)
+[(3, 1, -7), (4, 1, -8), (7, 0, -7), (8, 0, -8)]
+tune_ours = {4: [(0, 4, -8),
+     (1, 3, -7),
+     (2, 3, -8),
+     (3, 2, -7),
+     (4, 2, -8),
+     (5, 1, -7),
+     (6, 1, -8),
+     (7, 0, -7),
+     (8, 0, -8)],
+ 8: [(1, 2, -7), (2, 2, -8), (4, 1, -7), (5, 1, -8), (7, 0, -7), (8, 0, -8)],
+ 16: [(0, 2, -8), (3, 1, -7), (4, 1, -8), (7, 0, -7), (8, 0, -8)]}
+tune_sba = {4: [(2, 3, -8),
+     (3, 2, -7),
+     (4, 2, -8),
+     (5, 1, -7),
+     (6, 1, -8),
+     (7, 0, -7),
+     (8, 0, -8)],
+ 8: [(1, 2, -7), (2, 2, -8), (4, 1, -7), (5, 1, -8), (7, 0, -7), (8, 0, -8)],
+ 16: [(3, 1, -7), (4, 1, -8), (7, 0, -7), (8, 0, -8)]}
+time_ours = {4: 554.3315312862396, 8: 386.2859570980072, 16: 319.6105306148529}
+time_sba = {4: 525.4920561313629, 8: 395.0335681438446, 16: 305.84980726242065}

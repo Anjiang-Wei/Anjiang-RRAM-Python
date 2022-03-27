@@ -113,5 +113,67 @@ def tune_result():
     print("time_sba = ", end='')
     pprint.pprint(time2)
 
+tune_ours = {4: [(0, 4, -8),
+     (1, 3, -7),
+     (2, 3, -8),
+     (3, 2, -7),
+     (4, 2, -8),
+     (5, 1, -7),
+     (6, 1, -8),
+     (7, 0, -7),
+     (8, 0, -8)],
+ 8: [(1, 2, -7), (2, 2, -8), (4, 1, -7), (5, 1, -8), (7, 0, -7), (8, 0, -8)],
+ 16: [(0, 2, -8), (3, 1, -7), (4, 1, -8), (7, 0, -7), (8, 0, -8)]}
+
+tune_sba = {4: [(2, 3, -8),
+     (3, 2, -7),
+     (4, 2, -8),
+     (5, 1, -7),
+     (6, 1, -8),
+     (7, 0, -7),
+     (8, 0, -8)],
+ 8: [(1, 2, -7), (2, 2, -8), (4, 1, -7), (5, 1, -8), (7, 0, -7), (8, 0, -8)],
+ 16: [(3, 1, -7), (4, 1, -8), (7, 0, -7), (8, 0, -8)]}
+
+def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
+    return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_bit)
+
+def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
+    R_best_config = {}
+    R_best_detail = {}
+    R_runtime = {}
+    for R in tuning_result.keys():
+        pre_time = time.time()
+        best_overhead = 1e10
+        best_config = []
+        best_detail = []
+        raw_ber = ber_dict[R]
+        ecc_config = best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit)
+        tag, ecc_overhead, n, k, d, alpha_base, uber = ecc_config
+        base = math.log(R, 2)
+        for item in tuning_result[R]:
+            pbits, acells, f = item
+            total_overhead = (ecc_overhead * pbits) / base + acells
+            total_config = [R, base, "float/Rfix", pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_overhead]
+            detail_config = [R, base, raw_ber, uber, tag, n, k, d, 2**alpha_base]
+            if total_overhead < best_overhead:
+                best_overhead = total_overhead
+                best_config = total_config
+                best_detail = detail_config
+        R_best_config[R] = best_config
+        R_best_detail[R] = best_detail
+        post_time = time.time()
+        R_runtime[R] = post_time - pre_time
+    print("R, base, category, pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_cells", flush=True)
+    print("R_best_config = ", end='', flush=True)
+    print(R_best_config, flush=True)
+    print("R, base, raw_ber, uber, tag, n, k, d, alpha_size", flush=True)
+    print("R_best_detail = ", end='', flush=True)
+    print(R_best_detail, flush=True)
+    print("R_runtime = ", end='', flush=True)
+    print(R_runtime, flush=True)
+
 if __name__ == "__main__":
-    tune_result()
+    # tune_result()
+    ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
+    ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
