@@ -47,13 +47,13 @@ def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
                     str(p), str(a0), str(f),
                     str(spec_ber), str(raw_ber),
                     str(scale)])
-def fft():
-    subprocess.run(["./bin_inversek2j", "input0", "output0"])
+def jme():
+    subprocess.run(["./bin_jmeint", "input0", "output0"])
     return diff_compute.diff()
 
 def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
     run("input", "input0", R, base, p, a0, f, spec_ber, raw_ber, scale)
-    res = fft()
+    res = jme()
     print("diff = ", res, flush=True)
     if res <= 0.1:
         return True
@@ -83,8 +83,8 @@ def tune(R, base, mini, spec_ber, raw_ber):
         a0max = get_a0_max(base, mini, p)
         for a0 in range(0, a0max + 1):
             f = get_f(base, mini, p, a0)
-            if test(R, base, p, a0, f, spec_ber, raw_ber, 2**9) == True:
-                res.append((p, a0, f-9))
+            if test(R, base, p, a0, f, spec_ber, raw_ber, 2**8) == True:
+                res.append((p, a0, f-8))
     return res
 
 def autotune(q_rber, mini, spec_ber, binary):
@@ -103,9 +103,9 @@ def autotune(q_rber, mini, spec_ber, binary):
     return res, time_overhead
 
 def tune_result():
-    # data range (0, 2) * pre_scale (2**9) --> 2**10, need at most 10 bits
-    res1, time1 = autotune(ours, 10, 1e-13, True)
-    res2, time2 = autotune(sba, 10, 1e-13, True)
+    # data range (0, 1) * pre_scale (2**8) --> 2**8, need at most 8 bits
+    res1, time1 = autotune(ours, 8, 1e-13, True)
+    res2, time2 = autotune(sba, 8, 1e-13, True)
     print("tune_ours = ", end='')
     pprint.pprint(res1)
     print("tune_sba = ", end='')
@@ -116,11 +116,7 @@ def tune_result():
     pprint.pprint(time2)
 
 # R: [p_bits, a_cells, f(scale)]
-tune_ours = {4: [(2, 2, -5), (4, 1, -5), (6, 0, -5)],
- 8: [(3, 1, -5), (6, 0, -5)],
- 16: [(6, 0, -5)]}
 
-tune_sba = {4: [(6, 0, -5)], 8: [(6, 0, -5)], 16: [(6, 0, -5)]}
 
 def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_bit)
@@ -161,6 +157,6 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
     print(R_runtime, flush=True)
 
 if __name__ == "__main__":
-    # tune_result()
-    ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
-    ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
+    tune_result()
+    # ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
+    # ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
