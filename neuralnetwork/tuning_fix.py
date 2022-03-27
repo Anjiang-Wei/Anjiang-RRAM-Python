@@ -38,7 +38,7 @@ sba = {4: 0.125,
  16: 0.33875
 }
 
-repeated = 10
+repeated = 3
 
 def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
     subprocess.run(["./bin_fix_mutate", fin, fout,
@@ -64,75 +64,53 @@ def test(R, base, p, a0, f, spec_ber, raw_ber, scale):
             return False
     return True
 
+def get_a0_max(base, mini, p):
+    a0 = math.floor((mini - p) / base)
+    assert a0 >= 0
+    return a0
+
+def get_f(base, mini, p, a0):
+    f = mini - p - base * a0
+    assert f >= 0
+    return f
+
 def tune(R, base, mini, spec_ber, raw_ber):
-    best_a0 = math.floor(mini / base)
-    best_p, best_f = 0, mini - best_a0 * base
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 2 ** 8) == False:
-        # first identify the minimum best_p
-        best_p += 1
-        best_a0 = math.floor((mini - best_p) / base)
-        best_f = mini - best_p - best_a0 * base
-    res = [best_p, best_a0, best_f, 8]
-    while test(R, base, best_p, best_a0, best_f, spec_ber, raw_ber, 2 ** 8) == True:
-        res = [best_p, best_a0, best_f, 8]
-        if best_a0 == 0:
-            break
-        best_a0 -= 1
-        best_f = mini - best_p - best_a0 * base
+    res = []
+    for p in range(0, mini + 1):
+        a0max = get_a0_max(base, mini, p)
+        for a0 in range(0, a0max + 1):
+            f = get_f(base, mini, p, a0)
+            if test(R, base, p, a0, f, spec_ber, raw_ber, 2 ** 8) == True:
+                res.append((p, a0, f - 8))
     return res
 
 def autotune(q_rber, mini, spec_ber, binary):
     res = {}
+    time_overhead = {}
     for R, raw_ber in q_rber.items():
         base = math.floor(math.log(R, 2)) # R levels can at most store 'base' bits
         if binary and 2 ** base != R:
             continue
-        p, a0, f, pre_scale = tune(R, base, mini, spec_ber, raw_ber)
-        res[R] = [base, raw_ber, p, a0, f, pre_scale]
-    return res
+        pre_time = time.time()
+        candidate = tune(R, base, mini, spec_ber, raw_ber)
+        print(candidate, flush=True)
+        res[R] = candidate
+        post_time = time.time()
+        time_overhead[R] = post_time - pre_time
+    return res, time_overhead
 
 def tune_result():
-    print(datetime.datetime.now(), flush=True)
-    # data range (-0.5, 0.5) * pre_scale (2**8) --> (-2**7, 2**7), need at least 8 bits
-    res1 = autotune(ours, 8, 1e-13, True)
-    res2 = autotune(sba, 8, 1e-13, True)
-    print(datetime.datetime.now(), flush=True)
-    print(res1, flush=True)
-    print(res2, flush=True)
-
-# R: [base, raw_ber, p_bits, a_cells, f(neglect_bits), pre_scale]
-
-tune_ours = {4: [2, 0.003750000000000031, 0, 4, 0, 8],
-             8: [3, 0.043749999999999956, 1, 2, 1, 8],
-             16: [4, 0.25125, 3, 1, 1, 8]}
-
-tune_sba = {4: [2, 0.125, 2, 3, 0, 8],
-            8: [3, 0.2234848484848485, 1, 2, 1, 8],
-            16: [4, 0.33875, 3, 1, 1, 8]}
-
-def best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell):
-    return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_cell * base)
-
-def ecc_search(tuning_result, spec_ber, maxk_bit, maxn_cell):
-    best_overhead = 1e3
-    best_config = []
-    for R in tuning_result.keys():
-        base, raw_ber, pbits, acells, _, __ = tuning_result[R]
-        if pbits > 0:
-            config = best_ecc_config(base, spec_ber, raw_ber, maxk_bit, maxn_cell)
-            tag, ecc_overhead, n, k, d, base, uber = config
-            total_overhead = (ecc_overhead * pbits) / base + acells
-            total_config = [R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber]
-        else:
-            total_overhead = acells
-            total_config = [R, total_overhead, pbits, acells, raw_ber]
-        if total_overhead < best_overhead:
-            best_overhead = total_overhead
-            best_config = total_config
-    print(best_config)
+    # data range (-0.5, 0.5) * pre_scale (2 ** 8) --> (-2 ** 7, 2 ** 7) need at most 8 bits
+    res1, time1 = autotune(ours, 8, 1e-13, True)
+    res2, time2 = autotune(sba, 8, 1e-13, True)
+    print("tune_ours = ", end='')
+    pprint.pprint(res1)
+    print("tune_sba = ", end='')
+    pprint.pprint(res2)
+    print("time_ours = ", end='')
+    pprint.pprint(time1)
+    print("time_sba = ", end='')
+    pprint.pprint(time2)
 
 if __name__ == "__main__":
-    # tune_result()
-    print("R, total_overhead, pbits, acells, tag, ecc_overhead, n, k, d, base, raw_ber, uber")
-    ecc_search(tune_ours, 1e-13, 1e10, 1e10)
-    ecc_search(tune_sba, 1e-13, 1e10, 1e10)
+    tune_result()
