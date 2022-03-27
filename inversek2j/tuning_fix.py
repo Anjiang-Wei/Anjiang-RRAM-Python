@@ -48,7 +48,7 @@ def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
                     str(spec_ber), str(raw_ber),
                     str(scale)])
 def fft():
-    subprocess.run(["./bin_fft", "4096", "output0"])
+    subprocess.run(["./bin_inversek2j", "input0", "output0"])
     return diff_compute.diff()
 
 def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
@@ -83,8 +83,8 @@ def tune(R, base, mini, spec_ber, raw_ber):
         a0max = get_a0_max(base, mini, p)
         for a0 in range(0, a0max + 1):
             f = get_f(base, mini, p, a0)
-            if test(R, base, p, a0, f, spec_ber, raw_ber, 1) == True:
-                res.append((p, a0, f))
+            if test(R, base, p, a0, f, spec_ber, raw_ber, 2**9) == True:
+                res.append((p, a0, f-9))
     return res
 
 def autotune(q_rber, mini, spec_ber, binary):
@@ -103,9 +103,9 @@ def autotune(q_rber, mini, spec_ber, binary):
     return res, time_overhead
 
 def tune_result():
-    # data range (0, 4095) * pre_scale (1) --> 2**12, need at most 12 bits
-    res1, time1 = autotune(ours, 12, 1e-13, True)
-    res2, time2 = autotune(sba, 12, 1e-13, True)
+    # data range (0, 2) * pre_scale (2**9) --> 2**10, need at most 10 bits
+    res1, time1 = autotune(ours, 10, 1e-13, True)
+    res2, time2 = autotune(sba, 10, 1e-13, True)
     print("tune_ours = ", end='')
     pprint.pprint(res1)
     print("tune_sba = ", end='')
@@ -115,78 +115,8 @@ def tune_result():
     print("time_sba = ", end='')
     pprint.pprint(time2)
 
-# R: [p_bits, a_cells, f(neglect_bits)]
-tune_ours = {4: [(4, 0, 8),
-     (5, 0, 7),
-     (6, 0, 6),
-     (6, 1, 4),
-     (7, 0, 5),
-     (7, 1, 3),
-     (7, 2, 1),
-     (8, 0, 4),
-     (8, 1, 2),
-     (8, 2, 0),
-     (9, 0, 3),
-     (9, 1, 1),
-     (10, 0, 2),
-     (10, 1, 0),
-     (11, 0, 1),
-     (12, 0, 0)],
- 8: [(4, 0, 8),
-     (5, 0, 7),
-     (6, 0, 6),
-     (7, 0, 5),
-     (7, 1, 2),
-     (8, 0, 4),
-     (8, 1, 1),
-     (9, 0, 3),
-     (9, 1, 0),
-     (10, 0, 2),
-     (11, 0, 1),
-     (12, 0, 0)],
- 16: [(4, 0, 8),
-      (5, 0, 7),
-      (6, 0, 6),
-      (7, 0, 5),
-      (7, 1, 1),
-      (8, 0, 4),
-      (8, 1, 0),
-      (9, 0, 3),
-      (10, 0, 2),
-      (11, 0, 1),
-      (12, 0, 0)]}
-tune_sba = {4: [(4, 0, 8),
-     (5, 0, 7),
-     (6, 0, 6),
-     (7, 0, 5),
-     (8, 0, 4),
-     (9, 0, 3),
-     (9, 1, 1),
-     (10, 0, 2),
-     (10, 1, 0),
-     (11, 0, 1),
-     (12, 0, 0)],
- 8: [(4, 0, 8),
-     (5, 0, 7),
-     (6, 0, 6),
-     (7, 0, 5),
-     (8, 0, 4),
-     (8, 1, 1),
-     (9, 0, 3),
-     (9, 1, 0),
-     (10, 0, 2),
-     (11, 0, 1),
-     (12, 0, 0)],
- 16: [(4, 0, 8),
-      (5, 0, 7),
-      (6, 0, 6),
-      (7, 0, 5),
-      (8, 0, 4),
-      (8, 1, 0),
-      (9, 0, 3),
-      (10, 0, 2),
-      (11, 0, 1),
-      (12, 0, 0)]}
+# R: [p_bits, a_cells, f(scale)]
+
 
 def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_bit)
@@ -207,7 +137,7 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
         for item in tuning_result[R]:
             pbits, acells, f = item
             total_overhead = (ecc_overhead * pbits) / base + acells
-            total_config = [R, base, "Rfix", pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_overhead]
+            total_config = [R, base, "float/Rfix", pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_overhead]
             detail_config = [R, base, raw_ber, uber, tag, n, k, d, 2**alpha_base]
             if total_overhead < best_overhead:
                 best_overhead = total_overhead
@@ -227,6 +157,6 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
     print(R_runtime, flush=True)
 
 if __name__ == "__main__":
-    # tune_result()
-    ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
-    ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
+    tune_result()
+    # ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
+    # ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
