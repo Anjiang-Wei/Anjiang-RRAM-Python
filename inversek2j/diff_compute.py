@@ -5,8 +5,6 @@ def relative_diff(golden, mutated):
         err = golden[i] - mutated[i]
         if golden[i] == 0: # avoid division by 0
             continue
-        if mutated[i] == float("nan"):
-            err = golden[i]
         rel_err = abs(err / golden[i])
         all_error += rel_err
     all_error = all_error / len(golden)
