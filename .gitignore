@@ -135,3 +135,9 @@ retention.tsv.gz
 relaxdata.tsv.gz
 
 parsec-2.1/
+*input0
+*output0
+*pt0
+*parroto.data
+bodytrack/
+Rfloat/a.out
