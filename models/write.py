@@ -1,8 +1,22 @@
+from scipy import stats
 import sys
 sys.path.append("..")
 import collect_analyze
 from utils.TinyLevel import Tiny_Level
 import random
+
+def normal_test(x):
+    # x is a set of values
+    k2, p = stats.normaltest(x)
+    print(p)
+    alpha = 1e-3
+    if p < alpha:
+        return False
+    else:
+        return True
+
+
+
 class WriteModel(object):
     def __init__(self):
         pass
@@ -78,8 +92,12 @@ class WriteModel(object):
         new_vals = [i - old_center + new_center for i in vals]
         return WriteModel.simulate(new_vals, Write_N)
 
+    def stats_testing(Wctr, width, max_attempts):
+        level = Tiny_Level.filter_levels(lambda x: (x.width == width and x.center == Wctr) and x.max_attempts == max_attempts)
+        assert len(level) == 1
+        return normal_test(level[0].finals)
 
-if __name__ == "__main__":
+def Test_WriteModel():
     WriteModel.data_init()
     import numpy as np
     max_attempts = 100
@@ -102,3 +120,31 @@ if __name__ == "__main__":
         std_best_width = min(width_std, key=width_std.get)
         mean_best_width = min(width_mean, key=width_mean.get)
         print(Wctr, std_best_width, mean_best_width)
+
+def normal_testing():
+    WriteModel.data_init()
+    import numpy as np
+    max_attempts = 100
+    lowest_target = 7812.5
+    w_centers = list(range(7800, 10000, 200)) # 11
+    w_centers += list(range(10000, 20000, 1000)) # 10
+    w_centers += list(range(20000, 42000, 2000)) # 11
+    non_normal = 0
+    total = 0
+    for w_center in w_centers:
+        for width in range(50, 1000, 100):
+            if w_center-width/2 < lowest_target:
+                continue
+            if w_center < 14000 and width > 500:
+                continue
+            try:
+                res = WriteModel.stats_testing(w_center, width, max_attempts)
+                if res == False:
+                    non_normal += 1
+                total += 1
+            except Exception as e:
+                print(f'{e}')
+    print(non_normal, total, non_normal / total)
+
+if __name__ == "__main__":
+    normal_testing()
