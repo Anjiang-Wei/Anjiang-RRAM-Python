@@ -47,22 +47,20 @@ def run(fin, fout, R, base, p, a0, f, spec_ber, raw_ber, scale):
                     str(p), str(a0), str(f),
                     str(spec_ber), str(raw_ber),
                     str(scale)])
-def kmeans():
-    subprocess.run(["./bin_kmeans", "1_input0", "1_output0"])
-    subprocess.run(["./bin_kmeans", "2_input0", "2_output0"])
-    subprocess.run(["./bin_kmeans", "3_input0", "3_output0"])
-    diff1 = diff_compute.diff("1_output", "1_output0")
-    diff2 = diff_compute.diff("2_output", "2_output0")
-    diff3 = diff_compute.diff("3_output", "3_output0")
-    return (diff1 + diff2 + diff3) / 3
+def jpeg():
+    subprocess.run(["./bin_jpeg", "1_input0", "1_output0"])
+    subprocess.run(["./bin_jpeg", "2_input0", "2_output0"])
+    subprocess.run(["./bin_jpeg", "3_input0", "3_output0"])
+    res = diff_compute.diff(["1_output", "2_output", "3_output"], ["1_output0", "2_output0", "3_output0"])
+    return res
 
 def testonce(R, base, p, a0, f, spec_ber, raw_ber, scale):
     run("1_input", "1_input0", R, base, p, a0, f, spec_ber, raw_ber, scale)
     run("2_input", "2_input0", R, base, p, a0, f, spec_ber, raw_ber, scale)
     run("3_input", "3_input0", R, base, p, a0, f, spec_ber, raw_ber, scale)
-    res = kmeans()
-    print("diff = ", res, flush=True)
-    if res <= 0.1 * 255:
+    res = jpeg()
+    print(res, flush=True)
+    if res:
         return True
     else:
         return False
@@ -124,91 +122,6 @@ def tune_result():
 
 # R: [p_bits, a_cells, f(scale)]
 
-tune_ours = {4: [(0, 2, 4),
-     (0, 3, 2),
-     (0, 4, 0),
-     (1, 2, 3),
-     (1, 3, 1),
-     (2, 1, 4),
-     (2, 2, 2),
-     (2, 3, 0),
-     (3, 1, 3),
-     (3, 2, 1),
-     (4, 0, 4),
-     (4, 1, 2),
-     (4, 2, 0),
-     (5, 0, 3),
-     (5, 1, 1),
-     (6, 0, 2),
-     (6, 1, 0),
-     (7, 0, 1),
-     (8, 0, 0)],
- 8: [(0, 2, 2),
-     (1, 1, 4),
-     (1, 2, 1),
-     (2, 1, 3),
-     (2, 2, 0),
-     (3, 1, 2),
-     (4, 0, 4),
-     (4, 1, 1),
-     (5, 0, 3),
-     (5, 1, 0),
-     (6, 0, 2),
-     (7, 0, 1),
-     (8, 0, 0)],
- 16: [(0, 1, 4),
-      (0, 2, 0),
-      (1, 1, 3),
-      (2, 1, 2),
-      (3, 1, 1),
-      (4, 0, 4),
-      (4, 1, 0),
-      (5, 0, 3),
-      (6, 0, 2),
-      (7, 0, 1),
-      (8, 0, 0)]}
-
-tune_sba = {4: [(1, 2, 3),
-     (1, 3, 1),
-     (2, 1, 4),
-     (2, 2, 2),
-     (2, 3, 0),
-     (3, 1, 3),
-     (3, 2, 1),
-     (4, 0, 4),
-     (4, 1, 2),
-     (4, 2, 0),
-     (5, 0, 3),
-     (5, 1, 1),
-     (6, 0, 2),
-     (6, 1, 0),
-     (7, 0, 1),
-     (8, 0, 0)],
- 8: [(0, 2, 2),
-     (1, 1, 4),
-     (1, 2, 1),
-     (2, 1, 3),
-     (2, 2, 0),
-     (3, 1, 2),
-     (4, 0, 4),
-     (4, 1, 1),
-     (5, 0, 3),
-     (5, 1, 0),
-     (6, 0, 2),
-     (7, 0, 1),
-     (8, 0, 0)],
- 16: [(0, 1, 4),
-      (0, 2, 0),
-      (1, 1, 3),
-      (2, 1, 2),
-      (3, 1, 1),
-      (4, 0, 4),
-      (4, 1, 0),
-      (5, 0, 3),
-      (6, 0, 2),
-      (7, 0, 1),
-      (8, 0, 0)]}
-
 
 def best_ecc_config(spec_ber, raw_ber, maxk_bit, maxn_bit):
     return search.bestcode(search.allcode(), spec_ber, raw_ber, maxk_bit, maxn_bit)
@@ -229,7 +142,7 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
         for item in tuning_result[R]:
             pbits, acells, f = item
             total_overhead = (ecc_overhead * pbits) / base + acells
-            total_config = [R, base, "float/Rfix", pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_overhead]
+            total_config = [R, base, "uint8/Rfix", pbits, acells, f, raw_ber, tag, n, k, ecc_overhead, total_overhead]
             detail_config = [R, base, raw_ber, uber, tag, n, k, d, 2**alpha_base]
             if total_overhead < best_overhead:
                 best_overhead = total_overhead
@@ -249,6 +162,6 @@ def ecc_search(tuning_result, ber_dict, spec_ber, maxk_bit, maxn_bit):
     print(R_runtime, flush=True)
 
 if __name__ == "__main__":
-    # tune_result()
-    ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
-    ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
+    tune_result()
+    # ecc_search(tune_ours, ours, 1e-13, 1e10, 1e10)
+    # ecc_search(tune_sba, sba, 1e-13, 1e10, 1e10)
