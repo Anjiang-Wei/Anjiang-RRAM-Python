@@ -25,7 +25,7 @@ def judge(text):
             _, num = line.split("=")
             num = float(num)
             # print(num)
-            if num <= 0.1 * 255:
+            if num <= 0.1:
                 return True
             else:
                 return False
