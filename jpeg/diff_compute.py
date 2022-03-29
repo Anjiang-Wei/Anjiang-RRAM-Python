@@ -6,7 +6,7 @@ def diffonce(f1, f2):
     # Reason for not using RMSE: it has too much randomness
     # https://openimageio.readthedocs.io/en/stable/idiff.html
     # image diff 10%
-    ret = subprocess.run(["idiff", "-fail", "0.01", "-failpercent", "10", f1, f2],
+    ret = subprocess.run(["idiff", "-hardfail", "0.1", f1, f2],
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if ret.returncode == 0:
         return True
