@@ -1,14 +1,44 @@
 import subprocess
 
+
+'''
+Comparing "2_output" and "2_output0"
+  Mean error = 4.4059e+08
+  RMS error = 1.59511e+11
+  Peak SNR = 77.0505
+  Max error  = 5.77491e+13 @ (4, 256, Y)
+  2 pixels (0.000763%) over 1e-06
+  2 pixels (0.000763%) over 1e-06
+FAILURE
+-------------
+Comparing "2_output" and "2_output0"
+PASS
+'''
+
+def judge(text):
+    if "PASS" in text:
+        return True
+    assert "RMS error" in text
+    lines = text.split('\n')
+    for line in lines:
+        if "RMS error = " in line:
+            _, num = line.split("=")
+            num = float(num)
+            # print(num)
+            if num <= 0.1 * 255:
+                return True
+            else:
+                return False
+
 def diffonce(f1, f2):
     # Reason for not using compare: it does not work on the generated jpeg file
     # So we have to swtich to idiff
-    # Reason for not using RMSE: it has too much randomness
     # https://openimageio.readthedocs.io/en/stable/idiff.html
     # image diff 10%
-    ret = subprocess.run(["idiff", "-hardfail", "0.1", f1, f2],
-                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    if ret.returncode == 0:
+    ret = subprocess.run(["idiff", f1, f2],
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out = ret.stdout.decode()
+    if judge(out):
         return True
     else:
         return False
