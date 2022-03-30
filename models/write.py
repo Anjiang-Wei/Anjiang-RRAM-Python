@@ -47,9 +47,9 @@ class WriteModel(object):
 
     def get_adjacent_values(val, value_list):
         sorted_list = sorted(value_list)
-        if val < sorted_list[0]:
+        if val <= sorted_list[0]:
             return sorted_list[0], sorted_list[0]
-        if val > sorted_list[-1]:
+        if val >= sorted_list[-1]:
             return sorted_list[-1], sorted_list[-1]
         idx = 0
         for i in range(0, len(sorted_list) - 1):
