@@ -66,6 +66,22 @@ class Level(object):
         return levels
 
     @staticmethod
+    def merge_adjacent(levels):
+        '''
+        This merges the adjacent levels
+        '''
+        assert len(levels) % 2 == 0
+        result_levels = []
+        for i in range(0, len(levels), 2):
+            new_r1, new_r2 = levels[i].r1, levels[i+1].r2
+            new_w1 = (levels[i].w1 + levels[i+1].w1) / 2
+            new_w2 = (levels[i].w2 + levels[i+1].w2) / 2
+            new_level = Level(new_r1, new_r2, new_w1, new_w2)
+            result_levels.append(new_level)
+        assert(len(result_levels) == len(levels) / 2)
+        return result_levels
+
+    @staticmethod
     def overlap(A, B) -> bool:
         if B.r2 >= A.r1 and A.r2 >= B.r1:
             return True

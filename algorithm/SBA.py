@@ -1,3 +1,4 @@
+import time
 import tqdm
 import sys
 sys.path.append("..")
@@ -99,7 +100,30 @@ def generate_schemes():
     #         levels = Level.refine_read_ranges(levels)
     #         Level.export_to_file(levels, fout="../scheme/SBA/" + file_tag)
     #         sigma_start += sigma_delta
+def perf_test():
+    perf = {}
+    starts = [1.6, 1.2, 0.9]
+    ends = [1.8, 1.3, 1.0]
+    target_levels = [4, 8, 16]
+    for kkk in range(len(starts)):
+        pre_time = time.time()
+        target = target_levels[kkk]
+        sigma_delta = 0.01
+        sigma_start = starts[kkk] + sigma_delta
+        sigma_end = ends[kkk]
+        while sigma_start < sigma_end:
+            levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestmp, sigma_start, False)
+            if len(levels) == target:
+                print(f"Solved for {target}")
+                post_time = time.time()
+                perf[target] = post_time - pre_time
+                break
+            sigma_start += sigma_delta
+        print(perf)
+    print(perf)
+
 
 if __name__ == "__main__":
     init()
-    generate_schemes()
+    # generate_schemes()
+    perf_test()

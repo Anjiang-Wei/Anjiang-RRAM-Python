@@ -1,3 +1,4 @@
+import time
 import tqdm
 import sys
 sys.path.append("..")
@@ -47,12 +48,12 @@ def init():
     WriteModel.data_init()
     RelaxModel.data_init()
 
-def minimal_BER(specified_levels, eps, timestamp):
-    low_BER, high_BER = 0, 1
+def minimal_BER(specified_levels, eps, timestamp, low_BER = 0, high_BER = 1):
     first = True
     while high_BER - low_BER > eps:
         cur_BER = (low_BER + high_BER) / 2
         cur_levels = level_inference(Rmin, Rmax, Nctr, max_attempts, timestamp, cur_BER)
+        print(len(cur_levels), cur_BER)
         if first:
             best_level, best_BER = cur_levels, cur_BER # make sure that there is a solution
             first = False
@@ -80,5 +81,25 @@ def refine_levels():
     new_levels = Level.refine_read_ranges(levels)
     Level.export_to_file(new_levels, fout=filename)
 
+def evaluate_perf():
+    init()
+    perf = {}
+    for num_level in [4, 8, 16]:
+        pre_time = time.time()
+        if num_level == 4:
+            levels, ber = minimal_BER(num_level * 2, 0.001, timestmp, 0, 0.0625)
+            levels = Level.merge_adjacent(levels)
+            ber = ber / 2
+        elif num_level == 16:
+            levels, ber = minimal_BER(num_level, 0.005, timestmp, 0.125, 0.25)
+        else:
+            levels, ber = minimal_BER(num_level, 0.001, timestmp, 0, 0.0625)
+        print("success", len(levels), ber)
+        post_time = time.time()
+        perf[num_level] = post_time - pre_time
+    print(perf)
+
+
 if __name__ == "__main__":
-    refine_levels()
+    # refine_levels()
+    evaluate_perf()
