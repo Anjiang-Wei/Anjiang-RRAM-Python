@@ -28,7 +28,7 @@ test_scheme_files = [
     # 'scheme/SBA/C13_both_16.json',
 ]
 random_seed = 29 + exp_id
-levels = Level.load_from_file(test_scheme_files[exp_id-4])
+levels = Level.load_from_file(test_scheme_files[exp_id-6])
 high_init_config = {
     "B": [levels[-1].r1, levels[-1].r2]
 }
