@@ -6,18 +6,20 @@ import dead_detection
 
 chipname = "C13"
 config_char = "B"
-exp_id = 4
+exp_id = 6
 start_addr = 0
 end_addr = 65536
 dead_cells = []
 test_scheme_files = [
-    'scheme/SBA/C13_both_4.json',
-    'scheme/SBA/C13_both_5.json',
-    'scheme/SBA/C13_both_6.json',
-    'scheme/SBA/C13_both_7.json',
-    'scheme/SBA/C13_both_8.json',
-    'scheme/SBA/C13_both_9.json',
-    'scheme/SBA/C13_both_10.json',
+    'scheme/C13_6.json',
+    'scheme/C13_7.json',
+    # 'scheme/SBA/C13_both_4.json',
+    # 'scheme/SBA/C13_both_5.json',
+    # 'scheme/SBA/C13_both_6.json',
+    # 'scheme/SBA/C13_both_7.json',
+    # 'scheme/SBA/C13_both_8.json',
+    # 'scheme/SBA/C13_both_9.json',
+    # 'scheme/SBA/C13_both_10.json',
     # 'scheme/SBA/C13_both_11.json',
     # 'scheme/SBA/C13_both_12.json',
     # 'scheme/SBA/C13_both_13.json',
@@ -104,7 +106,7 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     n_cells = 100
-    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_July14", "w")
+    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_July15", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
