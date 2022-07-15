@@ -18,14 +18,14 @@ test_scheme_files = [
     'scheme/SBA/C13_both_8.json',
     'scheme/SBA/C13_both_9.json',
     'scheme/SBA/C13_both_10.json',
-    'scheme/SBA/C13_both_11.json',
-    'scheme/SBA/C13_both_12.json',
-    'scheme/SBA/C13_both_13.json',
-    'scheme/SBA/C13_both_14.json',
-    'scheme/SBA/C13_both_15.json',
-    'scheme/SBA/C13_both_16.json',
+    # 'scheme/SBA/C13_both_11.json',
+    # 'scheme/SBA/C13_both_12.json',
+    # 'scheme/SBA/C13_both_13.json',
+    # 'scheme/SBA/C13_both_14.json',
+    # 'scheme/SBA/C13_both_15.json',
+    # 'scheme/SBA/C13_both_16.json',
 ]
-random_seed = 16 + exp_id
+random_seed = 33 + exp_id
 levels = Level.load_from_file(test_scheme_files[exp_id-4])
 high_init_config = {
     "B": [levels[-1].r1, levels[-1].r2]
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     n_cells = 100
-    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_Dec10", "w")
+    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_July14", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
