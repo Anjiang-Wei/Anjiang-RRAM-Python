@@ -2,7 +2,7 @@ from nirram import NIRRAM
 import test_scheme
 import time
 
-chip_name = "C13"
+chip_name = "C9"
 
 def detect(cells, fout, nisys, low=10*1e3, high=11*1e3, already_dead=[]):
     for addr in cells:
@@ -25,7 +25,7 @@ def detect_after_test(ncells, fout, nisys):
 
 if __name__ == "__main__":
     start = time.time()
-    fout = open("log/13dead_test.csv", "w")
+    fout = open("log/9dead_test.csv", "w")
     nisys = NIRRAM(chip_name)
     cells = [i for i in range(0, 65536)]
     detect(cells, fout, nisys)

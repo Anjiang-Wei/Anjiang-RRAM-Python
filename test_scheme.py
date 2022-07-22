@@ -4,7 +4,7 @@ import random
 from scheme.level import Level
 import dead_detection
 
-chipname = "C13"
+chipname = "C9"
 config_char = "B"
 exp_id = 6
 start_addr = 0
@@ -27,7 +27,7 @@ test_scheme_files = [
     # 'scheme/SBA/C13_both_15.json',
     # 'scheme/SBA/C13_both_16.json',
 ]
-random_seed = 29 + exp_id
+random_seed = 0 + exp_id
 levels = Level.load_from_file(test_scheme_files[exp_id-6])
 high_init_config = {
     "B": [levels[-1].r1, levels[-1].r2]
@@ -61,13 +61,13 @@ def dead_init():
     Output -> dead_cells (a global variable)
     '''
     global dead_cells
-    with open("log/13dead_test.csv", "r") as fin:
+    with open("log/9dead_test.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
                 dead_addr = int(line.split(",")[0])
                 dead_cells.append(dead_addr)
-    with open("log/13new_dead.csv", "r") as fin:
+    with open("log/9new_dead.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
@@ -86,7 +86,7 @@ def random_pick(ncells):
     return res
 
 def testscheme(ncells):
-    dead_log = open("log/13new_dead.csv", "a")
+    dead_log = open("log/9new_dead.csv", "a")
     cells = random_pick(ncells)
     for level in levels:
         for addr in cells:
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     n_cells = 100
-    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_July15", "w")
+    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_July22", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
