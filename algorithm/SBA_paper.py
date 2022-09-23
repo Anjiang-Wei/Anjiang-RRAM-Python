@@ -1,3 +1,5 @@
+# to correctly setup SBA:
+# 1) deltaI=0.01; 2) given m and the sigma-R graph, compute the R(n) [get_R_range]
 def get_R_range(m, num_level):
     if m == 1.088 and num_level == 8:
         return [0, 532, 782, 1215, 2034, 3793, 13192, 0]
