@@ -6,7 +6,7 @@ import scipy.integrate
 import units
 
 #
-class RRAMMacroModel(mem.CellMacroModel):
+class RRAMMacroModel:
 
     def __init__(self):
         # estimate IV curves
