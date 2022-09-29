@@ -9,7 +9,7 @@ import units
 #
 class RRAMMacroModel:
 
-    def __init__(self,variation=False):
+    def __init__(self,compliance_current,variation=False):
         # estimate IV curves
         self.parameters = RRAMMacroModel.nominal_params()
         if variation:
@@ -17,6 +17,7 @@ class RRAMMacroModel:
 
         self.T = self.parameters["T0"]
         self.g = self.parameters["g0"]
+        self.CC = compliance_current
 
     def cite(self):
         return ["Compact Modeling of RRAM Devices and Its Applications in 1T1R and 1S1R Array Design",
@@ -59,7 +60,7 @@ class RRAMMacroModel:
 
 
     @staticmethod
-    def ddt_model(parameters,time,_g,T,V,rvs):
+    def ddt_model(parameters,CC,time,_g,T,V,rvs):
 
         # g = gap distance, proportional resistance
         # dg_dt = gap growth speed
@@ -89,55 +90,59 @@ class RRAMMacroModel:
         gmax = parameters["g_max"]
 
         tau_th = parameters["tau_th"]
+        #g = min(max(0,_g),L)
         g = min(max(gmin,_g),gmax)
         #physics constants
         k = 1.3806488e-23*units.J/units.K
+        # Volt = J/coulombs
+        # eV = 1.6e-19 Joules
         q = 1.602e-19*units.J/units.eV
+
+        #electrons in a coulomb
+        elecs = 6.24e18
+
         #expressions
         gamma = gamma0 - beta*(g/g1)**3.0
 
         q_kT = q/(k*T)
-        gamma_aL = gamma*a0/L*V
+        one_kT = 1.0/(k*T)
+        gamma_aLV = gamma*a0/L*float(V)
 
-        I,R = RRAMMacroModel.cell_state(parameters,V,g)
+        I,R = RRAMMacroModel.cell_state(parameters,CC,V,g)
         # functions
 
         #dist = math.exp(gamma_aL*q_kT*V)
         #term1 = math.exp(-q_kT*Eag)
         #term2= math.exp(-q_kT*Ear)
-        log_term1 = (gamma_aL - Eag)*q_kT
-        log_term2 = (-gamma_aL - Ear)*q_kT
+        log_term1 = (gamma_aLV*one_kT - Eag*one_kT)*q
+        log_term2 = (-gamma_aLV*one_kT - Ear*one_kT)*q
 
-        stoch_dg_dt = rvs[0](time)*(gmax-gmin)*0.0001
+        stoch_dg_dt = rvs[0](time)*(gmax-gmin)*0.001
         dg_dt = -v0*(math.exp(log_term1) - math.exp(log_term2))
         dg_dt += stoch_dg_dt
-        if(math.isnan(dg_dt)):
-            print("log_term1: %f , exp(term) = %f" % (log_term1,math.exp(log_term1)))
-            print("log_term2: %f , exp(term) = %f " % (log_term2, math.exp(log_term2)))
-            subexpr = (math.exp(log_term1) - math.exp(log_term2))
-            print("subexpr: %f" % subexpr)
-            print("v0: %f" % v0)
-            print("stoch: %f" % stoch_dg_dt)
-            raise Exception("nan found")
+        assert(not math.isnan(dg_dt))
 
 
-        stoch_dT_dt = rvs[1](time)*(1)*0.01
+        stoch_dT_dt = rvs[1](time)*(1/tau_th)*0.0001
         dT_dt = abs(V * I)/Cth - (float(T)-float(T0))/tau_th
         dT_dt += stoch_dT_dt
 
+        #print(" g = %e, dgdt = %e, dTdt = %f, T=%f" % (g,dg_dt, dT_dt, T))
+        #print("   barriers: %e , %e" % (Eag*one_kT*q, Ear*one_kT*q))
+        #print("   energy: %e" % (gamma_aLV*one_kT*q))
         assert(not math.isnan(dT_dt))
         # everything is per seconds
         return dg_dt, dT_dt
 
 
     @staticmethod
-    def cell_state(parameters, V, g):
+    def cell_state(parameters, CC, V, g):
         I0 = parameters["I0"]
         g0 = parameters["g0"]
         V0 = parameters["V0"]
         t1 = math.exp(-g/g0)
         t2 = math.sinh(abs(V)/V0)
-        I = I0*t1*t2
+        I = min(I0*t1*t2, CC)
         if I == 0.0:
             return 0.0,math.inf
         R = V/I
@@ -148,11 +153,11 @@ class RRAMMacroModel:
 
     @property
     def R(self):
-        I,R = RRAMMacroModel.cell_state(self.parameters, 0.3,self.g)
+        I,R = RRAMMacroModel.cell_state(self.parameters, self.CC, 0.1,self.g)
         return R
 
     def I(self,V):
-        I,R = RRAMMacroModel.cell_state(self.parameters, V, self.g)
+        I,R = RRAMMacroModel.cell_state(self.parameters, self.CC, V, self.g)
         return I
 
     def generate_noise(self,nsigs,times,npts):
@@ -171,7 +176,7 @@ class RRAMMacroModel:
 
         def model_ddt(x,t,voltfn,rvs):
             g,T = x
-            dg,dT = RRAMMacroModel.ddt_model(self.parameters,t,g,T,voltfn(t),rvs)
+            dg,dT = RRAMMacroModel.ddt_model(self.parameters,self.CC,t,g,T,voltfn(t),rvs)
             return [dg,dT]
 
         voltfn = scipy.interpolate.interp1d(times,voltages,fill_value=0.0, bounds_error=False)
@@ -189,15 +194,17 @@ class RRAMMacroModel:
 class RRAMMemoryArray:
 
 
-        def __init__(self, n, m, variation=False):
+        def __init__(self, n, m, compliance_current=10*units.uA, variation=False, simulate_entire_array=False):
             self.n = n
             self.m = m
             self.cells = {}
-
+            self.compliance_current = compliance_current
+            self.simulate_entire_array = simulate_entire_array
 
             for i in range(self.n):
                 for j in range(self.m):
-                    self.cells[(i, j)] = RRAMMacroModel(variation=variation)
+                    self.cells[(i, j)] = RRAMMacroModel(compliance_current=self.compliance_current,
+                                                        variation=variation)
 
         def wait_cell(self,i,j,time):
             times = np.linspace(0,time,1000)
@@ -212,16 +219,23 @@ class RRAMMemoryArray:
                 for j in range(self.m):
                     self.cells[(i,j)].simulate(times,voltages)
 
-        def pulse(self,i,j,length,amplitude,duty_cycle,simulate_entire_array=False):
+        def pulse(self,i,j,length,amplitude,duty_cycle=None,padding=None):
             cell = self.cells[(i,j)]
-            total = length/duty_cycle
-            delay = (total-length)/2
+            if duty_cycle != None:
+                total = length/duty_cycle
+                delay = (total-length)/2
+            elif padding != None:
+                total = length + padding
+                delay = padding/2
+            else:
+                raise Exception("must specify duty cycle or padding")
+
             times = np.linspace(0,total,1000)
             voltages = list(map(lambda t: amplitude if t >= delay and t <= delay+length else 0.0, times))
             cell.simulate(times,voltages)
 
 
-            if simulate_entire_array:
+            if self.simulate_entire_array:
                 zero_voltages = [0.0]*len(times)
                 for i2 in range(self.n):
                     for j2 in range(self.m):
@@ -242,11 +256,19 @@ class RRAMMemoryArray:
 class RRAMWriteAlgorithm:
 
     READ_VOLTAGE = 0.1*units.V
-    WRITE_POS_VOLTAGE = 1.2*units.V
-    WRITE_NEG_VOLTAGE = -1.0*units.V
+    WRITE_POS_VOLTAGE = 1.6*units.V
+    #WRITE_NEG_VOLTAGE = -0.4*units.V
+    WRITE_NEG_VOLTAGE = -1.6*units.V
+
+    WRITE_POS_VOLTAGE_FINE = 1.3 * units.V
+    # WRITE_NEG_VOLTAGE = -0.4*units.V
+    WRITE_NEG_VOLTAGE_FINE = -1.3 * units.V
+
+
     WRITE_DUTY_CYCLE=0.7
     WRITE_POS_PULSE_WIDTH = 10*units.ns
     WRITE_NEG_PULSE_WIDTH = 10*units.ns
+    WRITE_PADDING = 1*units.ns
 
     def __init__(self,memory_array):
         self.memory = memory_array
@@ -255,7 +277,7 @@ class RRAMWriteAlgorithm:
     def read(self,i,j):
         I = self.memory.read(i,j,
                                 RRAMWriteAlgorithm.READ_VOLTAGE)
-        return RRAMWriteAlgorithm.READ_VOLTAGE/I;
+        return RRAMWriteAlgorithm.READ_VOLTAGE/I
 
     def write(self,i,j,r,tol,max_cycles):
         resist = self.read(i,j)
@@ -267,14 +289,29 @@ class RRAMWriteAlgorithm:
             print("success: resistance %f, target = %f +- %f" % (resist, r,tol))
             return True
 
-        elif resist < r-tol:
-            self.memory.pulse(i,j,amplitude=RRAMWriteAlgorithm.WRITE_NEG_VOLTAGE,
+        print("debug: resistance %f, target = %f +- %f" % (resist, r, tol))
+        thresh = 2000*units.Ohms
+        multiplier = 3.0
+        volt_multiplier = 1.1
+        if resist < r - tol:
+            print("increase resistance!")
+            ampl = RRAMWriteAlgorithm.WRITE_NEG_VOLTAGE if abs(resist-(r-tol)) > thresh else \
+                RRAMWriteAlgorithm.WRITE_NEG_VOLTAGE_FINE
+
+            self.memory.pulse(i, j, amplitude=ampl,
                               length=RRAMWriteAlgorithm.WRITE_NEG_PULSE_WIDTH,
                               duty_cycle=RRAMWriteAlgorithm.WRITE_DUTY_CYCLE)
-        else:
-            self.memory.pulse(i,j,amplitude=RRAMWriteAlgorithm.WRITE_POS_VOLTAGE,
+
+        elif resist > r + tol:
+            ampl = RRAMWriteAlgorithm.WRITE_POS_VOLTAGE if abs(resist - (r + tol)) > thresh else \
+                RRAMWriteAlgorithm.WRITE_POS_VOLTAGE_FINE
+
+            print("decrease resistance!")
+            self.memory.pulse(i, j, amplitude=ampl,
                               length=RRAMWriteAlgorithm.WRITE_POS_PULSE_WIDTH,
                               duty_cycle=RRAMWriteAlgorithm.WRITE_DUTY_CYCLE)
+        else:
+            raise NotImplementedError
 
         self.write(i,j,r=r,tol=tol,max_cycles=max_cycles-1)
 
@@ -284,8 +321,23 @@ def generate_ivcurve():
     wralgo = RRAMWriteAlgorithm(mem)
     #TODO
     i,j = 0,0
-    r1 = 300*units.kOhms
-    wralgo.write(i,j,300*units.kOhms, 1000, 25)
+    vs = []
+    Is = []
+    wralgo.write(i,j,300*units.kOhms, 10000,25)
+
+    for V in np.linspace(-2,2,100):
+        I = mem.read(i,j,V)
+        vs.append(V)
+        Is.append(I)
+
+    plt.clf()
+    plt.scatter(vs,Is)
+    plt.savefig("IV.png")
+
+
+    return
+    #r1 = 300*units.kOhms
+    #wralgo.write(i,j,300*units.kOhms, 1000, 25)
 
 
     #TODO
@@ -296,7 +348,6 @@ def generate_resistance_distribution(r,tol):
     trials = 50
     i,j = 0,0
     niters = 50
-    nbins = int(np.sqrt(niters))
     time_keys = ["0ms","10ms","100ms","1s","10s","300s"]
     rs = dict(map(lambda t: (str(t),[]), time_keys))
     for t in range(niters):
@@ -308,27 +359,32 @@ def generate_resistance_distribution(r,tol):
         read_r = wralgo.read(i,j)
         rs["0ms"].append(read_r)
 
+        print("wait 10ms")
         wralgo.memory.wait_cell(i,j,10*units.ms)
         read_r = wralgo.read(i,j)
         rs["10ms"].append(read_r)
         total_wait += 10*units.ms
 
+        print("wait 100ms")
         wralgo.memory.wait_cell(i,j,100*units.ms - total_wait)
         read_r = wralgo.read(i,j)
         rs["100ms"].append(read_r)
         total_wait += 100*units.ms
 
+        print("wait 1s")
         wralgo.memory.wait_cell(i,j,1*units.s - total_wait)
         read_r = wralgo.read(i,j)
         rs["1s"].append(read_r)
         total_wait += 1*units.s
 
 
+        print("wait 10s")
         wralgo.memory.wait_cell(i,j,10*units.s - total_wait)
         read_r = wralgo.read(i,j)
         rs["10s"].append(read_r)
         total_wait += 10*units.s
 
+        print("wait 300s")
         wralgo.memory.wait_cell(i,j,300*units.s - total_wait)
         read_r = wralgo.read(i,j)
         rs["300s"].append(read_r)
@@ -364,5 +420,5 @@ def test_write():
 
 #test_write()
 #generate_ivcurve()
-
-generate_resistance_distribution(10000, 1000)
+generate_ivcurve()
+generate_resistance_distribution(100000, 10000)
