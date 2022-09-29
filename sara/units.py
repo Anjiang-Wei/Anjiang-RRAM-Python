@@ -1,6 +1,6 @@
 kOhms = 1000
 
-mV = 1e-3
+ms = mV = 1e-3
 
 Ohms = V = J = s = m = eV = K = 1
 uA = us = um = uV = 1e-6
