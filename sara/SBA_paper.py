@@ -1,3 +1,5 @@
+import rram
+import numpy as np
 # to correctly setup SBA:
 # 1) deltaI=0.01; 2) given m and the sigma-R graph, compute the R(n) [get_R_range]
 # Rmax(n) - Rmin(n) = R_range(n) = (1/2) * m * sigma
@@ -6,12 +8,15 @@ def sigma_R(R):
     '''
     given a R value, return its corresponding sigma (based on the curve / figure)
     '''
+    return np.std(rram.R_distr(R,500))
+    '''
     if 3000 < R < 6000:
         return 1000
     if 6000 <= R < 25000:
         return 5000
     if R >= 25000:
         return 10000
+    '''
 
 def get_R_range(m, R):
    return m * sigma_R(R)

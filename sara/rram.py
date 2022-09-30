@@ -470,7 +470,26 @@ def test_write():
     wralgo.write(i,j,1000,100,25)
     print("resistance value: %d ohms" % wralgo.memory.resistance(i,j))
 
+def R_distr(r,tol=100,relax_time=1,trials=100, write_max_cycle=50):
+    wralgo = RRAMWriteAlgorithm(RRAMMemoryArray(10,10,variation=True))
+    i,j = 0,0
+    niters = trials
+    time_keys = ["1s"]
+    rs = dict(map(lambda t: (str(t),[]), time_keys))
+    for t in range(niters):
+        # print("trial %d started "% t)
+        total_wait = 0.0
+        if not wralgo.write(i,j,r=r,tol=tol,max_cycles=write_max_cycle):
+            continue
+        wralgo.memory.wait_cell(i,j,1*units.s - total_wait)
+        read_r = wralgo.read(i,j)
+        rs["1s"].append(read_r)
+        total_wait += 1*units.s
+    return rs["1s"]
+
 #test_write()
 #generate_ivcurve()
 #generate_ivcurve()
-generate_resistance_distribution(100000, 10000)
+# generate_resistance_distribution(100000, 10000)
+if __name__ == "__main__":
+    print(R_distr(10000,500))
