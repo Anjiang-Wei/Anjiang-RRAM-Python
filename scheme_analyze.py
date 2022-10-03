@@ -1,17 +1,12 @@
 import pprint
 import numpy as np
+'''
+ls testlog/* | grep July15 | sed "s?testlog?'testlog?g" | sed "s?July15?July15',?g"
+'''
 logfiles = [
-    'testlog/13scheme_test_100_9_6_Dec6',
-    'testlog/13scheme_test_100_10_7_Dec6',
-    'testlog/13scheme_test_100_11_8_Dec6',
-    'testlog/13scheme_test_100_12_9_Dec6',
-    'testlog/13scheme_test_100_13_10_Dec6',
-    'testlog/13scheme_test_100_14_11_Dec6',
-    'testlog/13scheme_test_100_15_12_Dec6',
-    'testlog/13scheme_test_100_16_13_Dec6',
-    'testlog/13scheme_test_100_17_14_Dec6',
-    'testlog/13scheme_test_100_18_15_Dec6',
-    'testlog/13scheme_test_100_19_16_Dec6'
+    # 'testlog/13scheme_test_100_35_6_July15',
+    # 'testlog/13scheme_test_100_36_7_July15',
+    'testlog/13scheme_test_100_37_6_Aug17',
 ]
 logfiles2 = [
     'testlog/13scheme_test_100_20_4_Dec10',
@@ -101,7 +96,8 @@ class Result(object):
             categorized[i] = []
         # print(f"{len(results)} / ({num_cat} * {level_num})")
         tested_cells = len(results) / (num_cat * level_num)
-        assert num_cells - tested_cells <= 1, f"{num_cells}, {tested_cells}"
+        print("num_cells=", num_cells, ", tested_cells=", tested_cells)
+        # assert num_cells - tested_cells <= 1, f"{num_cells}, {tested_cells}"
         for i in range(0, len(results)):
             categorized[i%num_cat].append(results[i])
         if only_report is not None:
@@ -202,7 +198,7 @@ def gen_matrix(read_list, isOur, all_level):
 if __name__ == "__main__":
     dead_cell_init()
     map_report = {}
-    our = False
+    our = True
     if our:
         for i in range(len(logfiles)):
             clear()
@@ -222,4 +218,4 @@ if __name__ == "__main__":
             res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
             map_report[i+4] = res
             gen_matrix(Result.read, our, i+4)
-    # pprint.pprint(map_report)
+    pprint.pprint(map_report)
