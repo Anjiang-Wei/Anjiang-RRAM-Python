@@ -4,7 +4,7 @@ import random
 from scheme.level import Level
 import dead_detection
 
-chipname = "C13"
+chipname = "C14"
 config_char = "B"
 exp_id = 6
 start_addr = 0
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     n_cells = 100
-    log = open(f"testlog/13scheme_test_{n_cells}_{random_seed}_{exp_id}_Aug17", "w")
+    log = open(f"testlog/14scheme_test_{n_cells}_{random_seed}_{exp_id}_Oct3", "w")
     testscheme(n_cells)
     nisys.close()
     log.close()
