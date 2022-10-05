@@ -3,7 +3,7 @@ from nirram import NIRRAM
 import random
 import dead_detection
 
-chipname = "C13"
+chipname = "C14"
 config_char = "B"
 start_addr = 0
 end_addr = 65536
