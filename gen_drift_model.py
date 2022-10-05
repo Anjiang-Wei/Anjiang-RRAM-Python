@@ -1,4 +1,4 @@
-logfile = "testlog/13collect_data_100_1_0"
+logfile = "testlog/14collect_data_100_1_0"
 
 # R[timept][R_0] -> R_t
 R = {}

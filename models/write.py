@@ -24,7 +24,7 @@ class WriteModel(object):
     def data_init():
         collect_analyze.dead_cell_init("../log/")
         print(f"Write data init from {collect_analyze.logfile}")
-        fname = "../testlog/13collect_data_" + collect_analyze.logfile
+        fname = "../testlog/14collect_data_" + collect_analyze.logfile
         collect_analyze.data_init(fname)
         print("Write data init finished")
     

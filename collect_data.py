@@ -49,13 +49,13 @@ def dead_init():
     Output -> dead_cells (a global variable)
     '''
     global dead_cells
-    with open("log/13dead_test.csv", "r") as fin:
+    with open("log/14dead_test.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
                 dead_addr = int(line.split(",")[0])
                 dead_cells.append(dead_addr)
-    with open("log/13new_dead.csv", "r") as fin:
+    with open("log/14new_dead.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
@@ -106,7 +106,7 @@ def collect(ncells):
                     time.sleep(t)
                     read(addr, -1, -1)
         print("Start dead cell detection")
-        dead_log = open("log/13new_dead.csv", "a")
+        dead_log = open("log/14new_dead.csv", "a")
         dead_detection.detect(cells, dead_log, nisys, already_dead=dead_cells)
         dead_log.close()
         dead_init()
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     n_cells = 100
-    log = open(f"testlog/13collect_data_{n_cells}_{random_seed}_{exp_id}", "w")
+    log = open(f"testlog/14collect_data_{n_cells}_{random_seed}_{exp_id}", "w")
     collect(n_cells)
     nisys.close()
     log.close()

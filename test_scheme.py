@@ -61,13 +61,13 @@ def dead_init():
     Output -> dead_cells (a global variable)
     '''
     global dead_cells
-    with open("log/13dead_test.csv", "r") as fin:
+    with open("log/14dead_test.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
                 dead_addr = int(line.split(",")[0])
                 dead_cells.append(dead_addr)
-    with open("log/13new_dead.csv", "r") as fin:
+    with open("log/14new_dead.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
@@ -86,7 +86,7 @@ def random_pick(ncells):
     return res
 
 def testscheme(ncells):
-    dead_log = open("log/13new_dead.csv", "a")
+    dead_log = open("log/14new_dead.csv", "a")
     cells = random_pick(ncells)
     for level in levels:
         for addr in cells:

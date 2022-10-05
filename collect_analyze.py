@@ -77,7 +77,7 @@ def dead_cell_init(logdir=""):
 
 def data_init(fname=""):
     if fname == "":
-        fname = "testlog/13collect_data_" + logfile
+        fname = "testlog/14collect_data_" + logfile
     with open(fname, "r") as fin:
         lines = fin.readlines()
         for i in range(0, len(lines)):
