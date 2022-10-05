@@ -2,7 +2,7 @@ from nirram import NIRRAM
 import test_scheme
 import time
 
-chip_name = "C13"
+chip_name = "C14"
 
 def detect(cells, fout, nisys, low=10*1e3, high=11*1e3, already_dead=[]):
     for addr in cells:
