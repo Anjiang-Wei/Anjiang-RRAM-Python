@@ -17,11 +17,6 @@ def detect(cells, fout, nisys, low=10*1e3, high=11*1e3, already_dead=[]):
             print(f"{addr},{low},{high},{target[0]},False\n")
             fout.write(f"{addr},{low},{high},{target[0]},False\n")
 
-def detect_after_test(ncells, fout, nisys):
-    test_scheme.dead_init()
-    cells = test_scheme.random_pick(ncells)
-    detect(cells, fout, nisys)
-    print(cells)
 
 if __name__ == "__main__":
     start = time.time()
