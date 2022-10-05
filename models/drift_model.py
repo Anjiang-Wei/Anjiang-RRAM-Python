@@ -40,7 +40,7 @@ def interpolate(r0, key_list, dict_val, N):
     '''
     left_val, right_val = get_adjacent_values(r0, key_list)
     if left_val == right_val:
-        return simulate(dict_val[left_val], N)
+        return list(map(lambda x: x + r0, simulate(dict_val[left_val], N)))
     w1, w2 = get_adjacent_weight(left_val, right_val, r0)
     mixed_diff = simulate_mix(dict_val[left_val], dict_val[right_val], w1, w2, N)
     return list(map(lambda x: x + r0, mixed_diff))
