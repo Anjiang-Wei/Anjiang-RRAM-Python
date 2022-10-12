@@ -6,21 +6,21 @@ import sys
 class Level(object):
     '''
     Level is represented as Read Range [r1, r2] and Write Range [w1, w2]
-    [w1, w2] should be within the range of [r1, r2] 
+    [w1, w2] should be within the range of [r1, r2]
     '''
     def __init__(self, r1, r2, w1, w2, sigma=0, prob=0, assertion=True):
         if assertion:
-            assert r1 < w1 and w1 < w2 and w2 < r2, f'{r1}, {w1}, {w2}, {r2}'
+            assert ((w1 == 0 and r1 == 0) or r1 < w1) and w1 < w2 and w2 < r2, f'{r1}, {w1}, {w2}, {r2}'
         self.r1 = r1
         self.r2 = r2
         self.w1 = w1
         self.w2 = w2
         self.sigma = sigma
         self.prob = prob
-    
+
     def __str__(self):
         return "Read:[%d,%d], Write:[%d,%d]" % (self.r1, self.r2, self.w1, self.w2)
-    
+
     @staticmethod
     def draw(levels):
         for i in range(len(levels)):
@@ -41,7 +41,7 @@ class Level(object):
         jsonstr = json.dumps(levels, default=lambda obj: obj.__dict__)
         with open(fout, "w") as f:
             f.write(jsonstr)
-    
+
     @staticmethod
     def load_from_file(fin="B_mapping.json", draw=False):
         with open(fin, "r") as f:
@@ -51,7 +51,7 @@ class Level(object):
                 Level.draw(levels)
             print(len(levels))
             return levels
-    
+
     @staticmethod
     def refine_read_ranges(levels):
         '''
@@ -87,15 +87,15 @@ class Level(object):
             return True
         else:
             return False
-    
+
     @staticmethod
     def sort_by_mean(all_levels):
         return sorted(all_levels, key=lambda x: (x.w1 + x.w2) / 2)
-    
+
     @staticmethod
     def sort_by_read_high(all_levels):
         return sorted(all_levels, key=lambda x: x.r2)
-    
+
     @staticmethod
     def longest_non_overlap_old(all_levels):
         '''
@@ -114,7 +114,7 @@ class Level(object):
                 res.append(nxt)
                 cur = nxt
         return res
-    
+
     @staticmethod
     def longest_non_overlap(all_levels):
         '''
@@ -130,6 +130,6 @@ class Level(object):
                 res.append(nxt)
                 cur = nxt
         return res
-    
+
 if __name__ == "__main__":
     levels = Level.load_from_file(fin=sys.argv[1], draw=True)
