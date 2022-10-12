@@ -2,7 +2,7 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-model_char = "C13"
+model_char = "C14"
 diffs = {}
 timestamps = []
 fixed_timept = 1.0

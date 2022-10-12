@@ -71,7 +71,7 @@ def generate_schemes():
     for num_level in range(6, 17):
         levels, ber = minimal_BER(num_level, 0.005, timestmp)
         print(f"Solved for {num_level}: {len(levels)}, {ber}")
-        file_tag = "C13_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
+        file_tag = "C14_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
         levels = Level.refine_read_ranges(levels)
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
 
@@ -101,5 +101,6 @@ def evaluate_perf():
 
 
 if __name__ == "__main__":
+    generate_schemes()
     # refine_levels()
-    evaluate_perf()
+    # evaluate_perf()
