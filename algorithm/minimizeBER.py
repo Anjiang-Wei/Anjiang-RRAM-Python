@@ -68,7 +68,7 @@ def minimal_BER(specified_levels, eps, timestamp, low_BER = 0, high_BER = 1):
 
 def generate_schemes():
     init()
-    for num_level in range(6, 17):
+    for num_level in range(4, 9):
         levels, ber = minimal_BER(num_level, 0.005, timestmp)
         print(f"Solved for {num_level}: {len(levels)}, {ber}")
         file_tag = "C14_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
