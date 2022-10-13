@@ -1,4 +1,5 @@
 # import rram
+import matplotlib.pyplot as plt
 import numpy as np
 import sys
 sys.path.append("..")
@@ -31,6 +32,11 @@ def sigma_R(R):
 def get_R_range(m, R):
    return m * sigma_R(R)
 
+def draw(Rs):
+    init()
+    sigmas = [ sigma_R(R) for R in Rs ]
+    plt.plot(Rs, sigmas)
+    plt.show()
 
 def compute(num_level, Rpre_max, Rfinal_min, V_BL, delta_I, m, return_result=False):
     res = [[0, Rpre_max]]
@@ -79,4 +85,5 @@ def main():
 
 if __name__ == "__main__":
     # print(search_m(8, 3200, 39902, [0] + [0.20] * 7, 1e-6, 0.001, 0.300))
-    main()
+    # main()
+    draw(range(3200, 39902, 20))
