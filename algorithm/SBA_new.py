@@ -20,15 +20,6 @@ def sigma_R(R):
     # use width 250
     return np.std(WriteModel.distr(R, 250, 100, 100))
 
-    '''
-    if 3000 < R < 6000:
-        return 1000
-    if 6000 <= R < 25000:
-        return 5000
-    if R >= 25000:
-        return 10000
-    '''
-
 def get_R_range(m, R):
    return m * sigma_R(R)
 
