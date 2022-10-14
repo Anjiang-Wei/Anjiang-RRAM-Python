@@ -4,9 +4,9 @@ import numpy as np
 ls testlog/* | grep July15 | sed "s?testlog?'testlog?g" | sed "s?July15?July15',?g"
 '''
 logfiles = [
-    # 'testlog/13scheme_test_100_35_6_July15',
-    # 'testlog/13scheme_test_100_36_7_July15',
-    'testlog/13scheme_test_100_37_6_Aug17',
+    'testlog/14scheme_testours_100_106_6_Oct12',
+    'testlog/14scheme_testours_100_107_7_Oct12',
+    'testlog/14scheme_testours_100_108_8_Oct12',
 ]
 logfiles2 = [
     'testlog/13scheme_test_100_20_4_Dec10',
