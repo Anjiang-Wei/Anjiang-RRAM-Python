@@ -18,7 +18,13 @@ def sigma_R(R):
     '''
     # return np.std(rram.R_distr(R,500))
     # use width 250
-    return np.std(WriteModel.distr(R, 250, 100, 100))
+    data = WriteModel.distr(R, 250, 100, 89)
+    # if R == 12000:
+    #     diffs = list(map(lambda x: x-12000, data))
+    #     print(list(filter(lambda x:x>20000, data)))
+    #     print(np.std(data))
+    assert len(data) == 89
+    return np.std(data)
 
 def get_R_range(m, R):
    return m * sigma_R(R)
@@ -26,7 +32,7 @@ def get_R_range(m, R):
 def draw(Rs):
     init()
     sigmas = [ sigma_R(R) for R in Rs ]
-    plt.plot(Rs, sigmas)
+    plt.scatter(Rs, sigmas)
     plt.show()
 
 def compute(num_level, Rpre_max, Rfinal_min, V_BL, delta_I, m, return_result=False):
@@ -69,7 +75,7 @@ def init():
 def main():
     init()
     for num_level in range(4, 9):
-        m, levels = search_m(num_level, 3200, 39902, [0.20] * num_level, 1e-6, 0.001, 0.300)
+        m, levels = search_m(num_level, 8000, 40000, [0.20] * num_level, 1e-6, 0.001, 0.300)
         print(f"Solved for {num_level}: m={m}")
         file_tag = "C14_SBA_" +  str(num_level) + ".json"
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
@@ -77,4 +83,4 @@ def main():
 if __name__ == "__main__":
     # print(search_m(8, 3200, 39902, [0] + [0.20] * 7, 1e-6, 0.001, 0.300))
     # main()
-    draw(range(3200, 39902, 20))
+    draw(range(8000, 40000, 2000))
