@@ -16,7 +16,7 @@ high_init_config = {
 
 timestamps = [0.01, 0.1-0.01, 1.0-0.1, 2.0-1.0]
 
-random_seed = 1
+random_seed = 2
 exp_id = 0
 
 def write_init(addr):
@@ -99,7 +99,7 @@ def collect(ncells):
                     continue
                 print(addr)
                 write_init(addr)
-                ret = write(addr, w_center-width/2, w_center+width/2, 100) # num_attempts=100
+                ret = write(addr, w_center-width/2, w_center+width/2, 25) # num_attempts=25
                 if ret == -1:
                     continue # skip the read if write is skipped
                 for t in timestamps:
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     dead_init()
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
-    n_cells = 100
+    n_cells = 200
     log = open(f"testlog/14collect_data_{n_cells}_{random_seed}_{exp_id}", "w")
     collect(n_cells)
     nisys.close()
