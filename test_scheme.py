@@ -19,7 +19,7 @@ test_scheme_files = [
 ]
 our_sba = "SBA"
 date = "Oct17"
-random_seed = 1017 + exp_id
+random_seed_start = 1017
 n_cells = 100
 timestamps = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
 
@@ -95,6 +95,7 @@ if __name__ == "__main__":
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
     for exp_id in range(level_start, level_start+len(test_scheme_files)):
+        random_seed = random_seed_start + exp_id
         log = open(f"testlog/14scheme_test{our_sba}_{n_cells}_{random_seed}_{exp_id}_{date}", "w")
         levels = Level.load_from_file(test_scheme_files[exp_id-level_start])
         high_init_config = {
