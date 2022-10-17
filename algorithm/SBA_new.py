@@ -17,7 +17,7 @@ from math import sqrt
 width = 250
 R_min = 8000
 R_max = 40000
-max_attempts = 100
+max_attempts = 25
 
 def sigma_R(R):
     '''

@@ -63,6 +63,7 @@ class WriteModel(object):
         right_level = Tiny_Level.filter_levels(lambda x: x.center == right_ctr, levels)
         assert len(left_level) == 1 and len(right_level) == 1, f'{len(left_level)}, {len(right_level)}'
         # return WriteModel.simulate_mix(left_level[0].finals, right_level[0].finals, left_wgt, right_wgt, Write_N)
+        # print(len(left_level[0].finals))
         return left_wgt * np.std(left_level[0].finals) + right_wgt * np.std(right_level[0].finals)
 
     def get_adjacent_values(val, value_list):

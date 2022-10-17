@@ -9,7 +9,7 @@ from models.relax import RelaxModel
 Rmin = 8000
 Rmax = 40000
 Nctr = 500
-max_attempts = 100
+max_attempts = 25
 timestmp = 1
 
 def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
@@ -24,7 +24,7 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
     for Wctr in tqdm.tqdm(range(Rmin, Rmax, (Rmax-Rmin)//Nctr)):
         for width in range(50, 1000, 100): # pre-set values during data collection
             # run monte carlo simulation based on measurement data
-            Write_N = 100
+            Write_N = 176
             Read_N = 1000
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
             try:
