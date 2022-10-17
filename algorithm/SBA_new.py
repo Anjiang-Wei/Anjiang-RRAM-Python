@@ -12,13 +12,19 @@ from math import sqrt
 # 1) deltaI=0.01; 2) given m and the sigma-R graph, compute the R(n) [get_R_range]
 # Rmax(n) - Rmin(n) = R_range(n) = (1/2) * m * sigma
 # Approximation assumption in SBA: sigma to be the function of Rmin(n)
+
+# use width 250
+width = 250
+R_min = 8000
+R_max = 40000
+max_attempts = 100
+
 def sigma_R(R):
     '''
     given a R value, return its corresponding sigma (based on the curve / figure)
     '''
     # return np.std(rram.R_distr(R,500))
-    # use width 250
-    return np.std(WriteModel.distr(R, 250, 100, 100))
+    return WriteModel.sigma(R, width, max_attempts)
 
 def get_R_range(m, R):
    return m * sigma_R(R)
@@ -26,18 +32,18 @@ def get_R_range(m, R):
 def draw(Rs):
     init()
     sigmas = [ sigma_R(R) for R in Rs ]
-    plt.plot(Rs, sigmas)
+    plt.scatter(Rs, sigmas)
     plt.show()
 
 def compute(num_level, Rpre_max, Rfinal_min, V_BL, delta_I, m, return_result=False):
-    res = [[0, Rpre_max]]
+    res = [[R_min, Rpre_max]]
     for i in range(1, num_level):
         premax = res[-1][1]
         # V_BL[i] / premax - V_BL[i] / Rcur_min = 2*delta_I
         Rcur_min = V_BL[i] / (V_BL[i] / premax - 2*delta_I)
         Rcur_max = Rcur_min + get_R_range(m, Rcur_min)
         res.append([Rcur_min, Rcur_max])
-    res[-1][1] = 1e6
+    res[-1][1] = R_max
     overflow = False
     if res[-1][0] > Rfinal_min:
         overflow = True
@@ -69,7 +75,7 @@ def init():
 def main():
     init()
     for num_level in range(4, 9):
-        m, levels = search_m(num_level, 3200, 39902, [0.20] * num_level, 1e-6, 0.001, 0.300)
+        m, levels = search_m(num_level, R_min+width, R_max-width, [0.20] * num_level, 1e-6, 0.001, 0.300)
         print(f"Solved for {num_level}: m={m}")
         file_tag = "C14_SBA_" +  str(num_level) + ".json"
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
@@ -77,4 +83,4 @@ def main():
 if __name__ == "__main__":
     # print(search_m(8, 3200, 39902, [0] + [0.20] * 7, 1e-6, 0.001, 0.300))
     # main()
-    draw(range(3200, 39902, 20))
+    draw(range(R_min, R_max, 100))

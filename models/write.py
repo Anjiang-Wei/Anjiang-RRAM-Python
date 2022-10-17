@@ -1,4 +1,5 @@
 from scipy import stats
+import numpy as np
 import sys
 sys.path.append("..")
 import collect_analyze
@@ -27,7 +28,7 @@ class WriteModel(object):
         fname = "../testlog/14collect_data_" + collect_analyze.logfile
         collect_analyze.data_init(fname)
         print("Write data init finished")
-    
+
     def distr(Wctr, width, max_attempts, Write_N):
         levels = Tiny_Level.filter_levels(lambda x: x.width == width and x.max_attempts == max_attempts)
         center_vals = Tiny_Level.filter_properties(lambda x: x.center, levels)
@@ -45,6 +46,25 @@ class WriteModel(object):
         assert len(left_level) == 1 and len(right_level) == 1, f'{len(left_level)}, {len(right_level)}'
         return WriteModel.simulate_mix(left_level[0].finals, right_level[0].finals, left_wgt, right_wgt, Write_N)
 
+    def sigma(Wctr, width, max_attempts):
+        levels = Tiny_Level.filter_levels(lambda x: x.width == width and x.max_attempts == max_attempts)
+        center_vals = Tiny_Level.filter_properties(lambda x: x.center, levels)
+        if len(levels) == 0:
+            assert False, f"No satisfied levels for width={width}, max_attempts={max_attempts}, unable to do simulation"
+        left_ctr, right_ctr = WriteModel.get_adjacent_values(Wctr, center_vals)
+        if left_ctr == right_ctr:
+            left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
+            assert len(left_level) == 1, f'No left level at all'
+            # return WriteModel.transfer_distr(left_level[0].finals, left_level[0].center, Wctr, Write_N)
+            return np.std(left_level[0].finals)
+        assert left_ctr <= Wctr and Wctr <= right_ctr, f'{left_ctr}, {Wctr}, {right_ctr}'
+        left_wgt, right_wgt = WriteModel.get_adjacent_weight(left_ctr, right_ctr, Wctr)
+        left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
+        right_level = Tiny_Level.filter_levels(lambda x: x.center == right_ctr, levels)
+        assert len(left_level) == 1 and len(right_level) == 1, f'{len(left_level)}, {len(right_level)}'
+        # return WriteModel.simulate_mix(left_level[0].finals, right_level[0].finals, left_wgt, right_wgt, Write_N)
+        return left_wgt * np.std(left_level[0].finals) + right_wgt * np.std(right_level[0].finals)
+
     def get_adjacent_values(val, value_list):
         sorted_list = sorted(value_list)
         if val <= sorted_list[0]:
@@ -57,7 +77,7 @@ class WriteModel(object):
                 idx = i
                 break
         return sorted_list[idx], sorted_list[idx+1]
-    
+
     def get_adjacent_weight(x1, x2, v):
         '''
         Return normalized sum == 1
@@ -65,7 +85,7 @@ class WriteModel(object):
         a, b = x2 - v, v - x1
         assert a >= 0 and b >= 0, f'x1:{x1}, x2:{x2}, v:{v}'
         return a / (a + b), b / (a + b)
-    
+
     def simulate_mix(vals1, vals2, w1, w2, N):
         '''
         Input: values and their weight

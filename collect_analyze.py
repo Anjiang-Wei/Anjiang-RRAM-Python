@@ -26,7 +26,7 @@ class Result(object):
     @staticmethod
     def add2all(o):
         Result.all.append(o)
-    
+
     @staticmethod
     def check_range(low, high, value):
         '''
@@ -42,11 +42,11 @@ class Result(object):
             return 1
         else:
             return 0
-    
+
     @staticmethod
     def filter_result(lambda_func, all_results=all):
         return list(filter(lambda_func, all_results))
-    
+
     @staticmethod
     def toTinyLevel(results):
         for o in results:
@@ -60,13 +60,13 @@ def dead_cell_init(logdir=""):
     if logdir == "":
         logdir = 'log/'
     global dead_cells
-    with open(logdir + "13dead_test.csv", "r") as fin:
+    with open(logdir + "14dead_test.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
                 dead_addr = int(line.split(",")[0])
                 dead_cells.append(dead_addr)
-    with open(logdir + "13new_dead.csv", "r") as fin:
+    with open(logdir + "14new_dead.csv", "r") as fin:
         lines = fin.readlines()
         for line in lines:
             if "False" in line:
