@@ -1,7 +1,7 @@
 from utils.TinyLevel import Tiny_Level
 
 # This script is used to analyze writing behavior (used by models/write.py)
-logfile = "100_1_0"
+logfile = "200_2_0"
 
 init = {}
 write = {}
