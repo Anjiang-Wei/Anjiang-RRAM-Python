@@ -6,7 +6,7 @@ import dead_detection
 
 chipname = "C14"
 config_char = "B"
-exp_id = 4
+level_start = 4
 start_addr = 0
 end_addr = 65536
 dead_cells = []
@@ -17,11 +17,10 @@ test_scheme_files = [
     'scheme/C14_SBA_7.json',
     'scheme/C14_SBA_8.json',
 ]
-random_seed = 100 + exp_id
-levels = Level.load_from_file(test_scheme_files[exp_id-4])
-high_init_config = {
-    "B": [levels[-1].r1, levels[-1].r2]
-}
+our_sba = "SBA"
+date = "Oct17"
+random_seed_start = 1017
+n_cells = 100
 timestamps = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
 
 
@@ -75,7 +74,7 @@ def random_pick(ncells):
     res = sorted(set(res))
     return res
 
-def testscheme(ncells):
+def testscheme(ncells, levels):
     dead_log = open("log/14new_dead.csv", "a")
     cells = random_pick(ncells)
     for level in levels:
@@ -95,8 +94,13 @@ if __name__ == "__main__":
     dead_init()
     print("Num of dead cells", len(dead_cells))
     nisys = NIRRAM(chipname)
-    n_cells = 100
-    log = open(f"testlog/14scheme_testSBA_{n_cells}_{random_seed}_{exp_id}_Oct12", "w")
-    testscheme(n_cells)
+    for exp_id in range(level_start, level_start+len(test_scheme_files)):
+        random_seed = random_seed_start + exp_id
+        log = open(f"testlog/14scheme_test{our_sba}_{n_cells}_{random_seed}_{exp_id}_{date}", "w")
+        levels = Level.load_from_file(test_scheme_files[exp_id-level_start])
+        high_init_config = {
+            "B": [levels[-1].r1, levels[-1].r2]
+        }
+        testscheme(n_cells, levels)
     nisys.close()
     log.close()
