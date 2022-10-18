@@ -32,7 +32,7 @@ def get_R_range(m, R):
 def draw(Rs):
     init()
     sigmas = [ sigma_R(R) for R in Rs ]
-    plt.scatter(Rs, sigmas)
+    plt.plot(Rs, sigmas)
     plt.show()
 
 def compute(num_level, Rpre_max, Rfinal_min, V_BL, delta_I, m, return_result=False):
@@ -43,7 +43,6 @@ def compute(num_level, Rpre_max, Rfinal_min, V_BL, delta_I, m, return_result=Fal
         Rcur_min = V_BL[i] / (V_BL[i] / premax - 2*delta_I)
         Rcur_max = Rcur_min + get_R_range(m, Rcur_min)
         res.append([Rcur_min, Rcur_max])
-    res[-1][1] = R_max
     overflow = False
     if res[-1][0] > Rfinal_min:
         overflow = True
