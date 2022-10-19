@@ -25,11 +25,12 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
         for width in range(50, 1000, 100): # pre-set values during data collection
             # run monte carlo simulation based on measurement data
             Write_N = 176
-            Read_N = 1000
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
+            RelaxDistr = RelaxModel.distr(WriteDistr, T, -1)
+            Rlow, Rhigh = getReadRange(RelaxDistr, BER)
+            if Wctr-width/2 < Rmin:
+                Rlow = 0
             try:
-                RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
-                Rlow, Rhigh = getReadRange(RelaxDistr, BER)
                 levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=1-BER, assertion=True))
             except Exception as e:
                 # print(f"{str(e)}: {Rlow}, {Rhigh}, {Wctr-width/2}, {Wctr+width/2}")

@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+from math import lcm
 
 model_char = "C14"
 diffs = {}
@@ -29,7 +30,8 @@ def get_distribution(r0, t, N):
     Return the N values (by simulation)
     '''
     if t == 0:
-        return [r0] * N
+        # return [r0] * N
+        assert False
     assert t in timestamps, f"{t} not in {timestamps}"
     return interpolate(r0, list(diffs[t].keys()), diffs[t], N)
 
@@ -51,6 +53,8 @@ def simulate_mix(vals1, vals2, w1, w2, N):
     Invariant: w1 + w2 == 1
     Return: a list of N values of distribution
     '''
+    if N == -1:
+        N = lcm(len(vals1), len(vals2))
     assert len(vals1) <= N, f'{len(vals1)} > {N}'
     assert len(vals2) <= N, f'{len(vals2)} > {N}'
     a_dis = simulate(vals1, N)
