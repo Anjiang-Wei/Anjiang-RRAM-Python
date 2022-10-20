@@ -1,7 +1,8 @@
 import pprint
 import numpy as np
 '''
-ls testlog/* | grep July15 | sed "s?testlog?'testlog?g" | sed "s?July15?July15',?g"
+export DATE="Oct17"
+ls testlog/* | grep ${DATE} | sed "s?testlog?'testlog?g" | sed "s?${DATE}?${DATE}',?g"
 '''
 logfiles = [
     'testlog/14scheme_testours_100_106_6_Oct12',
@@ -9,19 +10,11 @@ logfiles = [
     'testlog/14scheme_testours_100_108_8_Oct12',
 ]
 logfiles2 = [
-    'testlog/13scheme_test_100_20_4_Dec10',
-    'testlog/13scheme_test_100_21_5_Dec10',
-    'testlog/13scheme_test_100_22_6_Dec10',
-    'testlog/13scheme_test_100_23_7_Dec10',
-    'testlog/13scheme_test_100_24_8_Dec10',
-    'testlog/13scheme_test_100_25_9_Dec10',
-    'testlog/13scheme_test_100_26_10_Dec10',
-    'testlog/13scheme_test_100_27_11_Dec10',
-    'testlog/13scheme_test_100_28_12_Dec10',
-    'testlog/13scheme_test_100_29_13_Dec10',
-    'testlog/13scheme_test_100_30_14_Dec10',
-    'testlog/13scheme_test_100_31_15_Dec10',
-    'testlog/13scheme_test_100_32_16_Dec10'
+    'testlog/14scheme_testSBA_100_1021_4_Oct17',
+    'testlog/14scheme_testSBA_100_1022_5_Oct17',
+    'testlog/14scheme_testSBA_100_1023_6_Oct17',
+    'testlog/14scheme_testSBA_100_1024_7_Oct17',
+    'testlog/14scheme_testSBA_100_1025_8_Oct17',
 ]
 
 '''
@@ -198,7 +191,7 @@ def gen_matrix(read_list, isOur, all_level):
 if __name__ == "__main__":
     dead_cell_init()
     map_report = {}
-    our = True
+    our = False
     if our:
         for i in range(len(logfiles)):
             clear()
