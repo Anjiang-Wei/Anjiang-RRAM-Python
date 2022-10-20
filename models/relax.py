@@ -7,8 +7,8 @@ class RelaxModel(object):
         print(f"Relax data init from conf{drift_model.model_char}")
         drift_model.load_param()
         print("Relax data init finished")
-    
-    def distr(WriteDistr, T, N):
+
+    def distr(WriteDistr, T, N=-1):
         res = []
         for v in WriteDistr:
             res += drift_model.get_distribution(v, T, N)

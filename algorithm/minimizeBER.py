@@ -26,7 +26,7 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
             # run monte carlo simulation based on measurement data
             # Write_N = 176
             WriteDistr = WriteModel.distr(Wctr, width, max_attempts)
-            RelaxDistr = RelaxModel.distr(WriteDistr, T, -1)
+            RelaxDistr = RelaxModel.distr(WriteDistr, T)
             Rlow, Rhigh = getReadRange(RelaxDistr, BER)
             if Wctr-width/2 < Rmin:
                 Rlow = 0

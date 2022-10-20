@@ -6,8 +6,6 @@ sys.path.append("..")
 from models.write import WriteModel
 from models.relax import RelaxModel
 from scheme.level import Level
-from statistics import variance
-from math import sqrt
 # to correctly setup SBA:
 # 1) deltaI=0.01; 2) given m and the sigma-R graph, compute the R(n) [get_R_range]
 # Rmax(n) - Rmin(n) = R_range(n) = (1/2) * m * sigma
@@ -18,13 +16,17 @@ width = 250
 R_min = 8000
 R_max = 40000
 max_attempts = 25
+timestmp = 1
 
 def sigma_R(R):
     '''
     given a R value, return its corresponding sigma (based on the curve / figure)
     '''
     # return np.std(rram.R_distr(R,500))
-    return WriteModel.sigma(R, width, max_attempts)
+    # return WriteModel.sigma(R, width, max_attempts)
+    WriteDistr = WriteModel.distr(R, width, max_attempts)
+    RelaxDistr = RelaxModel.distr(WriteDistr, timestmp)
+    return np.std(RelaxDistr)
 
 def get_R_range(m, R):
    return m * sigma_R(R)
