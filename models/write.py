@@ -4,7 +4,7 @@ import sys
 sys.path.append("..")
 import collect_analyze
 from utils.TinyLevel import Tiny_Level
-from math import lcm
+import math
 import random
 
 def normal_test(x):
@@ -17,7 +17,8 @@ def normal_test(x):
     else:
         return True
 
-
+def lcm(a, b):
+    return abs(a*b) // math.gcd(a, b)
 
 class WriteModel(object):
     def __init__(self):

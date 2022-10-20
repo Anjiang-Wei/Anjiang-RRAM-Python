@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-from math import lcm
+import math
 
 model_char = "C14"
 diffs = {}
@@ -23,6 +23,8 @@ def load_param():
             diffs[t][w_center] = diff_list
         timestamps = sorted(list(diffs.keys()))
 
+def lcm(a, b):
+    return abs(a*b) // math.gcd(a, b)
 
 def get_distribution(r0, t, N):
     '''
