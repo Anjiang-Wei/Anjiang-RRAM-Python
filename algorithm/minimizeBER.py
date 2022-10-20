@@ -11,6 +11,7 @@ Rmax = 40000
 Nctr = 500
 max_attempts = 25
 timestmp = 1
+date="Oct20"
 
 def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
     '''
@@ -72,7 +73,7 @@ def generate_schemes():
     for num_level in range(4, 9):
         levels, ber = minimal_BER(num_level, 0.005, timestmp)
         print(f"Solved for {num_level}: {len(levels)}, {ber}")
-        file_tag = "C14_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + ".json"
+        file_tag = "C14_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + "_" + date + ".json"
         levels = Level.refine_read_ranges(levels)
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
 
