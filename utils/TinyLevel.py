@@ -20,13 +20,16 @@ class Tiny_Level(object):
         self.idx = 0
         self.total_times = 0
         self.success_rate = 0
-    
+
+    def get_success_finals(self):
+        return [final for final in self.finals if final >= self.low and final <= self.high]
+
     def __eq__(self, o):
         if Tiny_Level.differentiate_attempt:
             return self.low == o.low and self.high == o.high and self.max_attempts == o.max_attempts
         else:
             return self.low == o.low and self.high == o.high
-    
+
     def __str__(self):
         success_total = self.summary[0]
         lower_total = self.summary[-1]
@@ -37,7 +40,7 @@ class Tiny_Level(object):
             Attempts:{self.max_attempts},\
             Success:{success_total}/{total_times} = {success_total/total_times}, \
             Low:{lower_total}, High:{higher_total}"
-    
+
     @staticmethod
     def data_stable():
         '''
@@ -45,13 +48,13 @@ class Tiny_Level(object):
         '''
         Tiny_Level.compute_idx()
         Tiny_Level.compute_total_succ()
-    
+
     @staticmethod
     def printall():
         Tiny_Level.compute_idx()
         for level in Tiny_Level.all_levels:
             print(level)
-    
+
     @staticmethod
     def clear():
         Tiny_Level.all_levels = []
@@ -77,7 +80,7 @@ class Tiny_Level(object):
         all_centers = list(map(lambda x: x.center, levels))
         sorted_centers = sorted(list(set(all_centers)))
         return sorted_centers.index(center)
-    
+
     @staticmethod
     def compute_idx():
         '''
@@ -86,14 +89,14 @@ class Tiny_Level(object):
         for i in range(len(Tiny_Level.all_levels)):
             level = Tiny_Level.all_levels[i]
             level.idx = Tiny_Level.center2idx(level.center)
-    
+
     @staticmethod
     def compute_total_succ():
         for i in range(len(Tiny_Level.all_levels)):
             level = Tiny_Level.all_levels[i]
             level.total_times = sum(level.summary.values())
             level.success_rate = level.summary[0] / level.total_times
-    
+
     @staticmethod
     def filter_levels(lambda_func, all_levels=all_levels):
         '''
@@ -101,28 +104,28 @@ class Tiny_Level(object):
         '''
         satisfied_levels = list(filter(lambda_func, all_levels))
         return satisfied_levels
-    
+
     def filter_properties(lambda_func, all_levels=all_levels):
         '''
         Given a lambda function, return the set of values of a certain property
         '''
         property_vals = set(map(lambda_func, all_levels))
         return property_vals
-    
+
     def level_sort_by_width():
         vals = Tiny_Level.filter_properties(lambda x: x.width)
         res = []
         for val in vals:
             res += Tiny_Level.filter_levels(lambda x: x.width == val)
         return res
-    
+
     def level_sort_by_attempt():
         vals = Tiny_Level.filter_properties(lambda x: x.max_attempts)
         res = []
         for val in vals:
             res += Tiny_Level.filter_levels(lambda x: x.max_attempts == val)
         return res
-    
+
     @staticmethod
     def draw_levels(levels, lambda_func=lambda x: x, hint=""):
         all_levels = list(filter(lambda_func, levels))
@@ -133,7 +136,7 @@ class Tiny_Level(object):
             sns.distplot(all_levels[i].finals, kde=True, label=f'{hint} {i}', axlabel=True)
         plt.legend()
         plt.show()
-    
+
     @staticmethod
     def draw_level(level):
         color= sns.color_palette(n_colors=1)[0]

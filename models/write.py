@@ -39,13 +39,13 @@ class WriteModel(object):
         if left_ctr == right_ctr:
             left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
             assert len(left_level) == 1, f'No left level at all'
-            return WriteModel.transfer_distr(left_level[0].finals, left_level[0].center, Wctr, Write_N)
+            return WriteModel.transfer_distr(left_level[0].get_success_finals(), left_level[0].center, Wctr, Write_N)
         assert left_ctr <= Wctr and Wctr <= right_ctr, f'{left_ctr}, {Wctr}, {right_ctr}'
         left_wgt, right_wgt = WriteModel.get_adjacent_weight(left_ctr, right_ctr, Wctr)
         left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
         right_level = Tiny_Level.filter_levels(lambda x: x.center == right_ctr, levels)
         assert len(left_level) == 1 and len(right_level) == 1, f'{len(left_level)}, {len(right_level)}'
-        return WriteModel.simulate_mix(left_level[0].finals, right_level[0].finals, left_wgt, right_wgt, Write_N)
+        return WriteModel.simulate_mix(left_level[0].get_success_finals(), right_level[0].get_success_finals(), left_wgt, right_wgt, Write_N)
 
     def sigma(Wctr, width, max_attempts):
         levels = Tiny_Level.filter_levels(lambda x: x.width == width and x.max_attempts == max_attempts)
@@ -56,14 +56,14 @@ class WriteModel(object):
         if left_ctr == right_ctr:
             left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
             assert len(left_level) == 1, f'No left level at all'
-            return np.std(left_level[0].finals)
+            return np.std(left_level[0].get_success_finals())
         assert left_ctr <= Wctr and Wctr <= right_ctr, f'{left_ctr}, {Wctr}, {right_ctr}'
         left_wgt, right_wgt = WriteModel.get_adjacent_weight(left_ctr, right_ctr, Wctr)
         left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
         right_level = Tiny_Level.filter_levels(lambda x: x.center == right_ctr, levels)
         assert len(left_level) == 1 and len(right_level) == 1, f'{len(left_level)}, {len(right_level)}'
         # print(len(left_level[0].finals))
-        return left_wgt * np.std(left_level[0].finals) + right_wgt * np.std(right_level[0].finals)
+        return left_wgt * np.std(left_level[0].get_success_finals()) + right_wgt * np.std(right_level[0].get_success_finals())
 
     def get_adjacent_values(val, value_list):
         sorted_list = sorted(value_list)
