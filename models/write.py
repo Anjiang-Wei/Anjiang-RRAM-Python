@@ -4,6 +4,7 @@ import sys
 sys.path.append("..")
 import collect_analyze
 from utils.TinyLevel import Tiny_Level
+from math import lcm
 import random
 
 def normal_test(x):
@@ -29,7 +30,7 @@ class WriteModel(object):
         collect_analyze.data_init(fname)
         print("Write data init finished")
 
-    def distr(Wctr, width, max_attempts, Write_N):
+    def distr(Wctr, width, max_attempts, Write_N=-1):
         levels = Tiny_Level.filter_levels(lambda x: x.width == width and x.max_attempts == max_attempts)
         center_vals = Tiny_Level.filter_properties(lambda x: x.center, levels)
         if len(levels) == 0:
@@ -55,14 +56,12 @@ class WriteModel(object):
         if left_ctr == right_ctr:
             left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
             assert len(left_level) == 1, f'No left level at all'
-            # return WriteModel.transfer_distr(left_level[0].finals, left_level[0].center, Wctr, Write_N)
             return np.std(left_level[0].finals)
         assert left_ctr <= Wctr and Wctr <= right_ctr, f'{left_ctr}, {Wctr}, {right_ctr}'
         left_wgt, right_wgt = WriteModel.get_adjacent_weight(left_ctr, right_ctr, Wctr)
         left_level = Tiny_Level.filter_levels(lambda x: x.center == left_ctr, levels)
         right_level = Tiny_Level.filter_levels(lambda x: x.center == right_ctr, levels)
         assert len(left_level) == 1 and len(right_level) == 1, f'{len(left_level)}, {len(right_level)}'
-        # return WriteModel.simulate_mix(left_level[0].finals, right_level[0].finals, left_wgt, right_wgt, Write_N)
         # print(len(left_level[0].finals))
         return left_wgt * np.std(left_level[0].finals) + right_wgt * np.std(right_level[0].finals)
 
@@ -93,6 +92,8 @@ class WriteModel(object):
         Invariant: w1 + w2 == 1
         Return: a list of N values of distribution
         '''
+        if N == -1:
+            N = lcm(len(vals1), len(vals2))
         assert len(vals1) <= N, f'{len(vals1)} > {N}'
         assert len(vals2) <= N, f'{len(vals2)} > {N}'
         a_dis = WriteModel.simulate(vals1, N)
@@ -101,6 +102,8 @@ class WriteModel(object):
 
     def simulate(vals, N):
         # print(f"original: {len(vals)}, simulate: {N}")
+        if N == -1:
+            N = len(vals)
         res = []
         for i in range(N // len(vals)):
             res += vals

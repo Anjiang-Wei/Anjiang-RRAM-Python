@@ -24,8 +24,8 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
     for Wctr in tqdm.tqdm(range(Rmin, Rmax, (Rmax-Rmin)//Nctr)):
         for width in range(50, 1000, 100): # pre-set values during data collection
             # run monte carlo simulation based on measurement data
-            Write_N = 176
-            WriteDistr = WriteModel.distr(Wctr, width, max_attempts, Write_N)
+            # Write_N = 176
+            WriteDistr = WriteModel.distr(Wctr, width, max_attempts)
             RelaxDistr = RelaxModel.distr(WriteDistr, T, -1)
             Rlow, Rhigh = getReadRange(RelaxDistr, BER)
             if Wctr-width/2 < Rmin:
