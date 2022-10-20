@@ -94,7 +94,7 @@ class WriteModel(object):
         Return: a list of N values of distribution
         '''
         if N == -1:
-            N = lcm(len(vals1), len(vals2))
+            N = max(len(vals1), len(vals2))
         assert len(vals1) <= N, f'{len(vals1)} > {N}'
         assert len(vals2) <= N, f'{len(vals2)} > {N}'
         a_dis = WriteModel.simulate(vals1, N)
