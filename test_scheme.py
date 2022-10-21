@@ -9,19 +9,19 @@ config_char = "B"
 start_addr = 0
 end_addr = 65536
 dead_cells = []
-# export DATE="Oct20"
+# export DATE="Oct20" # SBA
 # ls scheme/* | grep ${DATE} | sed "s?scheme?'scheme?g" | sed "s?json?json',?g"
 level_start = 4
 test_scheme_files = [
-    'scheme/C14_4_4_0.00390625_1_Oct20.json',
-    'scheme/C14_5_5_0.01171875_1_Oct20.json',
-    'scheme/C14_6_6_0.01953125_1_Oct20.json',
-    'scheme/C14_7_7_0.02734375_1_Oct20.json',
-    'scheme/C14_8_8_0.03515625_1_Oct20.json',
+    'scheme/C14_SBA_4.json',
+    'scheme/C14_SBA_5.json',
+    'scheme/C14_SBA_6.json',
+    'scheme/C14_SBA_7.json',
+    'scheme/C14_SBA_8.json',
 ]
-our_sba = "ours"
-date = "Oct20"
-random_seed_start = 2020
+our_sba = "SBA"
+date = "Oct21"
+random_seed_start = 202210
 n_cells = 100
 timestamps = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
 
