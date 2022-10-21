@@ -36,6 +36,7 @@ def draw(Rs):
     sigmas = [ sigma_R(R) for R in Rs ]
     plt.plot(Rs, sigmas)
     plt.show()
+    plt.savefig("sigmaR.png")
 
 def compute(num_level, Rpre_max, Rfinal_min, V_BL, delta_I, m, return_result=False):
     res = [[R_min, Rpre_max]]
@@ -83,5 +84,5 @@ def main():
 
 if __name__ == "__main__":
     # print(search_m(8, 3200, 39902, [0] + [0.20] * 7, 1e-6, 0.001, 0.300))
-    main()
-    # draw(range(R_min, R_max, 100))
+    # main()
+    draw(range(R_min, R_max, 100))
