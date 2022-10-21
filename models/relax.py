@@ -13,3 +13,6 @@ class RelaxModel(object):
         for v in WriteDistr:
             res += drift_model.get_distribution(v, T, N)
         return res
+
+    def distr_sigma(R, T):
+        return drift_model.get_distribution_interpolate_sigma(R, T)

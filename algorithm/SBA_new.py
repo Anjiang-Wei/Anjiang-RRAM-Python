@@ -11,8 +11,8 @@ from scheme.level import Level
 # Rmax(n) - Rmin(n) = R_range(n) = (1/2) * m * sigma
 # Approximation assumption in SBA: sigma to be the function of Rmin(n)
 
-# use width 250
-width = 250
+# use smallest possible width 50 to set the boundary
+width = 50
 R_min = 8000
 R_max = 40000
 max_attempts = 25
@@ -25,8 +25,8 @@ def sigma_R(R):
     # return np.std(rram.R_distr(R,500))
     # return WriteModel.sigma(R, width, max_attempts)
     # WriteDistr = WriteModel.distr(R, width, max_attempts)
-    RelaxDistr = RelaxModel.distr([R], timestmp)
-    return np.std(RelaxDistr)
+    # RelaxDistr = RelaxModel.distr([R], timestmp)
+    return RelaxModel.distr_sigma(R, timestmp)
 
 def get_R_range(m, R):
    return m * sigma_R(R)

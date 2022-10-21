@@ -37,6 +37,24 @@ def get_distribution(r0, t, N):
     assert t in timestamps, f"{t} not in {timestamps}"
     return interpolate(r0, list(diffs[t].keys()), diffs[t], N)
 
+def get_distribution_interpolate_sigma(r0, t):
+    if t == 0:
+        assert False
+    assert t in timestamps
+    return interpolate_sigma(r0, list(diffs[t].keys()), diffs[t])
+
+def interpolate_sigma(r0, key_list, dict_val):
+    '''
+    Given the initial value r0, find the adjacent write_centers
+    Then interpolate the sigma(based on left_write_center) and sigma(based on right_write_center)
+    '''
+    left_val, right_val = get_adjacent_values(r0, key_list)
+    if left_val == right_val:
+        return np.std(dict_val[left_val])
+    w1, w2 = get_adjacent_weight(left_val, right_val, r0)
+    return w1 * np.std(dict_val[left_val]) + w2 * np.std(dict_val[right_val])
+
+
 def interpolate(r0, key_list, dict_val, N):
     '''
     Given the initial value r0, find the adjacent write_centers
