@@ -5,9 +5,11 @@ export DATE="Oct17"
 ls testlog/* | grep ${DATE} | sed "s?testlog?'testlog?g" | sed "s?${DATE}?${DATE}',?g"
 '''
 logfiles = [
-    'testlog/14scheme_testours_100_106_6_Oct12',
-    'testlog/14scheme_testours_100_107_7_Oct12',
-    'testlog/14scheme_testours_100_108_8_Oct12',
+    'testlog/14scheme_testours_100_2024_4_Oct20',
+    'testlog/14scheme_testours_100_2025_5_Oct20',
+    'testlog/14scheme_testours_100_2026_6_Oct20',
+    'testlog/14scheme_testours_100_2027_7_Oct20',
+    'testlog/14scheme_testours_100_2028_8_Oct20',
 ]
 logfiles2 = [
     'testlog/14scheme_testSBA_100_1021_4_Oct17',
@@ -191,17 +193,17 @@ def gen_matrix(read_list, isOur, all_level):
 if __name__ == "__main__":
     dead_cell_init()
     map_report = {}
-    our = False
+    our = True
     if our:
         for i in range(len(logfiles)):
             clear()
             data_init(logfiles[i])
             # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
-            # 4: 1s, 7: 10s
+            # only_report=4: 1s, 7: 10s
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
-            res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+6), level_num=i+6)
-            map_report[i+6] = res
-            gen_matrix(Result.read, our, i+6)
+            res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
+            map_report[i+4] = res
+            gen_matrix(Result.read, our, i+4)
     else:
         for i in range(len(logfiles2)):
             clear()
