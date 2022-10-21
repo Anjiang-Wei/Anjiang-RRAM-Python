@@ -84,5 +84,5 @@ def main():
 
 if __name__ == "__main__":
     # print(search_m(8, 3200, 39902, [0] + [0.20] * 7, 1e-6, 0.001, 0.300))
-    # main()
-    draw(range(R_min, R_max, 100))
+    main()
+    # draw(range(R_min, R_max, 100))
