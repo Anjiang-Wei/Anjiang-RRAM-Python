@@ -24,8 +24,8 @@ def sigma_R(R):
     '''
     # return np.std(rram.R_distr(R,500))
     # return WriteModel.sigma(R, width, max_attempts)
-    WriteDistr = WriteModel.distr(R, width, max_attempts)
-    RelaxDistr = RelaxModel.distr(WriteDistr, timestmp)
+    # WriteDistr = WriteModel.distr(R, width, max_attempts)
+    RelaxDistr = RelaxModel.distr([R], timestmp)
     return np.std(RelaxDistr)
 
 def get_R_range(m, R):
