@@ -15,13 +15,13 @@ level_start = 4
 test_scheme_files = [
     'scheme/C14_4_4_0.00390625_1_variantOct22.json',
     'scheme/C14_5_5_0.01953125_1_variantOct22.json',
-    'scheme/C14_6_6_0.0390625_1_variantOct22.json',
+    'scheme/C14_6_6_0.04296875_1_variantOct22.json',
     'scheme/C14_7_7_0.09375_1_variantOct22.json',
     'scheme/C14_8_8_0.15625_1_variantOct22.json',
 ]
 our_sba = "SBAvariant"
 date = "Oct23"
-random_seed_start = 20221023
+random_seed_start = 10232022
 n_cells = 100
 timestamps = [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
 
