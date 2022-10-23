@@ -1,3 +1,4 @@
+import numpy as np
 import time
 import tqdm
 import sys
@@ -11,7 +12,7 @@ Rmax = 40000
 Nctr = 500
 max_attempts = 25
 timestmp = 1
-date="Oct22"
+date="variantOct22"
 
 def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
     '''
