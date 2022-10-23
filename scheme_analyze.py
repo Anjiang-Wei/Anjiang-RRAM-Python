@@ -91,8 +91,8 @@ class Result(object):
         for i in range(num_cat):
             categorized[i] = []
         # print(f"{len(results)} / ({num_cat} * {level_num})")
-        tested_cells = len(results) / (num_cat * level_num)
-        print("num_cells=", num_cells, ", tested_cells=", tested_cells)
+        # tested_cells = len(results) / (num_cat * level_num)
+        # print("num_cells=", num_cells, ", tested_cells=", tested_cells)
         # assert num_cells - tested_cells <= 1, f"{num_cells}, {tested_cells}"
         for i in range(0, len(results)):
             categorized[i%num_cat].append(results[i])
@@ -191,6 +191,11 @@ def gen_matrix(read_list, isOur, all_level):
             prob = len(output_i) / len(input_j)
             P[i][j] = prob
     # print(P.tolist())
+    # e = max(1 - P[k][k])
+    max_error = 0.0
+    for k in range(num_levels):
+        max_error = max(1 - P[k][k], max_error)
+    print("max_error", num_levels, max_error)
     to_write = []
     for i in range(num_levels):
         to_write.append(",".join(map(str, P[i])) + "\n")
@@ -198,12 +203,14 @@ def gen_matrix(read_list, isOur, all_level):
         f.writelines(to_write)
     # print(f"Success Rate for {num_levels}: ",
     #     np.mean(list(map(lambda x: P[x][x], [k for k in range(0, num_levels)]))))
+    return max_error
 
 
 if __name__ == "__main__":
     dead_cell_init()
     map_report = {}
-    our = True
+    map_report_maxerr = {}
+    our = False
     if our:
         for i in range(len(logfiles)):
             clear()
@@ -213,7 +220,8 @@ if __name__ == "__main__":
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
             res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
             map_report[i+4] = res
-            gen_matrix(Result.read, our, i+4)
+            err = gen_matrix(Result.read, our, i+4)
+            map_report_maxerr[i+4] = err
     else:
         for i in range(len(logfiles2)):
             clear()
@@ -222,5 +230,10 @@ if __name__ == "__main__":
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
             res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
             map_report[i+4] = res
-            gen_matrix(Result.read, our, i+4)
+            err = gen_matrix(Result.read, our, i+4)
+            map_report_maxerr[i+4] = err
+    print("ours" if our else "SBA")
+    print("Average error:")
     pprint.pprint(map_report)
+    print("Worst error:")
+    pprint.pprint(map_report_maxerr)
