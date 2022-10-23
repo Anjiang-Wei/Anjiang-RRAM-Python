@@ -35,6 +35,9 @@ def level_inference(Rmin, Rmax, Nctr, max_attempts, T, BER):
             if Wctr-width/2 < Rmin:
                 Rlow = 0
             try:
+                # level = 5,6 needs this fix, otherwise the hardware assertion in the write algorithm fails
+                if Wctr - width / 2 <= 7812.5: # 1 / (128 uS)
+                    continue
                 levels.append(Level(Rlow, Rhigh, Wctr-width/2, Wctr+width/2, prob=1-BER, assertion=True))
             except Exception as e:
                 # print(f"{str(e)}: {Rlow}, {Rhigh}, {Wctr-width/2}, {Wctr+width/2}")
@@ -80,6 +83,15 @@ def generate_schemes():
         levels = Level.refine_read_ranges(levels)
         Level.export_to_file(levels, fout="../scheme/" + file_tag)
 
+def fix_5_6():
+    init()
+    for num_level in range(5, 7):
+        levels, ber = minimal_BER(num_level, 0.005, timestmp)
+        print(f"Solved for {num_level}: {len(levels)}, {ber}")
+        file_tag = "C14_" +  str(num_level) + "_" + str(len(levels)) + "_" + str(ber) + "_" + str(timestmp) + "_" + date + ".json"
+        levels = Level.refine_read_ranges(levels)
+        Level.export_to_file(levels, fout="../scheme/" + file_tag)
+
 def refine_levels():
     filename = sys.argv[1]
     levels = Level.load_from_file(filename)
@@ -106,6 +118,7 @@ def evaluate_perf():
 
 
 if __name__ == "__main__":
-    generate_schemes()
+    # generate_schemes()
+    fix_5_6()
     # refine_levels()
     # evaluate_perf()

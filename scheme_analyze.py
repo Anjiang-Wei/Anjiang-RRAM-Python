@@ -13,11 +13,7 @@ logfiles = [
     'testlog/14scheme_testours_100_2028_8_Oct20',
 ]
 logfiles2 = [
-    'testlog/14scheme_testSBA_100_202214_4_Oct21',
-    'testlog/14scheme_testSBA_100_202215_5_Oct21',
-    'testlog/14scheme_testSBA_100_202216_6_Oct21',
-    'testlog/14scheme_testSBA_100_202217_7_Oct21',
-    'testlog/14scheme_testSBA_100_202218_8_Oct21',
+   'testlog/14scheme_testSBAvariant_100_20221027_4_Oct23'
 ]
 
 '''
@@ -199,7 +195,7 @@ def gen_matrix(read_list, isOur, all_level):
     to_write = []
     for i in range(num_levels):
         to_write.append(",".join(map(str, P[i])) + "\n")
-    with open("capacity/" + ("ours" if isOur else "SBA") + str(all_level), "w") as f:
+    with open("capacity/" + ("ours" if isOur else ("SBAvar" if variant else "SBA") + str(all_level), "w") as f:
         f.writelines(to_write)
     # print(f"Success Rate for {num_levels}: ",
     #     np.mean(list(map(lambda x: P[x][x], [k for k in range(0, num_levels)]))))
@@ -211,6 +207,7 @@ if __name__ == "__main__":
     map_report = {}
     map_report_maxerr = {}
     our = False
+    variant = True
     if our:
         for i in range(len(logfiles)):
             clear()
