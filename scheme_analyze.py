@@ -1,9 +1,10 @@
 import pprint
 import numpy as np
 '''
-export DATE="Oct17"
+export DATE="Oct21"
 ls testlog/* | grep ${DATE} | sed "s?testlog?'testlog?g" | sed "s?${DATE}?${DATE}',?g"
 '''
+skip_write_fail = True
 logfiles = [
     'testlog/14scheme_testours_100_2024_4_Oct20',
     'testlog/14scheme_testours_100_2025_5_Oct20',
@@ -12,11 +13,11 @@ logfiles = [
     'testlog/14scheme_testours_100_2028_8_Oct20',
 ]
 logfiles2 = [
-    'testlog/14scheme_testSBA_100_1021_4_Oct17',
-    'testlog/14scheme_testSBA_100_1022_5_Oct17',
-    'testlog/14scheme_testSBA_100_1023_6_Oct17',
-    'testlog/14scheme_testSBA_100_1024_7_Oct17',
-    'testlog/14scheme_testSBA_100_1025_8_Oct17',
+    'testlog/14scheme_testSBA_100_202214_4_Oct21',
+    'testlog/14scheme_testSBA_100_202215_5_Oct21',
+    'testlog/14scheme_testSBA_100_202216_6_Oct21',
+    'testlog/14scheme_testSBA_100_202217_7_Oct21',
+    'testlog/14scheme_testSBA_100_202218_8_Oct21',
 ]
 
 '''
@@ -106,11 +107,20 @@ def data_init(logfile):
     global all_lows
     with open(logfile, "r") as fin:
         lines = fin.readlines()
+        should_skip = False
         for i in range(0, len(lines)):
             line = lines[i].strip().split()
             action, low, high, addr, time, final, _ = line
             low, high, addr, time, final = float(low), float(high), int(addr), float(time), float(final)
             success = Result.check_range(low, high, final)
+            if action == "Init":
+                should_skip = False
+            if action == "Write" and success == False and skip_write_fail == True:
+                should_skip = True
+                continue
+            if should_skip == True:
+                assert action == "Read"
+                continue
             r = Result(action, addr, low, high, final, success, time)
             if addr in dead_cells:
                 # print(f"{addr} is dead, skipping")
