@@ -16,3 +16,6 @@ class RelaxModel(object):
 
     def distr_sigma(R, T):
         return drift_model.get_distribution_interpolate_sigma(R, T)
+
+    def distr_mean(R, T):
+        return drift_model.get_distribution_interpolate_mean(R, T)
