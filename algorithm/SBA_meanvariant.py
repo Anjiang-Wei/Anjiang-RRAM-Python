@@ -119,7 +119,7 @@ def evaluate_perf():
 
 
 if __name__ == "__main__":
-    # generate_schemes()
-    fix_5_6()
+    generate_schemes()
+    # fix_5_6()
     # refine_levels()
     # evaluate_perf()
