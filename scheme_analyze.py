@@ -13,7 +13,11 @@ logfiles = [
     'testlog/14scheme_testours_100_2028_8_Oct20',
 ]
 logfiles2 = [
-   'testlog/14scheme_testSBAvariant_100_20221027_4_Oct23'
+    'testlog/14scheme_testSBAvariant_100_10232026_4_Oct23',
+    'testlog/14scheme_testSBAvariant_100_10232027_5_Oct23',
+    'testlog/14scheme_testSBAvariant_100_10232028_6_Oct23',
+    'testlog/14scheme_testSBAvariant_100_10232029_7_Oct23',
+    'testlog/14scheme_testSBAvariant_100_10232030_8_Oct23',
 ]
 
 '''
@@ -195,7 +199,7 @@ def gen_matrix(read_list, isOur, all_level):
     to_write = []
     for i in range(num_levels):
         to_write.append(",".join(map(str, P[i])) + "\n")
-    with open("capacity/" + ("ours" if isOur else ("SBAvar" if variant else "SBA") + str(all_level), "w") as f:
+    with open("capacity/" + ("ours" if isOur else ("SBAvar" if variant else "SBA") + str(all_level)), "w") as f:
         f.writelines(to_write)
     # print(f"Success Rate for {num_levels}: ",
     #     np.mean(list(map(lambda x: P[x][x], [k for k in range(0, num_levels)]))))
@@ -229,7 +233,7 @@ if __name__ == "__main__":
             map_report[i+4] = res
             err = gen_matrix(Result.read, our, i+4)
             map_report_maxerr[i+4] = err
-    print("ours" if our else "SBA")
+    print("ours" if our else ("SBAvar" if variant else "SBA"))
     print("Average error:")
     pprint.pprint(map_report)
     print("Worst error:")
