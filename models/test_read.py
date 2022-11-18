@@ -34,9 +34,9 @@ def test_diff():
             if res == False:
                 non_normal += 1
             total += 1
-    print(non_normal, total, non_normal / total)
+    print("Drift_diff", non_normal, total, non_normal / total)
 
-def test():
+def test(only_write):
     '''
     Rmin, Rmax: set by hardware constraints
     Nctr: how many write center values to try in [Rmin, Rmax]
@@ -62,13 +62,18 @@ def test():
             Read_N = -1
             T = 1
             WriteDistr = WriteModel.distr(w_center, width, max_attempts, Write_N)
-            RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
+            if only_write:
+                RelaxDistr = WriteDistr
+            else:
+                RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
             res = normal_test(RelaxDistr)
             if res == False:
                 non_normal += 1
             total += 1
-    print(non_normal, total, non_normal / total)
+    print("T=0 (only_write)" if only_write else "T=1 (write+drift)", non_normal, total, non_normal / total)
 
 
 if __name__ == "__main__":
-    test_diff()
+    test(True)
+    # test_diff()
+    # test(False)
