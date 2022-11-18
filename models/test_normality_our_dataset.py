@@ -19,7 +19,7 @@ def init():
     WriteModel.data_init()
     RelaxModel.data_init()
 
-def test_diff():
+def test_diff(reciprocal):
     non_normal = 0
     total = 0
     with open('confC14') as f:
@@ -30,13 +30,21 @@ def test_diff():
                 continue
             # x.append(float(l[1]))
             # y.append(sqrt(statistics.variance(map(float, l[2:]))))
-            res = normal_test(list(map(float, l[2:])))
+            numbers = list(map(float, l[2:]))
+            if reciprocal:
+                for i in range(len(numbers)):
+                    if numbers[i] == 0: # avoid divide by 0
+                        numbers[i] = numbers[i-1]
+                    else:
+                        numbers[i] = 1 / numbers[i]
+            res = normal_test(numbers)
             if res == False:
                 non_normal += 1
             total += 1
-    print("Drift_diff", non_normal, total, non_normal / total)
+    print("Conductance" if reciprocal else "Resistance",
+          "Drift_diff", non_normal, total, non_normal / total)
 
-def test(only_write):
+def test(only_write, reciprocal):
     '''
     Rmin, Rmax: set by hardware constraints
     Nctr: how many write center values to try in [Rmin, Rmax]
@@ -66,24 +74,46 @@ def test(only_write):
                 RelaxDistr = WriteDistr
             else:
                 RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
+            if reciprocal:
+                for i in range(len(RelaxDistr)):
+                    if RelaxDistr[i] == 0: # avoid divide by 0
+                        RelaxDistr[i] = RelaxDistr[i-1]
+                    else:
+                        RelaxDistr[i] = 1 / RelaxDistr[i]
             res = normal_test(RelaxDistr)
             if res == False:
                 non_normal += 1
             total += 1
-    print("T=0 (only_write)" if only_write else "T=1 (write+drift)", non_normal, total, non_normal / total)
+    print("Conductance" if reciprocal else "Resistance",
+          "T=0 (only_write)" if only_write else "T=1 (write+drift)",
+          non_normal, total, non_normal / total)
 
 
 if __name__ == "__main__":
-    # test(True)
-    # test_diff()
-    test(False)
+    # test(True, False) # only write
+    # test_diff(False) # only relaxation
+    # test(False, False) # write+relaxation
+    # using conductance
+    # test(True, True)
+    # test_diff(True)
+    test(False, True)
 '''
 171 2.5580087545667636e-21
-T=0 (only_write) 234 239 0.9790794979079498
+Resistance T=0 (only_write) 234 239 0.9790794979079498
 -----------
 1760 1.5323776033510897e-08
-Drift_diff 31 31 1.0
+Resistance Drift_diff 31 31 1.0
 -----------
 149600 0.0
-T=1 (write+drift) 239 239 1.0
+Resistance T=1 (write+drift) 239 239 1.0
+===========================================
+do condunctance normality test
+171 4.4905104460966616e-21
+Conductance T=0 (only_write) 234 239 0.9790794979079498
+-----------
+1760 0.0
+Conductance Drift_diff 31 31 1.0
+-----------
+149600 0.0
+Conductance T=1 (write+drift) 239 239 1.0
 '''
