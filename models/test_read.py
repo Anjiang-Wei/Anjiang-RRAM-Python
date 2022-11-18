@@ -74,6 +74,16 @@ def test(only_write):
 
 
 if __name__ == "__main__":
-    test(True)
+    # test(True)
     # test_diff()
-    # test(False)
+    test(False)
+'''
+171 2.5580087545667636e-21
+T=0 (only_write) 234 239 0.9790794979079498
+-----------
+1760 1.5323776033510897e-08
+Drift_diff 31 31 1.0
+-----------
+149600 0.0
+T=1 (write+drift) 239 239 1.0
+'''
