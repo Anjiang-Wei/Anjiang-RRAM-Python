@@ -19,6 +19,23 @@ def init():
     WriteModel.data_init()
     RelaxModel.data_init()
 
+def test_diff():
+    non_normal = 0
+    total = 0
+    with open('confC14') as f:
+        for line in f.readlines()[1:]:
+            l = line.strip().split(',')
+            t = float(l[0])
+            if t != 1:
+                continue
+            # x.append(float(l[1]))
+            # y.append(sqrt(statistics.variance(map(float, l[2:]))))
+            res = normal_test(list(map(float, l[2:])))
+            if res == False:
+                non_normal += 1
+            total += 1
+    print(non_normal, total, non_normal / total)
+
 def test():
     '''
     Rmin, Rmax: set by hardware constraints
@@ -28,7 +45,7 @@ def test():
     BER: bit error rate specification
     '''
     init()
-    max_attempts = 100
+    max_attempts = 25
     lowest_target = 7812.5
     w_centers = list(range(7800, 10000, 200)) # 11
     w_centers += list(range(10000, 20000, 1000)) # 10
@@ -41,8 +58,8 @@ def test():
                 continue
             if w_center < 14000 and width > 500:
                 continue
-            Write_N = 100
-            Read_N = 1000
+            Write_N = -1
+            Read_N = -1
             T = 1
             WriteDistr = WriteModel.distr(w_center, width, max_attempts, Write_N)
             RelaxDistr = RelaxModel.distr(WriteDistr, T, Read_N)
@@ -54,4 +71,4 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    test_diff()
