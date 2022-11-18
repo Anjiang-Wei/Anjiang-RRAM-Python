@@ -1,5 +1,6 @@
    
 import matplotlib.pyplot as plt
+import numpy as np
 
 our_res = {4: 0.005555555555555556,
     5: 0.02643171806167401,
@@ -58,32 +59,35 @@ sba_our_search_mean={4: 0.01015228426395939,
 # 8: 0.20876288659793818}
 
 
-
-x = [i for i in range(4, 9)]
-
-our = [our_res[k] for k in x]
-sba = [sba_res[k] for k in x]
-sba_better_search = [sba_our_search[k] for k in x]
-sba_better_search_mean = [sba_our_search_mean[k] for k in x]
-
-plt.plot(x, our, "-x", linewidth=3.0, label="DALA")
-plt.plot(x, sba, "-o", linewidth=3.0, label="SBA")
-plt.plot(x, sba_better_search, "-.", linewidth=3.0, label="DALA+Sigma")
-plt.plot(x, sba_better_search_mean, ":", linewidth=3.0, label="DALA+Normal")
-
-plt.xlabel('Number of Levels', fontsize=20)
-plt.ylabel('Level Drift Probability', fontsize=20)
-
-plt.rcParams.update({'font.size': 20})
-
-# parameters = {'axes.labelsize': 20,
-#           'axes.titlesize': 20}
-# plt.rcParams.update(parameters)
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
-
+# set width of bar
+barWidth = 0.25
+fig = plt.subplots(figsize =(12, 8))
+ 
+# set height of bar
+dala = [our_res[i] / sba_res[i] for i in range(4, 9)]
+dala_sig = [sba_our_search[i] / sba_res[i] for i in range(4, 9)]
+dala_norm = [sba_our_search_mean[i] / sba_res[i] for i in range(4, 9)]
+ 
+# Set position of bar on X axis
+br1 = np.arange(len(dala))
+br2 = [x + barWidth for x in br1]
+br3 = [x + barWidth for x in br2]
+ 
+# Make the plot
+plt.bar(br1, dala, # color ='r',
+        width = barWidth,
+        edgecolor ='grey', label ='DALA')
+plt.bar(br2, dala_sig, #color ='g',
+        hatch='/', width = barWidth,
+        edgecolor ='grey', label ='DALA+Sigma')
+plt.bar(br3, dala_norm, #color ='b',
+        hatch='-', width = barWidth,
+        edgecolor ='grey', label ='DALA+Norm')
+ 
+# Adding Xticks
+plt.xlabel('Average Level Drift Error (Relative to SBA Baseline)', fontweight ='bold', fontsize = 15)
+plt.ylabel('Ratio (smaller is better)', fontweight ='bold', fontsize = 15)
+plt.xticks([r + barWidth for r in range(len(dala))], [str(i) for i in range(4, 9)])
 
 plt.legend()
 plt.show()
-
-# todo: bar plot
