@@ -99,7 +99,7 @@ def allcode():
 
 def bestcode(codes, spec_ber, raw_ber, maxk, maxn):
     best_overhead = 10
-    best_config = None
+    best_config = ["None", 1e10, -1, -1, -1, -1, -1]
     for codekey in codes.keys():
         base, n, k = codekey
         d, tag = codes[codekey]
@@ -123,8 +123,8 @@ def report_improve(ecc_res):
     sba4 = ecc_res['SBA4'][1] - 1
     res['Overhead_Ratio_4'] = sba4 / our4
     res['Reduction_in_Overhead_Ratio_4'] = (sba4 - our4) / sba4
-    our8 = ecc_res['ours8'][1]
-    sba8 = ecc_res['SBA8'][1]
+    our8 = ecc_res['ours8'][1] - 1
+    sba8 = ecc_res['SBA8'][1] - 1
     res['Overhead_Ratio_8'] = sba8 / our8
     res['Reduction_in_Overhead_Ratio_8'] = (sba8 - our8) / sba8
 
