@@ -32,11 +32,11 @@ logfiles = [
 'testlog/14scheme_testSBAmeanvariant_100_19981032_8_Oct24',
 '''
 logfiles2 = [
-    'testlog/14scheme_testSBAmeanvariant_100_19981028_4_Oct24',
-    'testlog/14scheme_testSBAmeanvariant_100_19981029_5_Oct24',
-    'testlog/14scheme_testSBAmeanvariant_100_19981030_6_Oct24',
-    'testlog/14scheme_testSBAmeanvariant_100_19981031_7_Oct24',
-    'testlog/14scheme_testSBAmeanvariant_100_19981032_8_Oct24',
+    'testlog/14scheme_testSBA_100_202214_4_Oct21',
+    'testlog/14scheme_testSBA_100_202215_5_Oct21',
+    'testlog/14scheme_testSBA_100_202216_6_Oct21',
+    'testlog/14scheme_testSBA_100_202217_7_Oct21',
+    'testlog/14scheme_testSBA_100_202218_8_Oct21',
 ]
 
 '''
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     dead_cell_init()
     map_report = {}
     map_report_maxerr = {}
-    our = True
+    our = False
     variant = False
     mean = False
     if our:
