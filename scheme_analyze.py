@@ -73,7 +73,7 @@ class Result(object):
 
     def check_range(low, high, value):
         assert low < high
-        if low <= value and value <= high:
+        if low <= value and value < high:
             return True
         else:
             return False
@@ -117,7 +117,7 @@ class Result(object):
             categorized[i%num_cat].append(results[i])
         if only_report is not None:
             _, res = Result.compute_prob(categorized[only_report], hint)
-            return res
+            return res, categorized[only_report]
         for i in range(num_cat):
             Result.compute_prob(categorized[i], "timebin_" + str(i))
 
@@ -195,6 +195,7 @@ def dead_cell_init(logdir=""):
 
 
 def gen_matrix(read_list, isOur, all_level):
+    # print(f"len(read_list)={len(read_list)}")
     lows = sorted(list(set(map(lambda x: x.low, read_list))))
     highs = sorted(list(set(map(lambda x: x.high, read_list))))
     assert len(lows) == len(highs)
@@ -212,9 +213,13 @@ def gen_matrix(read_list, isOur, all_level):
     # print(P.tolist())
     # e = max(1 - P[k][k])
     max_error = 0.0
+    avg_error = 0.0
     for k in range(num_levels):
         max_error = max(1 - P[k][k], max_error)
+        avg_error += 1 - P[k][k]
+    avg_error /= num_levels
     print("max_error", num_levels, max_error)
+    print("avg_error", num_levels, avg_error)
     to_write = []
     for i in range(num_levels):
         to_write.append(",".join(map(str, P[i])) + "\n")
@@ -229,9 +234,9 @@ if __name__ == "__main__":
     dead_cell_init()
     map_report = {}
     map_report_maxerr = {}
-    our = False
-    variant = True
-    mean = True
+    our = True
+    variant = False
+    mean = False
     if our:
         for i in range(len(logfiles)):
             clear()
@@ -239,9 +244,9 @@ if __name__ == "__main__":
             # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
             # only_report=4: 1s, 7: 10s
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
-            res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
+            res, read_list = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
             map_report[i+4] = res
-            err = gen_matrix(Result.read, our, i+4)
+            err = gen_matrix(read_list, our, i+4)
             map_report_maxerr[i+4] = err
     else:
         for i in range(len(logfiles2)):
@@ -249,9 +254,9 @@ if __name__ == "__main__":
             data_init(logfiles2[i])
             # [0, 0.01, 0.1, 0.2, 0.5, 1.0, 2, 5, 10]
             # Result.report_by_elasped_time(Result.write, 1, only_report=None, hint="write")
-            res = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
+            res, read_list = Result.report_by_elasped_time(Result.read, len(timestamp)-1, only_report=4, hint=str(i+4), level_num=i+4)
             map_report[i+4] = res
-            err = gen_matrix(Result.read, our, i+4)
+            err = gen_matrix(read_list, our, i+4)
             map_report_maxerr[i+4] = err
     print("ours" if our else (("SBAmeanvar" if mean else "SBAvar") if variant else "SBA"))
     print("Average error:")
