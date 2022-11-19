@@ -27,20 +27,20 @@ def compute_average(matrix):
     error_rate = error_rate / len(matrix)
     return error_rate
             
-def report_results(filename_prefix):
+def report_results(filename_prefix, hint):
     res = {}
     for i in range(4, 9):
         fname = filename_prefix + str(i)
         matrix = get_matrix_from_file(fname)
         avg = compute_average(matrix)
         res[i] = avg
-    print(filename_prefix + "=")
+    print(hint + " = \\")
     pprint.pprint(res)
 
 if __name__ == "__main__":
-    report_results("ours")
-    report_results("SBA")
-    report_results("SBAvar")
-    report_results("SBAmeanvar")
-# we should use this file for final results reported in the paper:
-# scheme_analyze.py
+    report_results("ours", "our_res")
+    report_results("SBA", "sba_res")
+    report_results("SBAvar", "sba_our_search")
+    report_results("SBAmeanvar", "sba_our_search_mean")
+# we should use this file for final results reported in the paper
+# instead of scheme_analyze.py (which is non-uniform weighted average)
