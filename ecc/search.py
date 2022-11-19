@@ -110,6 +110,26 @@ def bestcode(codes, spec_ber, raw_ber, maxk, maxn):
                 best_config = [tag, best_overhead, n, k, d, base, uber]
     return best_config
 
+def bestcode_dict(codes, spec_ber, raw_ber_dict, maxk, maxn):
+    res = {}
+    for key in raw_ber_dict.keys():
+        val = bestcode(codes, spec_ber, raw_ber_dict[key], maxk, maxn)
+        res[key] = val
+    return res
+
+def report_improve(ecc_res):
+    res = ecc_res
+    our4 = ecc_res['ours4'][1] - 1
+    sba4 = ecc_res['SBA4'][1] - 1
+    res['Overhead_Ratio_4'] = sba4 / our4
+    res['Reduction_in_Overhead_Ratio_4'] = (sba4 - our4) / sba4
+    our8 = ecc_res['ours8'][1]
+    sba8 = ecc_res['SBA8'][1]
+    res['Overhead_Ratio_8'] = sba8 / our8
+    res['Reduction_in_Overhead_Ratio_8'] = (sba8 - our8) / sba8
+
+    pprint.pprint(res)
+
 # obtained from capacity/trans.py
 raw_ber = {\
 'ours4' : 0.002688172043010753,
@@ -117,10 +137,11 @@ raw_ber = {\
 'SBA4' : 0.009267383198069752,
 'SBA8' : 0.033796296296296297,
 }
+error_spec = 1e-15
 
 if __name__ == "__main__":
-    print(bestcode(allcode(), 1e-13, 0.05, 1e10, 1e10))
+    report_improve(bestcode_dict(allcode(), error_spec, raw_ber, 1e10, 1e10))
     print("Add Constraints")
     for i in range(7, 14):
         print("No bigger than", 2**i)
-        print(bestcode(allcode(), 1e-13, 0.05, 2**i, 2**i))
+        report_improve(bestcode_dict(allcode(), error_spec, raw_ber, 2**i, 2**i))
