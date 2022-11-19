@@ -110,6 +110,13 @@ def bestcode(codes, spec_ber, raw_ber, maxk, maxn):
                 best_config = [tag, best_overhead, n, k, d, base, uber]
     return best_config
 
+# obtained from capacity/trans.py
+raw_ber = {\
+'ours4' : 0.002688172043010753,
+'ours8' : 0.023788767502217794,
+'SBA4' : 0.009267383198069752,
+'SBA8' : 0.033796296296296297,
+}
 
 if __name__ == "__main__":
     print(bestcode(allcode(), 1e-13, 0.05, 1e10, 1e10))

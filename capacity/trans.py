@@ -92,7 +92,7 @@ def report_ber(filename_prefix, level_list):
         ber_matrix = np.multiply(matrix, dist) / i
         # pprint.pprint(ber_matrix)
         ber_avg = np.sum(ber_matrix) / num_bits
-        print(filename_prefix + str(i) + " =", ber_avg)
+        print("'" + filename_prefix + str(i) + "' :", str(ber_avg)+",")
         res.append(ber_avg)
     return res
 
@@ -110,6 +110,8 @@ if __name__ == "__main__":
 # we should use this file for final results reported in the paper
 # instead of scheme_analyze.py (which is non-uniform weighted average)
     init_dist()
+    print("raw_ber = {\\")
     ours_ber = report_ber("ours", [4, 8])
     sba_ber = report_ber("SBA", [4, 8])
+    print("}")
     report_ber_reduction(ours_ber, sba_ber, ["4", "8"])
