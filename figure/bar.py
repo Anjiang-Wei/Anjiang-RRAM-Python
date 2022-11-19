@@ -61,33 +61,56 @@ sba_our_search_mean={4: 0.01015228426395939,
 
 # set width of bar
 barWidth = 0.25
-fig = plt.subplots(figsize =(12, 8))
+# fig = plt.subplots(figsize =(12, 8))
  
 # set height of bar
 dala = [our_res[i] / sba_res[i] for i in range(4, 9)]
 dala_sig = [sba_our_search[i] / sba_res[i] for i in range(4, 9)]
 dala_norm = [sba_our_search_mean[i] / sba_res[i] for i in range(4, 9)]
+
+print("Error ratio compared to SBA:", dala)
+data_reduction_error_perc = [(sba_res[i] - our_res[i]) / sba_res[i] * 100 for i in range(4, 9)]
+print("Reduction in error ratio w.r.t. SBA:", data_reduction_error_perc)
+print("Average Reduction in error ratio", sum(data_reduction_error_perc) / len(data_reduction_error_perc))
+'''
+Error ratio compared to SBA: [0.30476190476190473, 0.6568281938325992, 0.9627319507250898, 0.5751908396946565, 0.5545523730455237]
+Reduction in error ratio w.r.t. SBA: [69.52380952380952, 34.31718061674008, 3.7268049274910244, 42.48091603053435, 44.54476269544762]
+Average Reduction in error ratio 38.91869475880452
+'''
  
 # Set position of bar on X axis
 br1 = np.arange(len(dala))
 br2 = [x + barWidth for x in br1]
 br3 = [x + barWidth for x in br2]
+
+plt.figure(dpi=90)
  
 # Make the plot
 plt.bar(br1, dala, # color ='r',
         width = barWidth,
-        edgecolor ='grey', label ='DALA')
+        edgecolor ='grey', label ='dala')
 plt.bar(br2, dala_sig, #color ='g',
         hatch='/', width = barWidth,
-        edgecolor ='grey', label ='DALA+Sigma')
+        edgecolor ='grey', label ='dala-sigma')
 plt.bar(br3, dala_norm, #color ='b',
         hatch='-', width = barWidth,
-        edgecolor ='grey', label ='DALA+Norm')
+        edgecolor ='grey', label ='dala-norm')
  
 # Adding Xticks
-plt.xlabel('Average Level Drift Error (Relative to SBA Baseline)', fontweight ='bold', fontsize = 15)
-plt.ylabel('Ratio (smaller is better)', fontweight ='bold', fontsize = 15)
-plt.xticks([r + barWidth for r in range(len(dala))], [str(i) for i in range(4, 9)])
+plt.xlabel('Number of Levels', fontsize=25)
+plt.ylabel('Relative Level Drift Error w.r.t. SBA', fontsize=25)
+plt.xticks([r + barWidth for r in range(len(dala))], [str(i) for i in range(4, 9)], fontsize=20)
+plt.yticks(fontsize=20)
+
+plt.rcParams.update({'font.size': 25})
+
+plt.axhline(1.0, linestyle="--", linewidth=4, color='b')
+plt.text(-0.3, 1.03, "sba", size=25) #, bbox=dict(alpha=0.2))
 
 plt.legend()
 plt.show()
+
+# write 1s in experiment setup
+# 3) ping Sara
+# 4) compute BER, confusion matrix, machine learning example
+# 5) Akash's distribution normality test

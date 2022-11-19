@@ -1,5 +1,6 @@
    
 import matplotlib.pyplot as plt
+import numpy as np
 
 our_res = {4: 0.005555555555555556,
     5: 0.02643171806167401,
@@ -66,24 +67,27 @@ sba = [sba_res[k] for k in x]
 sba_better_search = [sba_our_search[k] for k in x]
 sba_better_search_mean = [sba_our_search_mean[k] for k in x]
 
-plt.plot(x, our, "-x", linewidth=3.0, label="DALA")
-plt.plot(x, sba, "-o", linewidth=3.0, label="SBA")
-plt.plot(x, sba_better_search, "-.", linewidth=3.0, label="DALA+Sigma")
-plt.plot(x, sba_better_search_mean, ":", linewidth=3.0, label="DALA+Norm")
+plt.figure(dpi=90)
 
-plt.xlabel('Number of Levels', fontsize=20)
-plt.ylabel('Level Drift Probability', fontsize=20)
+plt.plot(x, our, "-x", linewidth=3.0, label="dala")
+plt.plot(x, sba, "-o", linewidth=3.0, label="sba")
+plt.plot(x, sba_better_search, "-.", linewidth=3.0, label="dala-sigma")
+plt.plot(x, sba_better_search_mean, ":", linewidth=3.0, label="dala-norm")
 
-plt.rcParams.update({'font.size': 20})
+plt.xlabel('Number of Levels', fontsize=25)
+plt.ylabel('Level Drift Probability', fontsize=25)
+
+plt.rcParams.update({'font.size': 25})
 
 # parameters = {'axes.labelsize': 20,
 #           'axes.titlesize': 20}
 # plt.rcParams.update(parameters)
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
+plt.xticks(np.arange(4, 9), [str(i) for i in x], fontsize=20)
+plt.yticks(fontsize=20)
 
 
 plt.legend()
+
 plt.show()
 
 # todo: bar plot
