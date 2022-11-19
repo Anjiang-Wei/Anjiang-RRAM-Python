@@ -32,11 +32,11 @@ logfiles = [
 'testlog/14scheme_testSBAmeanvariant_100_19981032_8_Oct24',
 '''
 logfiles2 = [
-    'testlog/14scheme_testSBAvariant_100_10232026_4_Oct23',
-    'testlog/14scheme_testSBAvariant_100_10232027_5_Oct23',
-    'testlog/14scheme_testSBAvariant_100_10232028_6_Oct23',
-    'testlog/14scheme_testSBAvariant_100_10232029_7_Oct23',
-    'testlog/14scheme_testSBAvariant_100_10232030_8_Oct23',
+    'testlog/14scheme_testSBAmeanvariant_100_19981028_4_Oct24',
+    'testlog/14scheme_testSBAmeanvariant_100_19981029_5_Oct24',
+    'testlog/14scheme_testSBAmeanvariant_100_19981030_6_Oct24',
+    'testlog/14scheme_testSBAmeanvariant_100_19981031_7_Oct24',
+    'testlog/14scheme_testSBAmeanvariant_100_19981032_8_Oct24',
 ]
 
 '''
@@ -236,7 +236,7 @@ if __name__ == "__main__":
     map_report_maxerr = {}
     our = False
     variant = True
-    mean = False
+    mean = True
     if our:
         for i in range(len(logfiles)):
             clear()
