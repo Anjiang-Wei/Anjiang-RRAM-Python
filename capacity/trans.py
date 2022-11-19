@@ -36,6 +36,16 @@ def report_results(filename_prefix, hint):
         res[i] = avg
     print(hint + " = \\")
     pprint.pprint(res)
+    return res
+
+def report_drift_reduction(our, sba):
+    assert len(our) == len(sba)
+    reduce_list = []
+    for i in range(4, 9):
+        reduce_list.append((sba[i] - our[i]) / sba[i])
+    reduce_avg = sum(reduce_list) / len(reduce_list)
+    print("Drift Reduction", reduce_list)
+    print("Average Drift Reduction", reduce_avg)
 
 gray_coding = \
 {
@@ -65,6 +75,7 @@ def init_dist():
     # pprint.pprint(dist_8)
 
 def report_ber(filename_prefix, level_list):
+    res = []
     for i in level_list:
         dist = 0
         num_bits = 0
@@ -82,15 +93,23 @@ def report_ber(filename_prefix, level_list):
         # pprint.pprint(ber_matrix)
         ber_avg = np.sum(ber_matrix) / num_bits
         print(filename_prefix + str(i) + " =", ber_avg)
+        res.append(ber_avg)
+    return res
 
+def report_ber_reduction(our, sba, hint):
+    assert len(our) == len(sba)
+    for i in range(0, len(our)):
+        print(f"BER reduction for level{hint[i]} =", (sba[i] - our[i]) / sba[i])
 
 if __name__ == "__main__":
-    report_results("ours", "our_res")
-    report_results("SBA", "sba_res")
+    ours_drift = report_results("ours", "our_res")
+    sba_drift = report_results("SBA", "sba_res")
     report_results("SBAvar", "sba_our_search")
     report_results("SBAmeanvar", "sba_our_search_mean")
+    report_drift_reduction(ours_drift, sba_drift)
 # we should use this file for final results reported in the paper
 # instead of scheme_analyze.py (which is non-uniform weighted average)
     init_dist()
-    report_ber("ours", [4, 8])
-    report_ber("SBA", [4, 8])
+    ours_ber = report_ber("ours", [4, 8])
+    sba_ber = report_ber("SBA", [4, 8])
+    report_ber_reduction(ours_ber, sba_ber, ["4", "8"])
