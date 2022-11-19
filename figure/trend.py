@@ -36,12 +36,12 @@ sba = [sba_res[k] for k in x]
 sba_better_search = [sba_our_search[k] for k in x]
 sba_better_search_mean = [sba_our_search_mean[k] for k in x]
 
-plt.figure(dpi=90)
+plt.figure(figsize=[15, 8], dpi=400)
 
-plt.plot(x, our, "-x", linewidth=3.0, label="dala")
-plt.plot(x, sba, "-o", linewidth=3.0, label="sba")
-plt.plot(x, sba_better_search, "-.", linewidth=3.0, label="dala-sigma")
-plt.plot(x, sba_better_search_mean, ":", linewidth=3.0, label="dala-norm")
+plt.plot(x, our, "-x", color ='lightgreen', linewidth=3.0, label="dala")
+plt.plot(x, sba, "-o", color = 'chocolate', linewidth=3.0, label="sba")
+plt.plot(x, sba_better_search, "-.", color = 'gold', linewidth=3.0, label="dala-sigma")
+plt.plot(x, sba_better_search_mean, ":", color = 'skyblue', linewidth=3.0, label="dala-norm")
 
 plt.xlabel('Number of Levels', fontsize=25)
 plt.ylabel('Level Drift Probability', fontsize=25)
@@ -57,6 +57,7 @@ plt.yticks(fontsize=20)
 
 plt.legend()
 
-plt.show()
+# plt.show()
+plt.savefig('trend_compare.png', bbox_inches='tight')
 
 # todo: bar plot

@@ -52,18 +52,21 @@ br1 = np.arange(len(dala))
 br2 = [x + barWidth for x in br1]
 br3 = [x + barWidth for x in br2]
 
-plt.figure(dpi=90)
+plt.figure(figsize=[15, 8], dpi=400)
  
 # Make the plot
-plt.bar(br1, dala, # color ='r',
-        width = barWidth,
-        edgecolor ='grey', label ='dala')
-plt.bar(br2, dala_sig, #color ='g',
+plt.bar(br1, dala, color ='lightgreen',
+        width = barWidth, 
+        edgecolor ='grey',
+        label ='dala')
+plt.bar(br2, dala_sig, color ='gold',
         hatch='/', width = barWidth,
-        edgecolor ='grey', label ='dala-sigma')
-plt.bar(br3, dala_norm, #color ='b',
+        edgecolor ='grey',
+        label ='dala-sigma')
+plt.bar(br3, dala_norm, color ='skyblue',
         hatch='-', width = barWidth,
-        edgecolor ='grey', label ='dala-norm')
+        edgecolor ='grey',
+        label ='dala-norm')
  
 # Adding Xticks
 plt.xlabel('Number of Levels', fontsize=25)
@@ -77,7 +80,8 @@ plt.axhline(1.0, linestyle="--", linewidth=4, color='black')
 plt.text(-0.3, 1.03, "sba", size=25) #, bbox=dict(alpha=0.2))
 
 plt.legend()
-plt.show()
+# plt.show()
+plt.savefig('bar_compare.png', bbox_inches='tight')
 
 # write 1s in experiment setup
 # 3) ping Sara
