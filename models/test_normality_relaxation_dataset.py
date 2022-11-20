@@ -32,6 +32,7 @@ def init(model_char, reverse):
 
 def diff(model_char, reverse):
     data, basetime_data = init(model_char, reverse)
+    cell_num = len(list(set(map(lambda x: x[0], data))))
     res = {} # r, timept -> [conductance_diff, ...]
     for item in data:
         addr, timept, conductance, r = item
@@ -46,12 +47,12 @@ def diff(model_char, reverse):
             res[r][timept] = []
         res[r][timept].append(conductance_diff)
     # pprint.pprint(res)
-    return res
+    return res, cell_num
 
 def report_normality(model_char, reverse):
     non_normal = 0
     total = 0
-    diff_res = diff(model_char, reverse)
+    diff_res, cell_num = diff(model_char, reverse)
     for k1 in diff_res.keys():
         for k2 in diff_res[k1].keys():
             distribution = diff_res[k1][k2]
@@ -61,7 +62,8 @@ def report_normality(model_char, reverse):
             if res == False:
                 non_normal += 1
             total += 1
-    print(f"Model_{model_char}", "Resistance" if reverse else "Conductance", non_normal, total, non_normal / total)
+    print(f"Model_{model_char}", "Resistance" if reverse else "Conductance",
+        f"cell_num={cell_num}", f"{non_normal}/{total}={non_normal / total}")
 
 if __name__ == "__main__":
     report_normality("A", True)
@@ -71,10 +73,10 @@ if __name__ == "__main__":
     report_normality("C", True)
     report_normality("C", False)
 '''
-Model_A Resistance 212 231 0.9177489177489178
-Model_A Conductance 211 231 0.9134199134199135
-Model_B Resistance 189 198 0.9545454545454546
-Model_B Conductance 185 198 0.9343434343434344
-Model_C Resistance 164 165 0.9939393939393939
-Model_C Conductance 159 165 0.9636363636363636
+Model_A Resistance cell_num=16384 212/231=0.9177489177489178
+Model_A Conductance cell_num=16384 211/231=0.9134199134199135
+Model_B Resistance cell_num=32768 189/198=0.9545454545454546
+Model_B Conductance cell_num=32768 185/198=0.9343434343434344
+Model_C Resistance cell_num=16292 164/165=0.9939393939393939
+Model_C Conductance cell_num=16292 159/165=0.9636363636363636
 '''
