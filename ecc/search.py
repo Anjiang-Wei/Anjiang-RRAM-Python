@@ -137,7 +137,7 @@ raw_ber = {\
 'SBA4' : 0.009267383198069752,
 'SBA8' : 0.033796296296296297,
 }
-error_spec = 1e-15
+error_spec = 1e-14
 
 if __name__ == "__main__":
     report_improve(bestcode_dict(allcode(), error_spec, raw_ber, 1e10, 1e10))
