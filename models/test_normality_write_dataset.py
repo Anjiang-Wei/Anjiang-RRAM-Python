@@ -63,3 +63,7 @@ if __name__ == "__main__":
     filename = "sdr-4wl-eval-chip2-8k-8-9-20.csv"
     report_normality(filename, True)
     report_normality(filename, False)
+'''
+Resistance cell_num=8192 8/8=1.0
+Conductance cell_num=8192 8/8=1.0
+'''
