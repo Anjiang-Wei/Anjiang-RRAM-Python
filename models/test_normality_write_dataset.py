@@ -19,6 +19,9 @@ def normal_test(x):
     else:
         return True
 
+def compute_skew(x):
+    return stats.skew(x)
+
 def init(filename, reverse):
     data = []
     addr_list = []
@@ -57,13 +60,28 @@ def report_normality(filename, reverse):
     print("Resistance" if reverse else "Conductance",
         f"cell_num={cell_num}", f"{non_normal}/{total}={non_normal / total}")
 
+def report_skew(filename, reverse):
+    distr_dict, _ = bin(filename, reverse)
+    total = 0
+    number = 0
+    for k in distr_dict.keys():
+        distribution = distr_dict[k]
+        res = compute_skew(distribution)
+        total += res
+        number += 1
+    print("Resistance" if reverse else "Conductance", "Average Skewness",  total / number)
+
 
 if __name__ == "__main__":
     # obtained from https://github.com/Anjiang-Wei/pin/tree/main/data
     filename = "sdr-4wl-eval-chip2-8k-8-9-20.csv"
     report_normality(filename, True)
     report_normality(filename, False)
+    report_skew(filename, True)
+    report_skew(filename, False)
 '''
 Resistance cell_num=8192 8/8=1.0
 Conductance cell_num=8192 8/8=1.0
+Resistance Average Skewness 17.208040730005717
+Conductance Average Skewness -14.61609249819154
 '''
