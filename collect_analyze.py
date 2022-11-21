@@ -52,7 +52,7 @@ class Result(object):
         for o in results:
             Tiny_Level.add(Tiny_Level(o.low, o.high, o.success, o.max_attempts, o.final))
 
-def dead_cell_init(logdir=""):
+def dead_cell_init(logdir="", print_std=True):
     '''
     Consider two log files to initialize the dead cell tracking
     Output -> dead_cells (a global variable)
@@ -73,7 +73,8 @@ def dead_cell_init(logdir=""):
                 dead_addr = int(line.split(",")[0])
                 dead_cells.append(dead_addr)
     dead_cells = sorted(set(dead_cells))
-    print(f'Dead cell initialization finished: {len(dead_cells)} are dead')
+    if print_std:
+        print(f'Dead cell initialization finished: {len(dead_cells)} are dead')
 
 def data_init(fname=""):
     if fname == "":

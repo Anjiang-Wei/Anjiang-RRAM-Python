@@ -24,12 +24,14 @@ class WriteModel(object):
     def __init__(self):
         pass
 
-    def data_init():
-        collect_analyze.dead_cell_init("../log/")
-        print(f"Write data init from {collect_analyze.logfile}")
+    def data_init(print_std=True):
+        collect_analyze.dead_cell_init("../log/", print_std)
+        if print_std:
+            print(f"Write data init from {collect_analyze.logfile}")
         fname = "../testlog/14collect_data_" + collect_analyze.logfile
         collect_analyze.data_init(fname)
-        print("Write data init finished")
+        if print_std:
+            print("Write data init finished")
 
     def distr(Wctr, width, max_attempts, Write_N=-1):
         levels = Tiny_Level.filter_levels(lambda x: x.width == width and x.max_attempts == max_attempts)
