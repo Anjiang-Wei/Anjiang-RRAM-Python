@@ -109,8 +109,8 @@ if __name__ == "__main__":
     our_sigma = report_results("SBAvar", "sba_our_search")
     our_norm = report_results("SBAmeanvar", "sba_our_search_mean")
     report_drift_reduction([(ours_drift, sba_drift, "Overall"), 
-                            (ours_drift, our_sigma, "RDR"), 
-                            (ours_drift, our_norm, "Non-Normal")])
+                            (our_sigma, sba_drift, "RDR"), 
+                            (our_norm, sba_drift, "Non-Normal")])
 # we should use this file for final results reported in the paper
 # instead of scheme_analyze.py (which is non-uniform weighted average)
     # init_dist()
