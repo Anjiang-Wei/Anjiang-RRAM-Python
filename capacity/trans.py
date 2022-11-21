@@ -38,14 +38,16 @@ def report_results(filename_prefix, hint):
     pprint.pprint(res)
     return res
 
-def report_drift_reduction(our, sba):
-    assert len(our) == len(sba)
-    reduce_list = []
-    for i in range(4, 9):
-        reduce_list.append((sba[i] - our[i]) / sba[i])
-    reduce_avg = sum(reduce_list) / len(reduce_list)
-    print("Drift Reduction", reduce_list)
-    print("Average Drift Reduction", reduce_avg)
+def report_drift_reduction(queries):
+    for item in queries:
+        our, sba, hint = item
+        assert len(our) == len(sba)
+        reduce_list = []
+        for i in range(4, 9):
+            reduce_list.append((sba[i] - our[i]) / sba[i])
+        reduce_avg = sum(reduce_list) / len(reduce_list)
+        print(f"{hint} Drift Reduction", reduce_list)
+        print(f"{hint} Average Drift Reduction", reduce_avg)
 
 gray_coding = \
 {
@@ -104,14 +106,16 @@ def report_ber_reduction(our, sba, hint):
 if __name__ == "__main__":
     ours_drift = report_results("ours", "our_res")
     sba_drift = report_results("SBA", "sba_res")
-    report_results("SBAvar", "sba_our_search")
-    report_results("SBAmeanvar", "sba_our_search_mean")
-    report_drift_reduction(ours_drift, sba_drift)
+    our_sigma = report_results("SBAvar", "sba_our_search")
+    our_norm = report_results("SBAmeanvar", "sba_our_search_mean")
+    report_drift_reduction([(ours_drift, sba_drift, "Overall"), 
+                            (ours_drift, our_sigma, "RDR"), 
+                            (ours_drift, our_norm, "Non-Normal")])
 # we should use this file for final results reported in the paper
 # instead of scheme_analyze.py (which is non-uniform weighted average)
-    init_dist()
-    print("raw_ber = {\\")
-    ours_ber = report_ber("ours", [4, 8])
-    sba_ber = report_ber("SBA", [4, 8])
-    print("}")
-    report_ber_reduction(ours_ber, sba_ber, ["4", "8"])
+    # init_dist()
+    # print("raw_ber = {\\")
+    # ours_ber = report_ber("ours", [4, 8])
+    # sba_ber = report_ber("SBA", [4, 8])
+    # print("}")
+    # report_ber_reduction(ours_ber, sba_ber, ["4", "8"])
