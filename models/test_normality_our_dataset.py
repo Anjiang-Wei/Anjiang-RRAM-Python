@@ -140,6 +140,21 @@ if __name__ == "__main__":
     normality_test()
     skew_compute()
 '''
+Resistance T=0 (only_write) non-normal percentage 234 / 239 = 0.9790794979079498
+Resistance Drift_diff non-normal percentage 31 / 31 = 1.0
+Resistance T=1 (write+drift) non-normal percentage 239 / 239 = 1.0
+Conductance T=0 (only_write) non-normal percentage 239 / 239 = 1.0
+Conductance Drift_diff non-normal percentage 31 / 31 = 1.0
+Conductance T=1 (write+drift) non-normal percentage 239 / 239 = 1.0
+Resistance T=0 (only_write) average skewness 3.8722099042942797 / 239 = 0.016201715080729203
+Resistance Drift_diff average skewness 92.04771660959518 / 31 = 2.9692811809546833
+Resistance T=1 (write+drift) average skewness 493.54384845347744 / 239 = 2.065037022817897
+Conductance T=0 (only_write) average skewness -0.004917618950183715 / 239 = -2.0575811507044833e-05
+Conductance Drift_diff average skewness 5.280182700101353 / 31 = 0.17032847419681782
+Conductance T=1 (write+drift) average skewness -84.42995517618506 / 239 = -0.353263410779017
+'''
+
+'''
 171 2.5580087545667636e-21
 Resistance T=0 (only_write) 234 239 0.9790794979079498
 -----------
