@@ -98,7 +98,7 @@ def report_lognormality(model_char, reverse):
             total += 1
     print(f"Model_{model_char}", "Resistance" if reverse else "Conductance",
         f"cell_num={cell_num}", f"{non_normal}/{total}={non_normal / total}",
-        f"non-lognormal percentage", f"{(1 - non_normal / total) * 100} %")
+        f"lognormal percentage", f"{(1 - non_normal / total) * 100} %")
 
 def report_skew(model_char, reverse):
     diff_res, _ = diff(model_char, reverse)
@@ -139,10 +139,10 @@ Model_B Resistance cell_num=32768 189/198=0.9545454545454546 normal percentage 4
 Model_B Conductance cell_num=32768 185/198=0.9343434343434344 normal percentage 6.565656565656564 %
 Model_C Resistance cell_num=16292 164/165=0.9939393939393939 normal percentage 0.60606060606061 %
 Model_C Conductance cell_num=16292 159/165=0.9636363636363636 normal percentage 3.6363636363636376 %
-Model_A Resistance cell_num=16384 231/231=1.0 non-lognormal percentage 0.0 %
-Model_A Conductance cell_num=16384 212/231=0.9177489177489178 non-lognormal percentage 8.225108225108224 %
-Model_B Resistance cell_num=32768 198/198=1.0 non-lognormal percentage 0.0 %
-Model_B Conductance cell_num=32768 184/198=0.9292929292929293 non-lognormal percentage 7.070707070707072 %
-Model_C Resistance cell_num=16292 165/165=1.0 non-lognormal percentage 0.0 %
-Model_C Conductance cell_num=16292 159/165=0.9636363636363636 non-lognormal percentage 3.6363636363636376 %
+Model_A Resistance cell_num=16384 231/231=1.0 lognormal percentage 0.0 %
+Model_A Conductance cell_num=16384 212/231=0.9177489177489178 lognormal percentage 8.225108225108224 %
+Model_B Resistance cell_num=32768 198/198=1.0 lognormal percentage 0.0 %
+Model_B Conductance cell_num=32768 184/198=0.9292929292929293 lognormal percentage 7.070707070707072 %
+Model_C Resistance cell_num=16292 165/165=1.0 lognormal percentage 0.0 %
+Model_C Conductance cell_num=16292 159/165=0.9636363636363636 lognormal percentage 3.6363636363636376 %
 '''

@@ -19,6 +19,16 @@ def normal_test(x):
     else:
         return True
 
+def lognormal_test(x):
+    # x is a set of values
+    k2, p = stats.normaltest(np.log(np.array(x)))
+    # print(len(x), p)
+    alpha = 1e-3
+    if p < alpha:
+        return False
+    else:
+        return True
+
 def compute_skew(x):
     return stats.skew(x)
 
@@ -58,7 +68,22 @@ def report_normality(filename, reverse):
             non_normal += 1
         total += 1
     print("Resistance" if reverse else "Conductance",
-        f"cell_num={cell_num}", f"{non_normal}/{total}={non_normal / total}")
+        f"cell_num={cell_num}", f"{non_normal}/{total}={non_normal / total}",
+        f"normal percentage", f"{(1 - non_normal / total) * 100} %")
+
+def report_lognormality(filename, reverse):
+    non_normal = 0
+    total = 0
+    distr_dict, cell_num = bin(filename, reverse)
+    for k in distr_dict.keys():
+        distribution = distr_dict[k]
+        res = lognormal_test(distribution)
+        if res == False:
+            non_normal += 1
+        total += 1
+    print("Resistance" if reverse else "Conductance",
+        f"cell_num={cell_num}", f"{non_normal}/{total}={non_normal / total}",
+        f"lognormal percentage", f"{(1 - non_normal / total) * 100} %")
 
 def report_skew(filename, reverse):
     distr_dict, _ = bin(filename, reverse)
@@ -77,11 +102,13 @@ if __name__ == "__main__":
     filename = "sdr-4wl-eval-chip2-8k-8-9-20.csv"
     report_normality(filename, True)
     report_normality(filename, False)
-    report_skew(filename, True)
-    report_skew(filename, False)
+    report_lognormality(filename, True)
+    report_lognormality(filename, False)
+    # report_skew(filename, True)
+    # report_skew(filename, False)
 '''
-Resistance cell_num=8192 8/8=1.0
-Conductance cell_num=8192 8/8=1.0
-Resistance Average Skewness 17.208040730005717
-Conductance Average Skewness -14.61609249819154
+Resistance cell_num=8192 8/8=1.0 normal percentage 0.0 %
+Conductance cell_num=8192 8/8=1.0 normal percentage 0.0 %
+Resistance cell_num=8192 8/8=1.0 lognormal percentage 0.0 %
+Conductance cell_num=8192 8/8=1.0 lognormal percentage 0.0 %
 '''
